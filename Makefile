@@ -7,12 +7,27 @@ up:
 down:
 	docker-compose down
 
-ps:
-	docker ps
-
-exec:
-	docker exec -it $(c) /bin/bash
-
 init:
-	docker-compose run --rm composer create-project laravel/laravel .
+	docker-compose exec php composer create-project laravel/laravel .
+
+list:
+	docker-compose ps
+
+enter:
+	docker-compose exec -it $(name) /bin/bash
+
+php:
+	docker-compose exec php /bin/bash
+
+migrate:
+	docker-compose exec php php artisan migrate
+
+npm:
+	docker-compose exec npm /bin/bash
+
+vite:
+	docker-compose exec npm npm run dev
+
+vite-build:
+	docker-compose exec npm npm run build
 
