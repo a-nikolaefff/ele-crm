@@ -15,8 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('about');
+    return redirect()->route('home');
 });
+
+Route::resource('customers', \App\Http\Controllers\CustomerController::class);
+
+Route::resource('requests', \App\Http\Controllers\EquipmentRequestController::class);
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
