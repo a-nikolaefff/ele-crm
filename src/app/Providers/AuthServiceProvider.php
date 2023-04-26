@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -22,5 +24,13 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
+            return (new MailMessage)
+                ->subject('Подтверждение email адреса')
+                ->greeting('Здравствуйте')
+                ->line('Нажмите на кнопку ниже, чтобы подтвердить регистрацию в EleCRM')
+                ->action('Подтвердить email', $url)
+                ->salutation('С уважением, EleCRM');
+        });
     }
 }

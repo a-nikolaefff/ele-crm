@@ -14,18 +14,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes(['verify' => true]);
+
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
 Route::get('/', function () {
     return redirect()->route('home');
 });
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
+
 Route::resource('customers', \App\Http\Controllers\CustomerController::class);
 
-Route::resource('requests', \App\Http\Controllers\EquipmentRequestController::class);
+Route::resource(
+    'requests',
+    \App\Http\Controllers\EquipmentRequestController::class
+);
 
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
 
-Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
