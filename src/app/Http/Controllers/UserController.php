@@ -2,28 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EquipmentRequest;
 use Illuminate\Http\Request;
 
-class EquipmentRequestController extends Controller
+class UserController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified', 'authorized']);
-    }
-
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('requests');
+        return view('users');
     }
 
     /**
@@ -45,7 +33,7 @@ class EquipmentRequestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(EquipmentRequest $equipmentRequest)
+    public function show(string $id)
     {
         //
     }
@@ -53,7 +41,7 @@ class EquipmentRequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EquipmentRequest $equipmentRequest)
+    public function edit(string $id)
     {
         //
     }
@@ -61,7 +49,7 @@ class EquipmentRequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, EquipmentRequest $equipmentRequest)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -69,7 +57,7 @@ class EquipmentRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EquipmentRequest $equipmentRequest)
+    public function destroy(string $id)
     {
         //
     }

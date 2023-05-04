@@ -22,7 +22,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return 'test';
+        return view('customers');
     }
 
     /**

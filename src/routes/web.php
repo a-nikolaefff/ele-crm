@@ -27,12 +27,17 @@ Route::get('/', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
 
-Route::resource('customers', \App\Http\Controllers\CustomerController::class);
+Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'index'])
+    ->name('profile');
 
 Route::resource(
     'requests',
     \App\Http\Controllers\EquipmentRequestController::class
 );
+
+Route::resource('customers', \App\Http\Controllers\CustomerController::class);
+
+Route::resource('users', \App\Http\Controllers\UserController::class);
 
 
 

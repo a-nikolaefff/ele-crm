@@ -52,7 +52,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:50'],
             'email' => [
                 'required',
                 'string',
@@ -64,7 +64,7 @@ class RegisterController extends Controller
         ], [
             'name.required' => 'Поле обязательно для заполнения',
             'name.string' => 'Имя должно быть строкой',
-            'name.max' => 'Не более 255 символов',
+            'name.max' => 'Не более 50 символов',
             'email.required' => 'Поле обязательно для заполнения',
             'email.string' => 'Email должен быть строкой',
             'email.email' => 'Некорректный формат email',

@@ -1,0 +1,45 @@
+@use '../abstracts/variables' as *;
+
+.header {
+    width: 100%;
+    height: $header-height;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    background-color: $secondary-color;
+    z-index: $z-fixed;
+    transition: 0.5s;
+    @media (min-width: 768px) {
+        height: calc($header-height + 1rem);
+        padding: 0 2rem 0 calc($nav-width + 2rem);
+    }
+    &_menu-displayed {
+        padding-left: calc($nav-width + 1rem);
+        @media (min-width: 768px) {
+            padding-left: calc($nav-width + 188px);
+        }
+    }
+
+    &__toggle {
+        color: $primary-color;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+
+    &__authorisation {
+        display: flex;
+    }
+}
+
+
+
