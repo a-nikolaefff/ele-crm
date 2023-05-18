@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\RegisterUserRequest;
 use App\Models\UserRole;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -61,19 +62,6 @@ class RegisterController extends Controller
                 'unique:users'
             ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ], [
-            'name.required' => 'Поле обязательно для заполнения',
-            'name.string' => 'Имя должно быть строкой',
-            'name.max' => 'Не более 50 символов',
-            'email.required' => 'Поле обязательно для заполнения',
-            'email.string' => 'Email должен быть строкой',
-            'email.email' => 'Некорректный формат email',
-            'email.max' => 'Не более 255 символов',
-            'email.unique' => 'Пользователем с таким email уже зарегистрирован',
-            'password.required' => 'Поле обязательно для заполнения',
-            'password.string' => 'Пароль должен быть строкой',
-            'password.min' => 'Не менее 8 символов',
-            'password.confirmed' => 'Пароли не совпадают',
         ]);
     }
 
@@ -90,7 +78,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_id' => UserRole::where('name', 'stranger')->value('id')
+            'role_id' => UserRole::where('name', UserRole::STRANGER_ROLE)
+                ->value('id')
         ]);
     }
 }

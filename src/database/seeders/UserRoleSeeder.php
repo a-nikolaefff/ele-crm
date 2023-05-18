@@ -14,8 +14,9 @@ class UserRoleSeeder extends Seeder
      */
     public function run(): void
     {
-        UserRole::create(['name' => 'admin']);
-        UserRole::create(['name' => 'employee']);
-        UserRole::create(['name' => 'stranger']);
+        UserRole::create(['name' => UserRole::SUPER_ADMIN_ROLE]);
+        UserRole::create(['name' => UserRole::ADMIN_ROLE]);
+        UserRole::create(['name' => UserRole::EMPLOYEE_ROLE]);
+        UserRole::create(['name' => UserRole::STRANGER_ROLE]);
     }
 }

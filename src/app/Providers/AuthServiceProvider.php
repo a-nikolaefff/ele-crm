@@ -3,12 +3,14 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Policies\UserPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Password;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -19,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies
         = [
-            // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+            User::class => UserPolicy::class,
         ];
 
     /**
@@ -29,26 +31,25 @@ class AuthServiceProvider extends ServiceProvider
     {
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
             return (new MailMessage)
-                ->subject('Подтверждение email адреса')
-                ->greeting('Здравствуйте')
-                ->line(
-                    'Нажмите на кнопку ниже, чтобы подтвердить регистрацию в EleCRM'
-                )
-                ->action('Подтвердить email', $url)
-                ->salutation('С уважением, EleCRM');
+                ->subject(__('email.verification.subject'))
+                ->greeting(__('email.greeting'))
+                ->line(__('email.verification.description'))
+                ->action(__('email.verification.action'), $url)
+                ->salutation(__('email.salutation'));
         });
 
         ResetPassword::toMailUsing(function (object $notifiable, $url) {
             return (new MailMessage)
-                ->subject('Сброс пароля')
-                ->greeting('Здравствуйте')
-                ->line(
-                    'Вы получили это письмо, потому что мы получили запрос на сброс пароля для вашей учетной записи.'
+                ->subject(__('email.reset.subject'))
+                ->greeting(__('email.greeting'))
+                ->line(__('email.reset.description'))
+                ->action(
+                    __('email.reset.action'),
+                    url('password/reset', $url) . '?email=' . $notifiable->email
                 )
-                ->action('Сбросить пароль', url('password/reset', $url) . '?email=' . $notifiable->email)
                 ->line(
                     Lang::get(
-                        'Срок действия этой ссылки для сброса пароля истекает через :count минут.',
+                        __('email.reset.warning'),
                         [
                             'count' => config(
                                 'auth.passwords.' . config(
@@ -58,7 +59,7 @@ class AuthServiceProvider extends ServiceProvider
                         ]
                     )
                 )
-                ->salutation('С уважением, EleCRM');
+                ->salutation(__('email.salutation'));
         });
     }
 }

@@ -14,13 +14,15 @@
             @endforeach
         </div>
         <div class="sidebar__admin-block">
-            @foreach($menu['adminBlock'] as $adminMenuItem)
-                <a href="{{ route($adminMenuItem['route']) }}"
-                   class="sidebar__link @if($adminMenuItem['active']) sidebar__link_active @endif">
-                    <i class="sidebar__icon bx {{ $adminMenuItem['boxIconClass'] }}"></i>
-                    <span class="nav_name">{{ $adminMenuItem['title'] }}</span>
-                </a>
-            @endforeach
+            @can('viewAny', App\Models\User::class)
+                @foreach($menu['adminBlock'] as $adminMenuItem)
+                    <a href="{{ route($adminMenuItem['route']) }}"
+                       class="sidebar__link @if($adminMenuItem['active']) sidebar__link_active @endif">
+                        <i class="sidebar__icon bx {{ $adminMenuItem['boxIconClass'] }}"></i>
+                        <span class="nav_name">{{ $adminMenuItem['title'] }}</span>
+                    </a>
+                @endforeach
+            @endcan
         </div>
     </nav>
 </div>

@@ -3,9 +3,9 @@
 return [
     'userBlock' => [
         [
-            'title' => 'Главная',
-            'route' => 'home',
-            'boxIconClass' => 'bx-home-alt',
+            'title' => 'Монитор',
+            'route' => 'dashboard',
+            'boxIconClass' => 'bxs-dashboard',
         ],
         [
             'title' => 'Заявки',

@@ -8,9 +8,7 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                        <x-alert type="success" :message="session('status')"/>
                     @endif
                     <table class="table">
                         <tbody>
@@ -19,16 +17,27 @@
                             <td>{{ Auth::user()->name }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Email</th>
-                            <td>{{ Auth::user()->email }}</td>
-                        </tr>
-                        <tr>
                             <th scope="row">Роль</th>
                             <td>{{ Auth::user()->role->name }}</td>
                         </tr>
                         <tr>
+                            <th scope="row">Email</th>
+                            <td>{{ Auth::user()->email }}</td>
+                        </tr>
+
+                        <tr>
                             <th scope="row">Подтверждение email</th>
-                            <td>{{ Auth::user()->email_verified_at }}</td>
+                            <td>
+                                @if(Auth::user()->email_verified_at)
+                                    Да
+                                @else
+                                    Нет
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Регистрация</th>
+                            <td>{{ Auth::user()->created_at }}</td>
                         </tr>
                         </tbody>
                     </table>

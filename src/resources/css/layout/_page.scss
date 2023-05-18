@@ -1,0 +1,26 @@
+@use '../abstracts/variables' as *;
+
+.page {
+    position: absolute;
+    top: calc($header-height);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0 1rem;
+    font-family: $default-font;
+    font-size: $default-font-size;
+    transition: 0.5s;
+    @media (min-width: 768px) {
+        top: calc($header-height + 1rem);
+        padding-left: calc($nav-width + 2rem);
+    }
+
+    &_menu-displayed {
+        padding-left: calc($nav-width + 1rem);
+        @media (min-width: 768px) {
+            padding-left: calc($nav-width + 188px);
+        }
+    }
+}
+
+

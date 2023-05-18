@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    Список заказчиков
+    <h1 class="h2">Заказчики</h1>
 @endsection

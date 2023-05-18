@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\UserRole;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,9 @@ class CheckNotStrangerRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && $request->user()->role->name === 'stranger') {
-            return redirect('/login');
+        if ($request->user() && $request->user()->isStranger()) {
+            return redirect('/home');
         }
-
         return $next($request);
     }
 }

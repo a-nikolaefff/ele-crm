@@ -1,5 +1,16 @@
+@use '../abstracts/variables' as *;
+
 .logo-icon {
     background: url("/resources/images/icons/logo.png") no-repeat center center / contain;
+}
+
+.edit-icon {
+    font-size: 1.8rem;
+    color: $icon-color;
+    transition: color 0.3s ease 0s;
+    &:hover {
+        color: $primary-color;
+    }
 }
 
 
