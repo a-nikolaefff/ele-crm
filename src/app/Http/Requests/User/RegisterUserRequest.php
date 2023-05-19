@@ -16,6 +16,7 @@ class RegisterUserRequest extends FormRequest
             'unique:users'
         ],
         'password' => ['required', 'string', 'min:8', 'confirmed'],
+        'g-recaptcha-response' => 'required|captcha'
     ];
 
 

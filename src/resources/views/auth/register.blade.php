@@ -10,7 +10,6 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
-
                             <div class="row mb-3">
                                 <label for="name" class="col-md-4 col-form-label text-md-end">Имя</label>
 
@@ -70,6 +69,24 @@
                                            name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
+
+                            <div class="row mb-3">
+
+                                <div class="col-md-6 offset-md-2 offset-lg-4">
+                                    {!! NoCaptcha::renderJs() !!}
+                                    {!! NoCaptcha::display() !!}
+
+                                    @error('g-recaptcha-response')
+                                    <div>
+                                        <span class="invalid-feedback d-inline" role="alert">
+                                        <strong> {{ $message }}</strong>
+                                    </span>
+                                    </div>
+
+                                    @enderror
+                                </div>
+                            </div>
+
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">

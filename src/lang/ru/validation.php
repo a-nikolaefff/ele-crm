@@ -163,8 +163,9 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'g-recaptcha-response' => [
+            'required' => 'Пожалуйста, подтвердите, что вы не робот.',
+            'captcha' => 'Ошибка! Повторите попытку позже или обратитесь к администратору сайта.',
         ],
     ],
 
