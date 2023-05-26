@@ -19,7 +19,7 @@
 <div class="page" id="page">
     <x-header></x-header>
     <x-sidebar></x-sidebar>
-    <main class="content py-4">
+    <main class="height-100 content py-4">
         <div class="container">
             @yield('content')
         </div>

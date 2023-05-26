@@ -2,19 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\UserRoleType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class UserRole extends Model
 {
-    public const SUPER_ADMIN_ROLE = 'главный администратор';
-    public const ADMIN_ROLE = 'администратор';
-    public const EMPLOYEE_ROLE = 'сотрудник';
-    public const STRANGER_ROLE = 'неизвестный';
-
-    use HasFactory;
-
     protected $table = 'user_roles';
 
     protected $fillable = ['name'];
@@ -24,20 +18,29 @@ class UserRole extends Model
         return $this->hasMany(User::class, 'role_id');
     }
 
-    public static function getAllExceptSuperAdmin()
+    /**
+     * Get a role by role type
+     *
+     * @param Builder      $query
+     * @param UserRoleType $roleType The role type
+     *
+     * @return void
+     */
+    public function scopeGetRole(Builder $query, UserRoleType $roleType): void
     {
-        return self::where('name', '!=', UserRole::SUPER_ADMIN_ROLE)
-            ->get();
+        $query->where('name', $roleType->value)->first();
     }
 
-    public static function getSuperAdmin()
+    /**
+     * Get all roles except role given by type
+     *
+     * @param Builder $query
+     * @param UserRoleType $roleType The role type
+     *
+     * @return void
+     */
+    public function scopeAllRolesExcept(Builder $query, UserRoleType $roleType): void
     {
-        return self::where('name', '=', UserRole::SUPER_ADMIN_ROLE)
-            ->get();
-    }
-
-    public static function isSuperAdminRoleId(int $id): bool
-    {
-        return UserRole::find($id)->name === UserRole::SUPER_ADMIN_ROLE;
+        $query->where('name', '!=', $roleType->value);
     }
 }

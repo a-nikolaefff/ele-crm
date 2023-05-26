@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserRoleType;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,7 +20,7 @@ class UserSeeder extends Seeder
             'name' => config('admin.name'),
             'email' => config('admin.email'),
             'password' => Hash::make(config('admin.password')),
-            'role_id' => UserRole::where('name', UserRole::SUPER_ADMIN_ROLE)->value('id'),
+            'role_id' => UserRole::getRole(UserRoleType::SuperAdmin)->value('id'),
             'email_verified_at' => date('Y-m-d H:i:s')
         ]);
     }

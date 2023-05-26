@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoleType;
+use App\Filters\UserFilter;
+use App\Http\Requests\User\IndexUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use App\Models\UserRole;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -23,70 +24,52 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of users
      */
-    public function index(Request $request)
+    public function index(IndexUserRequest $request)
     {
-        $sortableColumns = [
-            'name' => 'name',
-            'role' => 'role_id',
-            'email' => 'email',
-            'email-verification' => 'email_verified_at',
-            'registration' => 'created_at',
-        ];
-        $defaultSortKey = 'name';
-        $sortKey = $request->query('sort', $defaultSortKey);
-        $sortColumn = Arr::get(
-            $sortableColumns,
-            $sortKey,
-            $sortableColumns[$defaultSortKey]
+        $queryParams = $request->validated();
+        $filter = app()->make(
+            UserFilter::class,
+            ['queryParams' => $queryParams]
         );
-
-        $sortDirection = $request->query('direction', 'asc');
-
-        $users = User::orderBy($sortColumn, $sortDirection)->paginate(10)
-            ->withQueryString();;
-        return view('users.index', compact('users'));
+        $users = User::with('role')
+            ->filter($filter)
+            ->sort($queryParams)
+            ->paginate(6)
+            ->withQueryString();
+        $roles = UserRole::all();
+        return view('users.index', compact('users', 'roles'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the user
      */
     public function edit(User $user)
     {
-        $isSuperAdmin = $user->isSuperAdmin();
-        $roles = $isSuperAdmin ? UserRole::getSuperAdmin()
-            : UserRole::getAllExceptSuperAdmin();
-        return view('users.edit', compact(['user', 'roles', 'isSuperAdmin']));
+        $roles = UserRole::allRolesExcept(UserRoleType::SuperAdmin)->get();
+        if (Auth::user()->hasRole(UserRoleType::Admin)) {
+            $adminRoleName = UserRoleType::Admin->value;
+            $roles = $roles->reject(function ($role) use ($adminRoleName) {
+                return $role->name === $adminRoleName;
+            });
+        }
+        return view('users.edit', compact(['user', 'roles']));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the user in storage.
      */
     public function update(UpdateUserRequest $request, User $user)
     {
         $data = $request->validated();
-
-        // Protection against setting the user to the role of super admin
-        if (isset($data['role_id'])
-            && UserRole::isSuperAdminRoleId($data['role_id'])
-        ) {
-            return redirect()->back()->withErrors(
-                ['role_id' => __('users.super-admin-role')]
-            );
-        }
-
-        // Protection against deprivation of the role of super admin
-        if ($user->isSuperAdmin()) {
-            unset($data['role_id']);
-        }
-
+        $this->authorize('update', [$user, $data['role_id']]);
         $user->fill($data)->save();
         return redirect()->route('users.index');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the user from storage.
      */
     public function destroy(User $user)
     {

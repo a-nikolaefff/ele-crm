@@ -8,6 +8,9 @@
 @use 'bootstrap/scss/bootstrap' as *;
 @use "boxicons/css/boxicons.min.css" as *;
 
+// Connecting baseline styles
+@use "base/baseline" as *;
+
 // Connecting layout
 @use "layout/header" as *;
 @use "layout/sidebar" as *;
@@ -15,23 +18,14 @@
 
 // Connecting components
 @use "components/icons" as *;
-@use "components/sortable-table" as *;
+@use "components/entity-table" as *;
+@use "components/search-form" as *;
+@use "components/g-recaptcha" as *;
 
-// Disabling link decoration
-a {
-    text-decoration: none;
+.height-100 {
+    height: 100vh;
 }
 
-// Responsive captcha
-.g-recaptcha {
-    @media (max-width: 420px) {
-        transform:scale(0.77);
-        transform-origin:0 0;
-    }
-    @media (max-width: 350px) {
-        transform:scale(0.7);
-    }
-}
 
 
 

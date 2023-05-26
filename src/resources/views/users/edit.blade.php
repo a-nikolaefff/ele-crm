@@ -48,7 +48,7 @@
                             <label for="role" class="col-md-4 col-form-label text-md-end">Роль</label>
                             <div class="col-md-6">
                                 <select class="form-select @error('role_id') is-invalid @enderror" name="role_id"
-                                        id="role" @if($isSuperAdmin) disabled @endif>
+                                        id="role">
                                     @foreach($roles as $role)
                                         <option
                                             value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
@@ -67,7 +67,7 @@
                         <div class="row mb-3 align-middle">
                             <div class="col-10 col-md-5 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Изменить данные
+                                    Подтвердить изменения
                                 </button>
                             </div>
                         </div>

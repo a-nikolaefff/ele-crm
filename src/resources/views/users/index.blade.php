@@ -2,8 +2,29 @@
 
 @section('content')
     <h1 class="h2">Пользователи</h1>
+
+    <x-error-messages></x-error-messages>
+
+    <div class="row mb-3">
+        <div class="col-12 col-sm-9 col-lg-6">
+            <x-search-form
+                :value="request()->search"
+                placeholder="Поиск по имени или email"
+            ></x-search-form>
+        </div>
+    </div>
+
+    <x-option-selector
+        :url="route('users.index')"
+        parameter-name="role_id"
+        :options="$roles"
+        passing-property='id'
+        displaying-property='name'
+        all-options-selector='Любая роль'
+    ></x-option-selector>
+
     <div class="table-responsive">
-        <table class="table text-center align-middle sortable-table" id="sortableTable">
+        <table class="table text-center table-fixed align-middle entity-table" id="sortableTable">
 
             <thead>
             <tr class="align-middle">
@@ -16,7 +37,7 @@
                 </th>
                 <th class="col-1" scope="col">
                     <a class="d-block"
-                       href="{{ route('users.index', ['sort' => 'role', 'direction' => 'asc']) }}"
+                       href="{{ route('users.index', ['sort' => 'role_id', 'direction' => 'asc']) }}"
                     >
                         Роль
                     </a>
@@ -30,14 +51,14 @@
                 </th>
                 <th class="col-1" scope="col">
                     <a class="d-block"
-                       href="{{ route('users.index', ['sort' => 'email-verification', 'direction' => 'asc']) }}"
+                       href="{{ route('users.index', ['sort' => 'email_verified_at', 'direction' => 'asc']) }}"
                     >
                         Подтверждение email
                     </a>
                 </th>
                 <th class="col-2" scope="col">
                     <a class="d-block"
-                       href="{{ route('users.index', ['sort' => 'registration', 'direction' => 'asc']) }}"
+                       href="{{ route('users.index', ['sort' => 'created_at', 'direction' => 'asc']) }}"
                     >
                         Регистрация
                     </a>
@@ -70,10 +91,11 @@
             </tbody>
 
         </table>
+        <div>
+            {{ $users->links() }}
+        </div>
     </div>
-    <div>
-        {{ $users->links() }}
-    </div>
+
 @endsection
 
 

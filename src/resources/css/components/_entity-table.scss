@@ -1,0 +1,12 @@
+@use '../abstracts/variables' as *;
+
+.entity-table {
+    th a {
+        color: $tableHeaderColor;
+    };
+
+    td {
+        height: 65px;
+    };
+}
+

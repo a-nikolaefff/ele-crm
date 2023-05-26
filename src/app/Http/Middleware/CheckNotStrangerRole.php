@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserRoleType;
 use App\Models\UserRole;
 use Closure;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class CheckNotStrangerRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && $request->user()->isStranger()) {
+        if ($request->user() && $request->user()->hasRole(UserRoleType::Stranger)) {
             return redirect('/home');
         }
         return $next($request);

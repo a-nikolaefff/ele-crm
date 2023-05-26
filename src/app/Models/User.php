@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use http\Exception\InvalidArgumentException;
+use App\Enums\UserRoleType;
+use App\Models\Traits\Filterable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Filterable;
 
     protected $table = 'users';
 
@@ -56,25 +57,48 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(UserRole::class, 'role_id');
     }
 
-    public function isAdminOrSuperAdmin(): bool
-    {
-        $role = $this->role->name;
-        return $role === UserRole::ADMIN_ROLE
-            || $role === UserRole::SUPER_ADMIN_ROLE;
+    public function scopeSort(
+        Builder $query,
+        array $queryParams,
+    ): void {
+        $sortColumn = $queryParams['sort'] ?? '';
+        $sortDirection = $queryParams['direction'] ?? 'asc';
+        $query->when(
+            !empty($sortColumn),
+            function ($query) use ($sortColumn, $sortDirection) {
+                return $query->orderBy($sortColumn, $sortDirection);
+            }
+        );
     }
 
-    public function isSuperAdmin(): bool
+    /**
+     * Check if the user has this role
+     *
+     * @param UserRoleType $roleType The role to check if the user has it
+     *
+     * @return bool
+     */
+    public function hasRole(UserRoleType $roleType): bool
     {
-        return $this->role->name === UserRole::SUPER_ADMIN_ROLE;
+        $userRoleName = $this->role->name;
+        return $userRoleName === $roleType->value;
     }
 
-    public function isAdmin(): bool
+    /**
+     * Check if the user has any of the roles
+     *
+     * @param UserRoleType ...$roleTypes The roles to check if the user has any of them
+     *
+     * @return bool
+     */
+    public function hasAnyRole(UserRoleType ...$roleTypes): bool
     {
-        return $this->role->name === UserRole::ADMIN_ROLE;
-    }
-
-    public function isStranger(): bool
-    {
-        return $this->role->name === UserRole::STRANGER_ROLE;
+        $userRoleName = $this->role->name;
+        foreach ($roleTypes as $roleType) {
+            if ($userRoleName === $roleType->value) {
+                return true;
+            }
+        }
+        return false;
     }
 }

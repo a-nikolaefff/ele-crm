@@ -2,14 +2,10 @@
 
 namespace App\Http\Requests\User;
 
-use App\Enums\UserRoleType;
-use App\Models\User;
-use App\Models\UserRole;
-use App\Rules\User\DisallowSuperAdminRole;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateUserRequest extends FormRequest
+class IndexUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +22,19 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $sortableColumns = [
+            'name',
+            'role_id',
+            'email',
+            'email_verified_at',
+            'created_at',
+        ];
+
         return [
-            'name' => ['required', 'string', 'max:50'],
-            'role_id' => [
-                'nullable',
-                'integer',
-                'exists:user_roles,id',
-            ]
+            'role_id' => ['nullable', 'integer', 'exists:user_roles,id'],
+            'search' => ['nullable', 'string'],
+            'sort' => ['nullable', Rule::in($sortableColumns)],
+            'direction' => ['nullable', Rule::in(['asc', 'desc'])],
         ];
     }
 }
