@@ -11,6 +11,17 @@
                 </a>
             </div>
         @else
+            @can('viewAny', App\Models\User::class)
+                @if($isPageWithAdminPanel)
+                    <a href="{{ route('dashboard') }}">
+                        <button type="button" class="btn btn-primary btn-sm me-3">Панель пользователя</button>
+                    </a>
+                @else
+                    <a href="{{ route('users.index') }}">
+                        <button type="button" class="btn btn-success btn-sm me-3">Панель администратора</button>
+                    </a>
+                @endif
+            @endcan
             <div class="dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center" href="#"
                    role="button"

@@ -9,48 +9,13 @@ use Illuminate\View\Component;
 
 class Sidebar extends Component
 {
-    const CONTENT
-        = [
-            'userBlock' => [
-                [
-                    'title' => 'Монитор',
-                    'route' => 'dashboard',
-                    'boxIconClass' => 'bxs-dashboard',
-                ],
-                [
-                    'title' => 'Заявки',
-                    'route' => 'requests.index',
-                    'boxIconClass' => 'bx-file',
-                ],
-                [
-                    'title' => 'Заказчики',
-                    'route' => 'customers.index',
-                    'boxIconClass' => 'bxs-business',
-                ],
-            ],
-            'adminBlock' => [
-                [
-                    'title' => 'Пользователи',
-                    'route' => 'users.index',
-                    'boxIconClass' => 'bx-user',
-                ],
-            ],
-        ];
-
-    public Collection $menu;
-
     /**
      * Create a new component instance.
      */
-    public function __construct()
-    {
-        $this->menu = collect(self::CONTENT)->map(function ($block) {
-            foreach ($block as &$item) {
-                $item['active'] = request()->routeIs($item['route']);
-            }
-            return $block;
-        });
-    }
+    public function __construct(
+        public bool $isAdminSidebar,
+        public array $menu
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

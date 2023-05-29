@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\NotifyUserAboutAccountChange;
 use App\Enums\UserRoleType;
 use App\Filters\UserFilter;
 use App\Http\Requests\User\IndexUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use App\Models\UserRole;
+use App\Notifications\UserAccountChanged;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -65,6 +67,7 @@ class UserController extends Controller
         $data = $request->validated();
         $this->authorize('update', [$user, $data['role_id']]);
         $user->fill($data)->save();
+        $user->notify(new UserAccountChanged());
         return redirect()->route('users.index');
     }
 

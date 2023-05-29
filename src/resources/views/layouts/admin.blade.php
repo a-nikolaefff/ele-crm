@@ -18,25 +18,15 @@
 <body class="bg-light">
 <div class="page" id="page">
     <x-header
-        :is-page-with-admin-panel="false"
+        :is-page-with-admin-panel="true"
     ></x-header>
     <x-sidebar
-        :is-admin-sidebar="false"
+        :is-admin-sidebar="true"
         :menu="[
                 [
-                    'title' => 'Монитор',
-                    'route' => 'dashboard',
-                    'boxIconClass' => 'bxs-dashboard',
-                ],
-                [
-                    'title' => 'Заявки',
-                    'route' => 'requests.index',
-                    'boxIconClass' => 'bx-file',
-                ],
-                [
-                    'title' => 'Заказчики',
-                    'route' => 'customers.index',
-                    'boxIconClass' => 'bxs-business',
+                    'title' => 'Пользователи',
+                    'route' => 'users.index',
+                    'boxIconClass' => 'bx-user',
                 ],
             ]"
     ></x-sidebar>
