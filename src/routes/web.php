@@ -44,6 +44,8 @@ Route::resource(
 
 Route::resource('customers', \App\Http\Controllers\CustomerController::class);
 
+Route::resource('customer-types', \App\Http\Controllers\CustomerTypeController::class);
+
 Route::resource('users', \App\Http\Controllers\UserController::class);
 
 

@@ -40,7 +40,7 @@
                 ],
             ]"
     ></x-sidebar>
-    <main class="height-100 content py-4">
+    <main class="page__content content py-4">
         <div class="container">
             @yield('content')
         </div>

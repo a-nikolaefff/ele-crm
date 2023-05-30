@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserRoleType;
 use App\Models\Traits\Filterable;
+use App\Models\Traits\Sortable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, Filterable;
+    use HasApiTokens, HasFactory, Notifiable, Filterable, Sortable;
 
     protected $table = 'users';
 
@@ -55,20 +56,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function role(): BelongsTo
     {
         return $this->belongsTo(UserRole::class, 'role_id');
-    }
-
-    public function scopeSort(
-        Builder $query,
-        array $queryParams,
-    ): void {
-        $sortColumn = $queryParams['sort'] ?? '';
-        $sortDirection = $queryParams['direction'] ?? 'asc';
-        $query->when(
-            !empty($sortColumn),
-            function ($query) use ($sortColumn, $sortDirection) {
-                return $query->orderBy($sortColumn, $sortDirection);
-            }
-        );
     }
 
     /**

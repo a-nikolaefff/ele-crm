@@ -12,14 +12,18 @@
     transition: 0.5s;
     @media (min-width: 768px) {
         top: calc($header-height + 1rem);
-        padding-left: calc($nav-width + 2rem);
+        padding-left: calc($sidebar-width + 2rem);
     }
 
     &_menu-displayed {
-        padding-left: calc($nav-width + 1rem);
+        padding-left: calc($sidebar-width + 1rem);
         @media (min-width: 768px) {
-            padding-left: calc($nav-width + 188px);
+            padding-left: calc($sidebar-width + $sidebar-extension-width + $sidebar-page-gap-width);
         }
+    }
+
+    &__content {
+        height: 100vh;
     }
 }
 

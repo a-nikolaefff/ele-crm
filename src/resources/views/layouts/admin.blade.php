@@ -28,9 +28,14 @@
                     'route' => 'users.index',
                     'boxIconClass' => 'bx-user',
                 ],
+                                [
+                    'title' => 'Группы заказчиков',
+                    'route' => 'customer-types.index',
+                    'boxIconClass' => 'bx-cabinet',
+                ],
             ]"
     ></x-sidebar>
-    <main class="height-100 content py-4">
+    <main class="page__content content py-4">
         <div class="container">
             @yield('content')
         </div>

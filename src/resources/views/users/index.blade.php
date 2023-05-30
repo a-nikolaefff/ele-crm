@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="h2">Пользователи</h1>
+    <x-page-title title="Пользователи"></x-page-title>
 
     <x-error-messages></x-error-messages>
 

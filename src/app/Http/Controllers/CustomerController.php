@@ -2,27 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\CustomerFilter;
+use App\Http\Requests\Customer\IndexCustomerRequest;
+use App\Http\Requests\Customer\StoreCustomerRequest;
+use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer;
-use Illuminate\Http\Request;
+use App\Models\CustomerType;
 
 class CustomerController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified', 'authorized']);
-    }
-
-    /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexCustomerRequest $request)
     {
-        return view('customers');
+        $queryParams = $request->validated();
+        $filter = app()->make(
+            CustomerFilter::class,
+            ['queryParams' => $queryParams]
+        );
+        $customers = Customer::with('type')
+            ->filter($filter)
+            ->sort($queryParams)
+            ->paginate(6)
+            ->withQueryString();
+        $types = CustomerType::all();
+        return view('customers.index', compact('customers', 'types'));
     }
 
     /**
@@ -30,15 +35,18 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        $types = CustomerType::all();
+        return view('customers.create', compact('types'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCustomerRequest $request)
     {
-        //
+        $data = $request->validated();
+        Customer::create($data);
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -54,15 +62,18 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        $types = CustomerType::all();
+        return view('customers.edit', compact('customer', 'types'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customer $customer)
+    public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        //
+        $data = $request->validated();
+        $customer->fill($data)->save();
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -70,6 +81,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+        return redirect()->route('customers.index');
     }
 }

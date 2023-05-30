@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('equipment_requests', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customers');
-            $table->string('object');
+            $table->string('name');
+            $table->string('full_name');
+            $table->unsignedBigInteger('customer_type_id')->nullable();
+
+            $table->foreign('customer_type_id')->references('id')
+                ->on('customer_types')->onDelete('set null');
+
             $table->timestamps();
         });
     }
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('equipment_requests');
+        Schema::dropIfExists('customers');
     }
 };
