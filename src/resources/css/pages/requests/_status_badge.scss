@@ -1,0 +1,25 @@
+.statusBadge {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+
+    &_new {
+        background-color: #b8c22d;
+    }
+
+    &_awaiting-response {
+        background-color: #F57C00;
+    }
+
+    &_in-progress {
+        background-color: #BF360C;
+    }
+
+    &_completed {
+        background-color: #1565C0;
+    }
+
+    &_cancelled {
+        background-color: #757575
+    }
+}

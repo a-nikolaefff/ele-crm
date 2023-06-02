@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\NotifyUserAboutAccountChange;
-use App\Enums\UserRoleType;
+use App\Enums\UserRoleEnum;
 use App\Filters\UserFilter;
 use App\Http\Requests\User\IndexUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
@@ -21,12 +20,11 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
         $this->authorizeResource(User::class, 'user');
     }
 
     /**
-     * Display a listing of users
+     * Display a listing of the users
      */
     public function index(IndexUserRequest $request)
     {
@@ -49,9 +47,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = UserRole::allRolesExcept(UserRoleType::SuperAdmin)->get();
-        if (Auth::user()->hasRole(UserRoleType::Admin)) {
-            $adminRoleName = UserRoleType::Admin->value;
+        $roles = UserRole::allRolesExcept(UserRoleEnum::SuperAdmin)->get();
+        if (Auth::user()->hasRole(UserRoleEnum::Admin)) {
+            $adminRoleName = UserRoleEnum::Admin->value;
             $roles = $roles->reject(function ($role) use ($adminRoleName) {
                 return $role->name === $adminRoleName;
             });

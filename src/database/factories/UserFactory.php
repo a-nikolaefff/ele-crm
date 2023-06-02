@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Enums\UserRoleType;
+use App\Enums\UserRoleEnum;
 use App\Models\UserRole;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -20,7 +19,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $allowableRoleId = UserRole::allRolesExcept(UserRoleType::SuperAdmin)
+        $allowableRoleId = UserRole::allRolesExcept(UserRoleEnum::SuperAdmin)
             ->pluck('id');
 
         return [

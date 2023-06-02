@@ -13,7 +13,7 @@
         @else
             @can('viewAny', App\Models\User::class)
                 @if($isPageWithAdminPanel)
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('requests.index') }}">
                         <button type="button" class="btn btn-primary btn-sm me-3">Панель пользователя</button>
                     </a>
                 @else

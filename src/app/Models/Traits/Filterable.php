@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Builder;
 trait Filterable
 {
     /**
+     * Filter data according to the passed filter
+     *
      * @param Builder $builder
      * @param FilterInterface $filter
      *

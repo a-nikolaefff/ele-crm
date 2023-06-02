@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\CustomerGroup;
+namespace App\Http\Requests\CustomerType;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -24,6 +24,7 @@ class IndexCustomerTypeRequest extends FormRequest
     {
         $sortableColumns = [
             'name',
+            'is_base_type',
             'created_at',
         ];
 

@@ -5,7 +5,7 @@
     <div class="mb-3">
         <a href="{{ route('customers.create') }}"
         >
-            <button type="button" class="btn btn-success">Добавить компанию</button>
+            <button type="button" class="btn btn-success">Добавить заказчика</button>
         </a>
     </div>
 
@@ -24,7 +24,7 @@
         :options="$types"
         passing-property='id'
         displaying-property='name'
-        all-options-selector='Любой тип'
+        all-options-selector='любой тип'
     ></x-option-selector>
 
     <div class="table-responsive">

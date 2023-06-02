@@ -5,7 +5,7 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use App\Models\CustomerType;
 use App\Models\User;
-use App\Policies\CustomerGroupPolicy;
+use App\Policies\CustomerTypePolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -24,7 +24,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies
         = [
             User::class => UserPolicy::class,
-            CustomerType::class => CustomerGroupPolicy::class,
+            CustomerType::class => CustomerTypePolicy::class,
         ];
 
     /**

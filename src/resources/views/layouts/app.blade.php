@@ -11,7 +11,7 @@
 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.02.min.css">
     @vite(['resources/js/app.js', 'resources/css/app.scss'])
 </head>
 
@@ -23,11 +23,6 @@
     <x-sidebar
         :is-admin-sidebar="false"
         :menu="[
-                [
-                    'title' => 'Монитор',
-                    'route' => 'dashboard',
-                    'boxIconClass' => 'bxs-dashboard',
-                ],
                 [
                     'title' => 'Заявки',
                     'route' => 'requests.index',

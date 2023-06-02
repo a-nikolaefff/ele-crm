@@ -70,15 +70,19 @@
             <tbody>
             @foreach($users as $user)
                 <tr>
-                    <td>{{ $user->name }}</td>
+                    <td class="text-truncate max-w-250">
+                        {{ $user->name }}
+                    </td>
                     <td>{{ $user->role->name }}</td>
-                    <td>{{ $user->email }}</td>
+                    <td class="text-truncate max-w-250">
+                        {{ $user->email }}
+                    </td>
                     <td> @if($user->email_verified_at)
                             Да
                         @else
                             Нет
                         @endif</td>
-                    <td>{{ $user->created_at->format('Y-m-d') }}</td>
+                    <td>{{ $user->created_at->format('d.m.Y') }}</td>
                     <td class="text-start">
                         @can('update', $user)
                             <a href="{{ route('users.edit', $user->id) }}">

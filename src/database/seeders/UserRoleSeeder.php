@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\UserRoleType;
+use App\Enums\UserRoleEnum;
 use App\Models\UserRole;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,7 +15,7 @@ class UserRoleSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (UserRoleType::cases() as $roleType) {
+        foreach (UserRoleEnum::cases() as $roleType) {
             UserRole::create(['name' => $roleType->value]);
         }
     }

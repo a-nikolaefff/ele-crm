@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\UserRoleType;
+use App\Enums\UserRoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\RegisterUserRequest;
 use App\Models\UserRole;
@@ -69,7 +69,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_id' => UserRole::getRole(UserRoleType::Stranger)->value('id')
+            'role_id' => UserRole::getRole(UserRoleEnum::Stranger)->value('id')
         ]);
     }
 }

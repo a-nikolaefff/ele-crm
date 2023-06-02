@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\UserRoleType;
+use App\Enums\UserRoleEnum;
 use App\Models\Traits\Filterable;
 use App\Models\Traits\Sortable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -17,6 +17,11 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, Filterable, Sortable;
 
+    /**
+     * The name of the table in the database
+     *
+     * @var string
+     */
     protected $table = 'users';
 
     /**
@@ -61,11 +66,11 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Check if the user has this role
      *
-     * @param UserRoleType $roleType The role to check if the user has it
+     * @param UserRoleEnum $roleType The role to check if the user has it
      *
      * @return bool
      */
-    public function hasRole(UserRoleType $roleType): bool
+    public function hasRole(UserRoleEnum $roleType): bool
     {
         $userRoleName = $this->role->name;
         return $userRoleName === $roleType->value;
@@ -74,11 +79,11 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Check if the user has any of the roles
      *
-     * @param UserRoleType ...$roleTypes The roles to check if the user has any of them
+     * @param UserRoleEnum ...$roleTypes The roles to check if the user has any of them
      *
      * @return bool
      */
-    public function hasAnyRole(UserRoleType ...$roleTypes): bool
+    public function hasAnyRole(UserRoleEnum ...$roleTypes): bool
     {
         $userRoleName = $this->role->name;
         foreach ($roleTypes as $roleType) {

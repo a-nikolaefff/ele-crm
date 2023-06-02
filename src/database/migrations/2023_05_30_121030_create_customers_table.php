@@ -16,11 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('full_name');
             $table->unsignedBigInteger('customer_type_id')->nullable();
+            $table->timestamps();
 
             $table->foreign('customer_type_id')->references('id')
-                ->on('customer_types')->onDelete('set null');
-
-            $table->timestamps();
+                ->on('customer_types')->nullOnDelete();
         });
     }
 

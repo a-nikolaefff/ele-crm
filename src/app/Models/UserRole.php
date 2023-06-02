@@ -2,15 +2,25 @@
 
 namespace App\Models;
 
-use App\Enums\UserRoleType;
+use App\Enums\UserRoleEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class UserRole extends Model
 {
+    /**
+     * The name of the table in the database
+     *
+     * @var string
+     */
     protected $table = 'user_roles';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = ['name'];
 
     public function users(): HasMany
@@ -22,11 +32,11 @@ class UserRole extends Model
      * Get a role by role type
      *
      * @param Builder      $query
-     * @param UserRoleType $roleType The role type
+     * @param UserRoleEnum $roleType The role type
      *
      * @return void
      */
-    public function scopeGetRole(Builder $query, UserRoleType $roleType): void
+    public function scopeGetRole(Builder $query, UserRoleEnum $roleType): void
     {
         $query->where('name', $roleType->value)->first();
     }
@@ -34,13 +44,15 @@ class UserRole extends Model
     /**
      * Get all roles except role given by type
      *
-     * @param Builder $query
-     * @param UserRoleType $roleType The role type
+     * @param Builder      $query
+     * @param UserRoleEnum $roleType The role type
      *
      * @return void
      */
-    public function scopeAllRolesExcept(Builder $query, UserRoleType $roleType): void
-    {
+    public function scopeAllRolesExcept(
+        Builder $query,
+        UserRoleEnum $roleType
+    ): void {
         $query->where('name', '!=', $roleType->value);
     }
 }

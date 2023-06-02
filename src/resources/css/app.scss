@@ -8,6 +8,9 @@
 @use 'bootstrap/scss/bootstrap' as *;
 @use "boxicons/css/boxicons.min.css" as *;
 
+// Connecting utilities
+@use 'utils/max-width-util' as *;
+
 // Connecting baseline styles
 @use "base/baseline" as *;
 
@@ -16,11 +19,19 @@
 @use "layout/sidebar" as *;
 @use "layout/page" as *;
 
-// Connecting components
+// Connecting common components
 @use "components/icons" as *;
 @use "components/entity-table" as *;
 @use "components/search-form" as *;
 @use "components/g-recaptcha" as *;
+@use "components/autocomplete" as *;
+
+// Connecting pages components
+@use "pages/requests/status_badge" as *;
+@use "pages/requests/datepicker" as *;
+
+
+
 
 
 

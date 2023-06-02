@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Enums\UserRoleType;
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserRole;
 
@@ -10,7 +10,7 @@ class UserPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->hasAnyRole(UserRoleType::SuperAdmin, UserRoleType::Admin);
+        return $user->hasAnyRole(UserRoleEnum::SuperAdmin, UserRoleEnum::Admin);
     }
 
     public function update(
@@ -18,12 +18,12 @@ class UserPolicy
         User $targetUser,
         int $newTargetUserRoleId = null
     ): bool {
-        if ($user->hasRole(UserRoleType::SuperAdmin)) {
-            if ($targetUser->hasRole(UserRoleType::SuperAdmin)) {
+        if ($user->hasRole(UserRoleEnum::SuperAdmin)) {
+            if ($targetUser->hasRole(UserRoleEnum::SuperAdmin)) {
                 return false;
             }
             if (isset($newTargetUserRoleId)) {
-                $superAdminRoleId = UserRole::getRole(UserRoleType::SuperAdmin)
+                $superAdminRoleId = UserRole::getRole(UserRoleEnum::SuperAdmin)
                     ->get()->first()->id;
                 return $newTargetUserRoleId !== $superAdminRoleId;
             } else {
@@ -31,10 +31,10 @@ class UserPolicy
             }
         }
 
-        if ($user->hasRole(UserRoleType::Admin)) {
+        if ($user->hasRole(UserRoleEnum::Admin)) {
             if ($targetUser->hasAnyRole(
-                UserRoleType::SuperAdmin,
-                UserRoleType::Admin
+                UserRoleEnum::SuperAdmin,
+                UserRoleEnum::Admin
             )
             ) {
                 return false;
@@ -42,9 +42,9 @@ class UserPolicy
 
             if (isset($newTargetUserRoleId)) {
                 $AllAdminRoleId = [
-                    UserRole::getRole(UserRoleType::SuperAdmin)
+                    UserRole::getRole(UserRoleEnum::SuperAdmin)
                         ->get()->first()->id,
-                    UserRole::getRole(UserRoleType::Admin)
+                    UserRole::getRole(UserRoleEnum::Admin)
                         ->get()->first()->id,
                 ];
                 return !in_array(
@@ -61,8 +61,8 @@ class UserPolicy
 
     public function delete(User $user, User $targetUser): bool
     {
-        if ($user->hasAnyRole(UserRoleType::SuperAdmin, UserRoleType::Admin)
-            && !$targetUser->hasRole(UserRoleType::SuperAdmin)
+        if ($user->hasAnyRole(UserRoleEnum::SuperAdmin, UserRoleEnum::Admin)
+            && !$targetUser->hasRole(UserRoleEnum::SuperAdmin)
         ) {
             return true;
         }

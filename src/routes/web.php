@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerTypeController;
+use App\Http\Controllers\RequestController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,30 +30,20 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
-    ->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])
+        ->name('home');
+    Route::get('profile', [ProfileController::class, 'index'])
+        ->name('profile');
+});
 
-Route::get(
-    '/dashboard',
-    [App\Http\Controllers\DashboardController::class, 'index']
-)
-    ->name('dashboard');
+Route::middleware(['auth', 'verified', 'authorized'])->group(function () {
+    Route::resource('users', UserController::class);
+    Route::resource('customer-types', CustomerTypeController::class);
+    Route::get('customers/autocomplete', [CustomerController::class, 'autocomplete']);
+    Route::resource('customers', CustomerController::class);
+    Route::resource('requests', RequestController::class);
 
-
-Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'index'])
-    ->name('profile');
-
-Route::resource(
-    'requests',
-    \App\Http\Controllers\EquipmentRequestController::class
-);
-
-Route::resource('customers', \App\Http\Controllers\CustomerController::class);
-
-Route::resource('customer-types', \App\Http\Controllers\CustomerTypeController::class);
-
-Route::resource('users', \App\Http\Controllers\UserController::class);
-
-
+});
 
 

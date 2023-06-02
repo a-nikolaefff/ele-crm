@@ -2,12 +2,7 @@
 
 namespace App\Http\Requests\User;
 
-use App\Enums\UserRoleType;
-use App\Models\User;
-use App\Models\UserRole;
-use App\Rules\User\DisallowSuperAdminRole;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {

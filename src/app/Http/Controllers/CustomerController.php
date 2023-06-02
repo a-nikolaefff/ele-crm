@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\BaseCustomerTypeEnum;
 use App\Filters\CustomerFilter;
+use App\Http\Requests\Customer\AutocompleteCustomerRequest;
 use App\Http\Requests\Customer\IndexCustomerRequest;
 use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer;
 use App\Models\CustomerType;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the customers.
      */
     public function index(IndexCustomerRequest $request)
     {
@@ -31,7 +34,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new customer.
      */
     public function create()
     {
@@ -40,7 +43,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created customer in storage.
      */
     public function store(StoreCustomerRequest $request)
     {
@@ -50,7 +53,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified customer.
      */
     public function show(Customer $customer)
     {
@@ -58,7 +61,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified customer.
      */
     public function edit(Customer $customer)
     {
@@ -67,7 +70,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified customer in storage.
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
@@ -77,11 +80,36 @@ class CustomerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified customer from storage.
      */
     public function destroy(Customer $customer)
     {
         $customer->delete();
         return redirect()->route('customers.index');
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $keyword = $request->input('search');
+        $isProjectOrganization = $request->input('is_project_organization');
+        $projectOrganizationTypeId = null;
+
+        if ($isProjectOrganization) {
+            $projectOrganizationTypeId = CustomerType::getBaseCustomerType(
+                BaseCustomerTypeEnum::ProjectOrganization
+            )->get()->first()->id;
+        }
+        $customers = Customer::where(function ($query) use ($keyword) {
+            $query->where('name', 'like', "%$keyword%")
+                ->orWhere('full_name', 'like', "%$keyword%");
+        })
+            ->when(
+                isset($projectOrganizationTypeId),
+                function ($query) use ($projectOrganizationTypeId) {
+                    return $query->where('customer_type_id', $projectOrganizationTypeId);
+                }
+            )
+            ->get();
+        return response()->json($customers);
     }
 }

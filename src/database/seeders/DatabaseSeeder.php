@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,9 +11,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
+        $seeders = [
             UserRoleSeeder::class,
-            SuperAdminSeeder::class
-        ]);
+            SuperAdminSeeder::class,
+            RequestStatusSeeder::class,
+            BaseCustomerTypeSeeder::class
+        ];
+        $appEnv = config('app.env');
+        if($appEnv === 'development') {
+            $seeders[] = UserSeeder::class;
+            $seeders[] = CustomerSeeder::class;
+            $seeders[] = CustomerTypeSeeder::class;
+        }
+        $this->call($seeders);
     }
 }

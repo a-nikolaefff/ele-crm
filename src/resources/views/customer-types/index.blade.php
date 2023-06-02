@@ -21,6 +21,15 @@
                         Наименование
                     </a>
                 </th>
+
+                <th class="col-2" scope="col">
+                    <a class="d-block"
+                       href="{{ route('customer-types.index', ['sort' => 'is_base_type', 'direction' => 'asc']) }}"
+                    >
+                        Категория
+                    </a>
+                </th>
+
                 <th class="col-2" scope="col">
                     <a class="d-block"
                        href="{{ route('customer-types.index', ['sort' => 'created_at', 'direction' => 'asc']) }}"
@@ -36,6 +45,14 @@
             @foreach($customerTypes as $type)
                 <tr>
                     <td>{{ $type->name }}</td>
+                    <td>
+                        @if($type->is_base_type)
+                            Базовый тип CRM
+                            @else
+                            Пользовательский
+                        @endif
+                    </td>
+
                     <td>{{ $type->created_at->format('Y-m-d') }}</td>
                     <td class="text-start">
                         @can('update', $type)

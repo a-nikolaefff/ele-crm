@@ -29,7 +29,7 @@
                                 Наименование
                             </label>
                             <div class="col-md-6">
-                                <input type="text"
+                                <input id="name" type="text"
                                        class="form-control @error('name') is-invalid @enderror" name="name"
                                         required autocomplete="name" autofocus>
 

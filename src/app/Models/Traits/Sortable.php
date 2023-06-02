@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait Sortable
 {
-
     /**
+     * Sort data by parameters from query string
+     *
      * @param Builder $query
      * @param array   $queryParams
      *
@@ -18,9 +19,11 @@ trait Sortable
     public function scopeSort(
         Builder $query,
         array $queryParams,
+        string $defaultSortColumn = '',
+        string $defaultSortDirection = 'asc'
     ): void {
-        $sortColumn = $queryParams['sort'] ?? '';
-        $sortDirection = $queryParams['direction'] ?? 'asc';
+        $sortColumn = $queryParams['sort'] ?? $defaultSortColumn;
+        $sortDirection = $queryParams['direction'] ?? $defaultSortDirection;
         $query->when(
             !empty($sortColumn),
             function ($query) use ($sortColumn, $sortDirection) {

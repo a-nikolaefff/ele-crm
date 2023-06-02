@@ -47,11 +47,11 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">
+                            <label for="fullName" class="col-md-4 col-form-label text-md-end">
                                 Полное имя
                             </label>
                             <div class="col-md-6">
-                                <input type="text"
+                                <input id="fullName" type="text"
                                        class="form-control @error('name') is-invalid @enderror" name="full_name"
                                        value="{{ $customer->full_name }}" required autocomplete="name" autofocus>
 
@@ -66,7 +66,7 @@
                         <div class="row mb-3">
                             <label for="role" class="col-md-4 col-form-label text-md-end">Тип</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('role_id') is-invalid @enderror"
+                                <select id="role" class="form-select @error('role_id') is-invalid @enderror"
                                         name="customer_type_id">
                                     <option value="">не задан</option>
                                     @foreach($types as $type)

@@ -11,10 +11,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Customer extends Model
 {
-    use Filterable, Sortable;
+    use HasFactory, Filterable, Sortable;
 
+    /**
+     * The name of the table in the database
+     *
+     * @var string
+     */
     protected $table = 'customers';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = ['name', 'full_name', 'customer_type_id'];
 
     public function type(): BelongsTo

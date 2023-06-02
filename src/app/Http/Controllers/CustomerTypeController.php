@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CustomerGroup\IndexCustomerTypeRequest;
-use App\Http\Requests\CustomerGroup\StoreCustomerTypeRequest;
-use App\Http\Requests\CustomerGroup\UpdateCustomerTypeRequest;
+use App\Http\Requests\CustomerType\IndexCustomerTypeRequest;
+use App\Http\Requests\CustomerType\StoreCustomerTypeRequest;
+use App\Http\Requests\CustomerType\UpdateCustomerTypeRequest;
 use App\Models\CustomerType;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,12 +13,11 @@ class CustomerTypeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
         $this->authorizeResource(CustomerType::class);
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the customer types.
      */
     public function index(IndexCustomerTypeRequest $request)
     {
@@ -28,7 +27,7 @@ class CustomerTypeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new customer type.
      */
     public function create()
     {
@@ -36,7 +35,7 @@ class CustomerTypeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created customer type in storage.
      */
     public function store(StoreCustomerTypeRequest $request)
     {
@@ -46,7 +45,7 @@ class CustomerTypeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified customer type.
      */
     public function show(CustomerType $customerGroup)
     {
@@ -54,7 +53,7 @@ class CustomerTypeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified customer type.
      */
     public function edit(CustomerType $customerType)
     {
@@ -62,7 +61,7 @@ class CustomerTypeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified customer type in storage.
      */
     public function update(UpdateCustomerTypeRequest $request, CustomerType $customerType)
     {
@@ -73,7 +72,7 @@ class CustomerTypeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified customer type from storage.
      */
     public function destroy(CustomerType $customerType)
     {
