@@ -23,14 +23,19 @@ class UpdateRequestRequest extends FormRequest
     {
         return [
             'received_at' => ['required', 'date'],
-            'answered_at' => ['date', 'nullable'],
+            'answered_at' => ['nullable', 'date'],
             'customer_id' => ['integer', 'exists:customers,id'],
-            'project_organization_id' => ['integer', 'exists:customers,id', 'nullable'],
-            'object' => ['required', 'string', 'max:75'],
-            'equipment' => ['required', 'string', 'max:100'],
+            'project_organization_id' => [
+                'integer',
+                'exists:customers,id',
+                'nullable'
+            ],
+            'object' => ['required', 'string', 'max:200'],
+            'equipment' => ['required', 'string', 'max:200'],
             'comment' => ['nullable', 'string', 'max:200'],
             'status_id' => ['integer', 'exists:request_statuses,id'],
             'prospect' => 'required|integer|between:0,5',
+            'expected_order_date' => ['date', 'nullable'],
         ];
     }
 }

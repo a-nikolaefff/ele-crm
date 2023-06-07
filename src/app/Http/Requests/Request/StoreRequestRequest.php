@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreRequestRequest extends FormRequest
 {
@@ -24,12 +23,17 @@ class StoreRequestRequest extends FormRequest
     {
         return [
             'received_at' => ['required', 'date'],
-            'object' => ['required', 'string', 'max:75'],
-            'equipment' => ['required', 'string', 'max:100'],
+            'object' => ['required', 'string', 'max:200'],
+            'equipment' => ['required', 'string', 'max:200'],
             'comment' => ['nullable', 'string', 'max:200'],
-            'customer_id' => ['integer', 'exists:customers,id'],
-            'project_organization_id' => ['integer', 'exists:customers,id', 'nullable'],
+            'customer_id' => ['exists:customers,id'],
+            'project_organization_id' => [
+                'integer',
+                'exists:customers,id',
+                'nullable'
+            ],
             'prospect' => 'required|integer|between:0,5',
+            'expected_order_date' => ['date', 'nullable'],
         ];
     }
 }

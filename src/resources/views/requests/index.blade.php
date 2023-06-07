@@ -1,11 +1,16 @@
 @extends('layouts.app')
 
+@section('title', 'Заявки')
+
 @section('content')
     <x-page-title title="Заявки"></x-page-title>
+
+    <x-error-messages></x-error-messages>
+
     <div class="mb-3">
         <a href="{{ route('requests.create') }}"
         >
-            <button type="button" class="btn btn-success">Добавить заявку</button>
+            <button type="button" class="btn btn-success">Создать заявку</button>
         </a>
     </div>
 
@@ -28,7 +33,7 @@
     ></x-option-selector>
 
     <div class="table-responsive">
-        <table class="table text-center table-fixed align-middle entity-table" id="sortableTable">
+        <table class="table text-center table-fixed align-middle entityTable" id="sortableTable">
 
             <thead>
             <tr class="align-middle">
@@ -43,7 +48,7 @@
                     <a class="d-block"
                        href="{{ route('requests.index', ['sort' => 'received_at', 'direction' => 'asc']) }}"
                     >
-                        Получено
+                        Поступила
                     </a>
                 </th>
                 <th class="col-2" scope="col">
@@ -98,9 +103,11 @@
                         {{ $request->received_at->format('d.m.Y') }}
                     </td>
                     <td class="text-truncate max-w-200">
-                    {{ $request->customer->name }}
+                        {{ $request->customer->name }}
                     </td>
-                    <td class="text-truncate max-w-200">{{ $request->object }}</td>
+                    <td class="text-truncate max-w-200">
+                        {{ $request->object }}
+                    </td>
                     <td class="text-truncate max-w-200">
                         {{ $request->equipment }}
                     </td>
@@ -134,10 +141,199 @@
                         @endif
                     </td>
 
-                    <td class="text-start">
+                    <td class="min-w-130 text-start">
+                        <button data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}"
+                                class="icon-button" type="button"
+                        >
+                            <x-accordion-arrow></x-accordion-arrow>
+                        </button>
+
                         <a href="{{ route('requests.edit', $request->id) }}">
                             <x-edit-icon></x-edit-icon>
                         </a>
+                    </td>
+                </tr>
+                <tr class="hiddenRow">
+                    <td colspan="12">
+                        <div class="collapse" id="request_{{$request->id}}">
+                            <div class="d-flex justify-content-center">
+                                <div class="entityTable__fullInfoBlock">
+                                    <div class="row gx-0">
+                                        <div class="col-6">
+
+                                            <div class="row mb-2">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Номер
+                                                </div>
+                                                <div class="col-8">
+                                                    {{ $request->received_at->format('Y') . '-' . $request->number  }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Дата поступления
+                                                </div>
+                                                <div class="col-8">
+                                                    {{ $request->received_at->format('d.m.Y') }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Дата ответа
+                                                </div>
+                                                <div class="col-8">
+                                                    @if($request->answered_at)
+                                                        {{ $request->answered_at->format('d.m.Y') }}
+                                                    @else
+                                                        ответ не дан
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Заказчик
+                                                </div>
+                                                <div class="col-8">
+                                                    {{ $request->customer->name }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Проектная организация
+                                                </div>
+                                                <div class="col-8">
+                                                    @if($request->projectOrganization)
+                                                        {{ $request->projectOrganization->name }}
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Объект
+                                                </div>
+                                                <div class="col-8">
+                                                    {{ $request->object }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Номенклатура
+                                                </div>
+                                                <div class="col-8">
+                                                    {{ $request->equipment }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-6">
+
+                                            <div class="row mb-2">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Статус
+                                                </div>
+                                                <div class="col-8">
+                                                    {{ $request->status->name }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Перспективность
+                                                </div>
+                                                <div class="col-8">
+                                                    @if($request->prospect !== 0)
+                                                        @for($i = 0; $i < $request->prospect; $i++)
+                                                            <i class='bx bxs-star'></i>
+                                                        @endfor
+                                                    @else
+                                                        <i class='bx bxs-trash bx-sm'></i>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Ожидаемая дата заказа
+                                                </div>
+                                                <div class="col-8">
+                                                    @if($request->expected_order_date)
+                                                        {{ $request->expected_order_date->format('d.m.Y') }}
+                                                    @else
+                                                        не задана
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Комментарий
+                                                </div>
+                                                <div class="col-8">
+                                                    {{ $request->comment }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="entityTable__userInfoBlock">
+                                        <div class="row gx-0">
+                                            <div class="col-6">
+
+                                                <div class="row mb-1">
+                                                    <div class="col-6 col-lg-4 entityTable__fieldName">
+                                                        Создана
+                                                    </div>
+                                                    <div class="col-6 col-lg-8">
+                                                        {{ $request->created_at }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-2">
+                                                    <div class="col-6 col-lg-4 entityTable__fieldName">
+                                                        Пользователем
+                                                    </div>
+                                                    <div class="col-6 col-lg-8">
+                                                        {{ $request->createdByUser->name }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-6">
+
+                                                <div class="row mb-1">
+                                                    <div class="col-6 col-lg-4 entityTable__fieldName">
+                                                        Обновлена
+                                                    </div>
+                                                    <div class="col-6 col-lg-8">
+                                                        {{ $request->updated_at }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-6 col-lg-4 entityTable__fieldName">
+                                                        Пользователем
+                                                    </div>
+                                                    <div class="col-6 col-lg-8">
+                                                        {{ $request->updatedByUser->name }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             @endforeach

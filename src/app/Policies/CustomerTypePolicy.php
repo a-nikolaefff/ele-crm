@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Enums\UserRoleEnum;
 use App\Models\CustomerType;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CustomerTypePolicy
 {

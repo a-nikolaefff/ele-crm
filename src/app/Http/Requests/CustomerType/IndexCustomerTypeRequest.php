@@ -25,7 +25,6 @@ class IndexCustomerTypeRequest extends FormRequest
         $sortableColumns = [
             'name',
             'is_base_type',
-            'created_at',
         ];
 
         return [

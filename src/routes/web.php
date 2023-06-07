@@ -27,7 +27,7 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 Route::get('/', function () {
-    return redirect()->route('home');
+    return redirect()->route('requests.index');
 });
 
 Route::middleware('auth')->group(function () {

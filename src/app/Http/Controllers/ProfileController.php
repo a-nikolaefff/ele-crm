@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Create a new ProfileController instance.
      *
      * @return void
      */
@@ -17,11 +17,11 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the user profile page.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return View The profile view.
      */
-    public function index()
+    public function index(): View
     {
         return view('profile');
     }

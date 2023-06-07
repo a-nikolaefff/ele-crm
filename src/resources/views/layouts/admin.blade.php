@@ -7,10 +7,9 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>EleCRM</title>
-
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <title>
+        @yield('title') | EleCRM
+    </title>
 
     @vite(['resources/js/app.js', 'resources/css/app.scss'])
 </head>
@@ -18,7 +17,7 @@
 <body class="bg-light">
 <div class="page" id="page">
     <x-header
-        :is-page-with-admin-panel="true"
+        :is-page-with-admin-sidebar="true"
     ></x-header>
     <x-sidebar
         :is-admin-sidebar="true"

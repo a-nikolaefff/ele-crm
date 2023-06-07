@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Редактирование типа заказчиков')
+
 @section('content')
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -14,17 +16,13 @@
                         </div>
                         <div>
                             <x-delete-modal-button question="Вы уверены, что хотите удалить данный тип?
-                            У всех заказчиков с данным типом тип будет не задан"
+                            У всех заказчиков этого типа, после удаления типа, не будет указан какой-либо тип."
                                                    :route="route('customer-types.destroy', $customerType->id)"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body">
-
-                    @if (session('status'))
-                        <x-alert type="success" :message="session('status')"/>
-                    @endif
 
                     <form method="POST" action="{{ route('customer-types.update', $customerType->id) }}">
                         @method('PUT')
@@ -35,10 +33,9 @@
                                 Наименование
                             </label>
                             <div class="col-md-6">
-                                <input type="text"
-                                       class="form-control @error('name') is-invalid @enderror" name="name"
-                                       value="{{ $customerType->name }}" required autocomplete="name" autofocus>
-
+                                <input id="name" name="name" type="text"
+                                       class="form-control @error('name') is-invalid @enderror"
+                                       value="{{ $customerType->name }}" required autofocus>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

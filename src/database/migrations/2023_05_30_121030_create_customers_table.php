@@ -15,11 +15,21 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('full_name');
+            $table->string('contact_person')->nullable();;
+            $table->string('email')->nullable();;
+            $table->string('phone')->nullable();;
+            $table->string('website')->nullable();;
             $table->unsignedBigInteger('customer_type_id')->nullable();
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
             $table->timestamps();
 
             $table->foreign('customer_type_id')->references('id')
                 ->on('customer_types')->nullOnDelete();
+            $table->foreign('created_by_user_id')->references('id')
+                ->on('users')->nullOnDelete();
+            $table->foreign('updated_by_user_id')->references('id')
+                ->on('users')->nullOnDelete();
         });
     }
 

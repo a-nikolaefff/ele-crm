@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -43,7 +42,9 @@ class UserAccountChanged extends Notification
             ->line(__('email.account_change.description'))
             ->line(__('email.account_change.new_details'))
             ->line(__('email.account_change.name') . ': ' . $notifiable->name)
-            ->line(__('email.account_change.role') . ': ' . $notifiable->role->name)
+            ->line(
+                __('email.account_change.role') . ': ' . $notifiable->role->name
+            )
             ->salutation(__('email.salutation'));
     }
 

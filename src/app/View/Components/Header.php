@@ -12,7 +12,7 @@ class Header extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public bool $isPageWithAdminPanel
+        public bool $isPageWithAdminSidebar
     ) {}
 
     /**

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Профиль пользователя')
+
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -7,9 +9,7 @@
                 <div class="card-header">Профиль пользователя</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <x-alert type="success" :message="session('status')"/>
-                    @endif
+
                     <table class="table">
                         <tbody>
                         <tr>
@@ -40,6 +40,7 @@
                             <td>{{ Auth::user()->created_at }}</td>
                         </tr>
                         </tbody>
+
                     </table>
                 </div>
             </div>

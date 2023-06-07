@@ -1,7 +1,7 @@
 <div class="sidebar @if($isAdminSidebar) sidebar_admin @endif" id="sidebar">
     <nav class="sidebar__content">
             <a class="sidebar__logo" href="{{ url('/') }}">
-                <span class="sidebar__logo-icon logo-icon"></span>
+                <span class="sidebar__logo-icon"></span>
                 <span class="sidebar__logo-name">EleCRM</span>
             </a>
             @foreach($menu as $item)

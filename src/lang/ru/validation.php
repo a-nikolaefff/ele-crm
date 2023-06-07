@@ -119,6 +119,7 @@ return [
         'symbols' => 'Значение поля :attribute должно содержать хотя бы один символ.',
         'uncompromised' => 'Значение поля :attribute обнаружено в утёкших данных. Пожалуйста, выберите другое значение для :attribute.',
     ],
+    'phone' => 'Значение поля :attribute должно быть телефонным номером.',
     'present' => 'Значение поля :attribute должно присутствовать.',
     'prohibited' => 'Значение поля :attribute запрещено.',
     'prohibited_if' => 'Значение поля :attribute запрещено, когда :other равно :value.',
@@ -181,8 +182,24 @@ return [
     */
 
     'attributes' => [
+        'answered_at' => 'дата ответа',
+        'comment' => 'комментарий',
+        'customer_type_id' => 'тип заказчика',
+        'customer_id' => 'заказчик',
+        'direction' => 'направление сортировки',
+        'equipment' => 'номенклатура',
+        'full_name' => 'полное имя',
         'name' => 'имя',
+        'object' => 'объект',
         'password' => 'пароль',
+        'phone' => 'телефон',
+        'project_organization_id' => 'проектная организация',
+        'prospect' => 'перспектива',
+        'received_at' => 'дата поступления',
+        'role_id' => 'роль',
+        'search' => 'ключевое слово',
+        'sort' => 'ключ сортировки',
+        'status_id' => 'статус',
     ],
 
 ];

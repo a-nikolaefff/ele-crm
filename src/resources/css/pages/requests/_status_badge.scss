@@ -1,25 +1,27 @@
+@use '../../abstracts/variables' as *;
+
 .statusBadge {
-    color: #fff;
+    color: $statusText;
     font-size: 1rem;
     font-weight: 500;
 
     &_new {
-        background-color: #b8c22d;
+        background-color: $newStatus;
     }
 
     &_awaiting-response {
-        background-color: #F57C00;
+        background-color: $awaitingResponseStatus;
     }
 
     &_in-progress {
-        background-color: #BF360C;
+        background-color: $inProgressStatus;
     }
 
     &_completed {
-        background-color: #1565C0;
+        background-color: $completedStatus;
     }
 
     &_cancelled {
-        background-color: #757575
+        background-color: $cancelledStatus;
     }
 }

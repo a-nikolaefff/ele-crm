@@ -6,21 +6,29 @@ namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * Abstract filter class.
+ */
 abstract class AbstractFilter implements FilterInterface
 {
-    /** @var array */
+    /** @var array The query parameters array. */
     private array $queryParams = [];
 
     /**
      * AbstractFilter constructor.
      *
-     * @param array $queryParams
+     * @param array $queryParams The query parameters array.
      */
     public function __construct(array $queryParams)
     {
         $this->queryParams = $queryParams;
     }
 
+    /**
+     * Get the filter callbacks array.
+     *
+     * @return array The filter callbacks array.
+     */
     abstract protected function getCallbacks(): array;
 
     public function apply(Builder $builder)

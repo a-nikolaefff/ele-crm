@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
+
+            $table->foreign('updated_by_user_id')->references('id')
+                ->on('users')->nullOnDelete();
         });
     }
 

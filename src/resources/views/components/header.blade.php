@@ -1,5 +1,6 @@
 <header class="header" id="header">
-    <i class="header__toggle bx bx-menu" id="header__toggle"></i>
+    <i class="header__toggle @if($isPageWithAdminSidebar) header__toggle_admin @endif bx bx-menu" id="header__toggle"></i>
+
     <div class="header__container container">
         @guest
             <div class="header__authorisation ms-1">
@@ -11,8 +12,9 @@
                 </a>
             </div>
         @else
+
             @can('viewAny', App\Models\User::class)
-                @if($isPageWithAdminPanel)
+                @if($isPageWithAdminSidebar)
                     <a href="{{ route('requests.index') }}">
                         <button type="button" class="btn btn-primary btn-sm me-3">Панель пользователя</button>
                     </a>
@@ -22,10 +24,11 @@
                     </a>
                 @endif
             @endcan
+
             <div class="dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center" href="#"
                    role="button"
-                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <box-icon type='solid' name='user' size="md" color='#0066ff' border='circle'></box-icon>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

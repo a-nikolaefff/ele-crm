@@ -9,7 +9,10 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use App\Models\UserRole;
 use App\Notifications\UserAccountChanged;
+use App\Services\User\UserService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -24,9 +27,13 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the users
+     * Display a listing of the users.
+     *
+     * @param IndexUserRequest $request The index user request instance.
+     *
+     * @return View The users index view.
      */
-    public function index(IndexUserRequest $request)
+    public function index(IndexUserRequest $request): View
     {
         $queryParams = $request->validated();
         $filter = app()->make(
@@ -43,9 +50,13 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the user
+     * Show the form for editing the user.
+     *
+     * @param User $user The user instance.
+     *
+     * @return View The edit user form view.
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         $roles = UserRole::allRolesExcept(UserRoleEnum::SuperAdmin)->get();
         if (Auth::user()->hasRole(UserRoleEnum::Admin)) {
@@ -59,20 +70,35 @@ class UserController extends Controller
 
     /**
      * Update the user in storage.
+     *
+     * @param UpdateUserRequest $request The update user request instance.
+     * @param User              $user    The user instance.
+     * @param UserService       $service The user service instance.
+     *
+     * @return RedirectResponse A redirect response to the users index.
      */
-    public function update(UpdateUserRequest $request, User $user)
-    {
-        $data = $request->validated();
-        $this->authorize('update', [$user, $data['role_id']]);
-        $user->fill($data)->save();
+    public function update(
+        UpdateUserRequest $request,
+        User $user,
+        UserService $service
+    ): RedirectResponse {
+        $validatedData = $request->validated();
+        $this->authorize('update', [$user, $validatedData['role_id']]);
+        $processedData = $service->processData($validatedData);
+        $user->fill($processedData)->save();
+        $user->load('role');
         $user->notify(new UserAccountChanged());
         return redirect()->route('users.index');
     }
 
     /**
      * Remove the user from storage.
+     *
+     * @param User $user The user instance.
+     *
+     * @return RedirectResponse A redirect response to the users index.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         $user->delete();
         return redirect()->route('users.index');

@@ -6,7 +6,6 @@ use App\Enums\UserRoleEnum;
 use App\Models\Traits\Filterable;
 use App\Models\Traits\Sortable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'email',
             'password',
             'role_id',
+            'updated_by_user_id',
         ];
 
     /**
@@ -58,15 +58,20 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
         ];
 
+    /**
+     * Get current role of the user.
+     *
+     * @return BelongsTo
+     */
     public function role(): BelongsTo
     {
         return $this->belongsTo(UserRole::class, 'role_id');
     }
 
     /**
-     * Check if the user has this role
+     * Check if the user has a specific role.
      *
-     * @param UserRoleEnum $roleType The role to check if the user has it
+     * @param UserRoleEnum $roleType
      *
      * @return bool
      */
@@ -77,9 +82,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Check if the user has any of the roles
+     * Check if the user has any of the specified roles.
      *
-     * @param UserRoleEnum ...$roleTypes The roles to check if the user has any of them
+     * @param UserRoleEnum ...$roleTypes
      *
      * @return bool
      */
@@ -92,5 +97,15 @@ class User extends Authenticatable implements MustVerifyEmail
             }
         }
         return false;
+    }
+
+    /**
+     * Get the user who updated this user.
+     *
+     * @return BelongsTo
+     */
+    public function updatedByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by_user_id');
     }
 }

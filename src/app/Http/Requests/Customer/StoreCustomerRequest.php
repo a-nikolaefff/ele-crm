@@ -27,7 +27,11 @@ class StoreCustomerRequest extends FormRequest
             'customer_type_id' => [
                 'nullable',
                 'integer',
-            ]
+            ],
+            'website' => ['nullable', 'url'],
+            'contact_person' => ['nullable', 'string', 'max:70'],
+            'email' => ['nullable', 'email'],
+            'phone' => ['nullable', 'phone'],
         ];
     }
 }

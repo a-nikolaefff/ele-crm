@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Enums;
 
 /**
- * List of roles used in the app. Values are names of roles in the database.
+ * List of user roles used in the app. Values are names of roles in the database.
  */
 enum UserRoleEnum: string
 {

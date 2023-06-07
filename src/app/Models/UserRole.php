@@ -23,16 +23,21 @@ class UserRole extends Model
      */
     protected $fillable = ['name'];
 
+    /**
+     * Get the users associated with the role.
+     *
+     * @return HasMany
+     */
     public function users(): HasMany
     {
         return $this->hasMany(User::class, 'role_id');
     }
 
     /**
-     * Get a role by role type
+     * Get a role by role type.
      *
      * @param Builder      $query
-     * @param UserRoleEnum $roleType The role type
+     * @param UserRoleEnum $roleType
      *
      * @return void
      */
@@ -42,10 +47,10 @@ class UserRole extends Model
     }
 
     /**
-     * Get all roles except role given by type
+     * Get all roles except a specific role type.
      *
      * @param Builder      $query
-     * @param UserRoleEnum $roleType The role type
+     * @param UserRoleEnum $roleType
      *
      * @return void
      */

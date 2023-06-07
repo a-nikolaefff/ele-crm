@@ -15,10 +15,11 @@ return new class extends Migration {
             $table->unsignedBigInteger('number');
             $table->string('object');
             $table->string('equipment');
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->unsignedSmallInteger('prospect');
             $table->date('received_at');
             $table->date('answered_at')->nullable();
+            $table->date('expected_order_date')->nullable();
             $table->unsignedBigInteger('status_id');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('project_organization_id')->nullable();

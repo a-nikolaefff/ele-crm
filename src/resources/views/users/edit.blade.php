@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
+@section('title', 'Редактирование пользователя')
 
 @section('content')
     <div class="row justify-content-center">
@@ -23,10 +25,6 @@
 
                 <div class="card-body">
 
-                    @if (session('status'))
-                        <x-alert type="success" :message="session('status')"/>
-                    @endif
-
                     <form method="POST" action="{{ route('users.update', $user->id) }}">
                         @method('PUT')
                         @csrf
@@ -36,7 +34,6 @@
                                 <input id="name" name="name" type="text"
                                        class="form-control @error('name') is-invalid @enderror"
                                        value="{{ $user->name }}" required autocomplete="name" autofocus>
-
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -48,8 +45,8 @@
                         <div class="row mb-3">
                             <label for="role" class="col-md-4 col-form-label text-md-end">Роль</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('role_id') is-invalid @enderror" name="role_id"
-                                        id="role">
+                                <select id="role "name="role_id"
+                                        class="form-select @error('role_id') is-invalid @enderror">
                                     @foreach($roles as $role)
                                         <option
                                             value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
@@ -57,7 +54,6 @@
                                         </option>
                                     @endforeach
                                 </select>
-
                                 @error('role_id')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

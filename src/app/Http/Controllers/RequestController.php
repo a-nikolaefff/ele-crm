@@ -8,14 +8,21 @@ use App\Http\Requests\Request\StoreRequestRequest;
 use App\Http\Requests\Request\IndexRequestRequest;
 use App\Models\Request;
 use App\Models\RequestStatus;
-use App\Services\RequestService;
+use App\Services\Request\CreateRequestService;
+use App\Services\Request\UpdateRequestService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class RequestController extends Controller
 {
     /**
      * Display a listing of the requests.
+     *
+     * @param IndexRequestRequest $httpRequest The index request instance.
+     *
+     * @return View The requests index view.
      */
-    public function index(IndexRequestRequest $httpRequest)
+    public function index(IndexRequestRequest $httpRequest): View
     {
         $queryParams = $httpRequest->validated();
         $filter = app()->make(
@@ -40,37 +47,41 @@ class RequestController extends Controller
 
     /**
      * Show the form for creating a new request.
+     *
+     * @return View The create request form view.
      */
-    public function create()
+    public function create(): View
     {
         return view('requests.create');
     }
 
     /**
      * Store a newly created request in storage.
+     *
+     * @param StoreRequestRequest $httpRequest The store request instance.
+     * @param CreateRequestService $service    The create request service instance.
+     *
+     * @return RedirectResponse A redirect response to the requests index.
      */
     public function store(
         StoreRequestRequest $httpRequest,
-        RequestService $requestService
-    ) {
-        $data = $httpRequest->validated();
-        $requestService->setRequestData($data);
-        Request::create($requestService->getRequestData());
+        CreateRequestService $service
+    ): RedirectResponse {
+        $validatedData = $httpRequest->validated();
+        $processedData = $service->processData($validatedData);
+        Request::create($processedData);
         return redirect()->route('requests.index');
     }
 
-    /**
-     * Display the specified request.
-     */
-    public function show(Request $request)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified request.
+     *
+     * @param Request $request The request instance.
+     *
+     * @return View The edit request form view.
      */
-    public function edit(Request $request)
+    public function edit(Request $request): View
     {
         $request->load(['customer', 'projectOrganization']);
         $statuses = RequestStatus::all();
@@ -79,22 +90,32 @@ class RequestController extends Controller
 
     /**
      * Update the specified request in storage.
+     *
+     * @param UpdateRequestRequest $httpRequest The update request instance.
+     * @param Request              $request     The request instance.
+     * @param UpdateRequestService $service     The update request service instance.
+     *
+     * @return RedirectResponse A redirect response to the requests index.
      */
     public function update(
         UpdateRequestRequest $httpRequest,
         Request $request,
-        RequestService $requestService
-    ) {
-        $data = $httpRequest->validated();
-        $requestService->setRequestData($data, false);
-        $request->fill($requestService->getRequestData())->save();
+        UpdateRequestService $service
+    ): RedirectResponse {
+        $validatedData = $httpRequest->validated();
+        $processedData = $service->processData($validatedData);
+        $request->fill($processedData)->save();
         return redirect()->route('requests.index');
     }
 
     /**
      * Remove the specified request from storage.
+     *
+     * @param Request $request The request instance.
+     *
+     * @return RedirectResponse A redirect response to the requests index.
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): RedirectResponse
     {
         $request->delete();
         return redirect()->route('requests.index');

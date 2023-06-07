@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class IndexCustomerRequest extends FormRequest
@@ -29,7 +30,19 @@ class IndexCustomerRequest extends FormRequest
         ];
 
         return [
-            'customer_type_id' => ['nullable', 'integer', 'exists:customer_types,id'],
+            'customer_type_id' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    if ($value !== 'none'
+                        && !Validator::make(
+                            [$attribute => $value],
+                            [$attribute => 'exists:customer_types,id']
+                        )->passes()
+                    ) {
+                        $fail(__('validation.exists', [$attribute]));
+                    }
+                }
+            ],
             'search' => ['nullable', 'string'],
             'sort' => ['nullable', Rule::in($sortableColumns)],
             'direction' => ['nullable', Rule::in(['asc', 'desc'])],

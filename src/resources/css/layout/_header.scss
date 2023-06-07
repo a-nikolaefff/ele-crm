@@ -2,7 +2,7 @@
 
 .header {
     width: 100%;
-    height: $header-height;
+    height: $headerHeight;
     position: fixed;
     top: 0;
     left: 0;
@@ -10,24 +10,28 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem;
-    background-color: $secondary-color;
-    z-index: $z-fixed;
+    background-color: $headerColor;
+    z-index: $zFixed;
     transition: 0.5s;
     @media (min-width: 768px) {
-        height: calc($header-height + 1rem);
-        padding: 0 2rem 0 calc($sidebar-width + 2rem);
+        height: calc($headerHeight + 1rem);
+        padding: 0 2rem 0 calc($sidebarWidth + 2rem);
     }
     &_menu-displayed {
-        padding-left: calc($sidebar-width + 1rem);
+        padding-left: calc($sidebarWidth + 1rem);
         @media (min-width: 768px) {
-            padding-left: calc($sidebar-width + $sidebar-extension-width + $sidebar-page-gap-width);
+            padding-left: calc($sidebarWidth + $sidebarExtensionWidth + $sidebarPageGapWidth);
         }
     }
 
     &__toggle {
-        color: $primary-color;
+        color: $sidebarColor;
         font-size: 1.5rem;
         cursor: pointer;
+
+        &_admin {
+            color: $adminSidebarColor;
+        }
     }
 
     &__container {

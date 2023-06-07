@@ -33,7 +33,11 @@ class IndexRequestRequest extends FormRequest
         ];
 
         return [
-            'status_id' => ['nullable', 'integer', 'exists:request_statuses,id'],
+            'status_id' => [
+                'nullable',
+                'integer',
+                'exists:request_statuses,id'
+            ],
             'search' => ['nullable', 'string'],
             'sort' => ['nullable', Rule::in($sortableColumns)],
             'direction' => ['nullable', Rule::in(['asc', 'desc'])],

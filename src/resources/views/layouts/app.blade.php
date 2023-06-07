@@ -7,18 +7,17 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>EleCRM</title>
+    <title>
+        @yield('title') | EleCRM
+    </title>
 
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.02.min.css">
     @vite(['resources/js/app.js', 'resources/css/app.scss'])
 </head>
 
 <body class="bg-light">
 <div class="page" id="page">
     <x-header
-        :is-page-with-admin-panel="false"
+        :is-page-with-admin-sidebar="false"
     ></x-header>
     <x-sidebar
         :is-admin-sidebar="false"

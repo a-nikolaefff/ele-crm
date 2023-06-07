@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Добро пожаловать в EleCRM!')
+
 @section('content')
 
     <div class="row justify-content-center">
@@ -13,14 +15,15 @@
                     @if (session('status'))
                         <x-alert type="success" :message="session('status')"/>
                     @endif
+
                     <p>
                         Если Вы являетесь верифицированным сотрудником компании вы можете свободно пользоваться системой.
                     </p>
+
                     <p>
                         Если Вы только что зарегистрировались, то для получения доступа к системе EleCRM вам необходимо
                         выполнить несколько простых шагов:
                     </p>
-
 
                     <ol>
                         <li class="mb-2">
@@ -43,6 +46,7 @@
                             и предоставления доступа к системе.
                         </li>
                     </ol>
+
                 </div>
             </div>
         </div>

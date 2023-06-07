@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Traits\Filterable;
-use App\Models\Traits\Sortable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class Request extends Model
 {
-    use Filterable;
+    use HasFactory, Filterable;
 
     /**
      * The name of the table in the database
@@ -35,6 +34,7 @@ class Request extends Model
             'prospect',
             'received_at',
             'answered_at',
+            'expected_order_date',
             'customer_id',
             'project_organization_id',
             'status_id',
@@ -42,27 +42,78 @@ class Request extends Model
             'updated_by_user_id',
         ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
     protected $casts
         = [
             'received_at' => 'date',
             'answered_at' => 'date',
+            'expected_order_date' => 'date',
         ];
 
+    /**
+     * Get the customer associated with the request.
+     *
+     * @return BelongsTo
+     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
 
+    /**
+     * Get the project organization associated with the request.
+     *
+     * @return BelongsTo
+     */
     public function projectOrganization(): BelongsTo
     {
         return $this->belongsTo(Customer::class, 'project_organization_id');
     }
 
+    /**
+     * Get current status of the request.
+     *
+     * @return BelongsTo
+     */
     public function status(): BelongsTo
     {
         return $this->belongsTo(RequestStatus::class, 'status_id');
     }
 
+    /**
+     * Get the user who created the request.
+     *
+     * @return BelongsTo
+     */
+    public function createdByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
+    }
+
+    /**
+     * Get the user who updated the request.
+     *
+     * @return BelongsTo
+     */
+    public function updatedByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by_user_id');
+    }
+
+    /**
+     * Scope a query to apply sorting to the request.
+     *
+     * @param Builder $query
+     * @param array   $queryParams
+     * @param string  $defaultSortColumn
+     * @param string  $defaultSortDirection
+     *
+     * @return void
+     */
     public function scopeSort(
         Builder $query,
         array $queryParams,
@@ -75,7 +126,10 @@ class Request extends Model
             !empty($sortColumn),
             function ($query) use ($sortColumn, $sortDirection) {
                 if ($sortColumn === 'number') {
-                    return $query->orderBy(DB::raw('YEAR(received_at)'), $sortDirection)
+                    return $query->orderBy(
+                        DB::raw('YEAR(received_at)'),
+                        $sortDirection
+                    )
                         ->orderBy($sortColumn, $sortDirection);
                 }
                 if ($sortColumn === 'customer') {

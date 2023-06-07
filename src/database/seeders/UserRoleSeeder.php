@@ -4,9 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\UserRoleEnum;
 use App\Models\UserRole;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class UserRoleSeeder extends Seeder
 {

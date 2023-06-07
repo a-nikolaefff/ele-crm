@@ -4,25 +4,25 @@
     position: fixed;
     top: 0;
     left: -30%;
-    width: $sidebar-width;
+    width: $sidebarWidth;
     height: 100vh;
-    background-color: $primary-color;
+    background-color: $sidebarColor;
     padding: 0.5rem 1rem 0 0;
     transition: 0.5s;
-    z-index: $z-fixed;
+    z-index: $zFixed;
     @media (min-width: 768px) {
         left: 0;
         padding: 1rem 1rem 0 0;
     }
 
     &_admin {
-        background-color: $admin-panel-color;
+        background-color: $adminSidebarColor;
     }
 
     &_displayed {
         left: 0;
         @media (min-width: 768px) {
-            width: calc($sidebar-width + $sidebar-extension-width);
+            width: calc($sidebarWidth + $sidebarExtensionWidth);
         }
     }
 
@@ -41,18 +41,19 @@
         column-gap: 1rem;
         padding: 0.5rem 0 0.5rem 1.5rem;
         margin-bottom: 2rem;
-        color: $secondary-color;
+        color: $sidebarActiveColor;
     }
 
     &__logo-icon {
+        background: url("/resources/images/icons/logo.png") no-repeat center center / contain;
         width: 24px;
         height: 24px;
-        color: $secondary-color;
+        color: $sidebarActiveColor;
     }
 
     &__logo-name {
         font-weight: 700;
-        color: $secondary-color;
+        color: $sidebarActiveColor;
     }
 
     &__link {
@@ -62,12 +63,12 @@
         column-gap: 1rem;
         padding: 0.5rem 0 0.5rem 1.5rem;
         position: relative;
-        color: $disabled-item-color;
+        color: $sidebarDisabledColor;
         margin-bottom: 1.5rem;
         transition: 0.3s;
 
         &:hover {
-            color: $secondary-color;
+            color: $sidebarActiveColor;
         }
     }
 
@@ -78,7 +79,7 @@
     }
 
     &__link_active {
-        color: $secondary-color;
+        color: $sidebarActiveColor;
 
         &::before {
             content: "";
@@ -86,7 +87,7 @@
             left: 0;
             width: 4px;
             height: 32px;
-            background-color: $secondary-color;
+            background-color: $sidebarActiveColor;
         }
     }
 }

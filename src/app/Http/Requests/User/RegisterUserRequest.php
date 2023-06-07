@@ -6,18 +6,19 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterUserRequest extends FormRequest
 {
-    public static $rules = [
-        'name' => ['required', 'string', 'max:50'],
-        'email' => [
-            'required',
-            'string',
-            'email',
-            'max:255',
-            'unique:users'
-        ],
-        'password' => ['required', 'string', 'min:8', 'confirmed'],
-        'g-recaptcha-response' => 'required|captcha'
-    ];
+    public static $rules
+        = [
+            'name' => ['required', 'string', 'max:50'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users'
+            ],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'g-recaptcha-response' => 'required|captcha'
+        ];
 
 
     /**

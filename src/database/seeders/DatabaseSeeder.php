@@ -20,8 +20,9 @@ class DatabaseSeeder extends Seeder
         $appEnv = config('app.env');
         if($appEnv === 'development') {
             $seeders[] = UserSeeder::class;
-            $seeders[] = CustomerSeeder::class;
             $seeders[] = CustomerTypeSeeder::class;
+            $seeders[] = CustomerSeeder::class;
+            $seeders[] = RequestSeeder::class;
         }
         $this->call($seeders);
     }

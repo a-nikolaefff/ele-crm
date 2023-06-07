@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Создание заявки')
+
 @section('content')
     <div class="row justify-content-center">
         <div class="col-lg-12 col-xl-8">
@@ -9,7 +11,7 @@
                     <div class="d-flex justify-content-between">
                         <div class="d-flex align-items-center">
                             <div>
-                                Добавление новой заявки
+                                Создание новой заявки
                             </div>
                         </div>
                     </div>
@@ -21,16 +23,16 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="receivedAt" class="col-md-4 col-form-label text-md-end">
+                            <label for="receivedAtDatePicker" class="col-md-4 col-form-label text-md-end">
                                 Дата поступления
                             </label>
                             <div class="col-md-6">
-                                <input id="receivedAt" type="text" name="received_at"
+                                <input id="receivedAtDatePicker" name="received_at" type="text"
                                        placeholder="Выберите дату поступления"
-                                       class="form-control @error('answered_at') is-invalid @enderror"
-                                       autocomplete="off"
+                                       class="form-control @error('received_at') is-invalid @enderror"
+                                       autocomplete="off" required
                                        value="{{ old('received_at') }}">
-                                @error('answered_at')
+                                @error('received_at')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
@@ -39,11 +41,11 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="customer" class="col-md-4 col-form-label text-md-end">
+                            <label for="customerAutocomplete" class="col-md-4 col-form-label text-md-end">
                                 Заказчик
                             </label>
                             <div class="col-md-6 mb-2 mb-md-0">
-                                <input id="customer" name="customer" autocomplete="off"
+                                <input id="customerAutocomplete" name="customer" autocomplete="off"
                                        class="form-control @error('customer_id') is-invalid @enderror"
                                        value="{{ old('customer') }}"
                                 >
@@ -58,17 +60,17 @@
                             <div class="col-md-2">
                                 <a href="{{ route('customers.create') }}" target="_blank"
                                 >
-                                    <button type="button" class="btn btn-success">Добавить</button>
+                                    <button type="button" class="btn btn-success">Создать</button>
                                 </a>
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="project_organization" class="col-md-4 col-form-label text-md-end">
+                            <label for="projectOrganizationAutocomplete" class="col-md-4 col-form-label text-md-end">
                                 Проектная организация
                             </label>
                             <div class="col-md-6 mb-2 mb-md-0">
-                                <input id="project_organization" autocomplete="off" name="project_organization"
+                                <input id="projectOrganizationAutocomplete" autocomplete="off" name="project_organization"
                                        class="form-control @error('project_organization_id') is-invalid @enderror"
                                        value="{{ old('project_organization') }}">
                                 <input name="project_organization_id" id="projectOrganizationId" hidden="hidden"
@@ -82,7 +84,7 @@
                             <div class="col-md-2">
                                 <a href="{{ route('customers.create') }}" target="_blank"
                                 >
-                                    <button type="button" class="btn btn-success">Добавить</button>
+                                    <button type="button" class="btn btn-success">Создать</button>
                                 </a>
                             </div>
                         </div>
@@ -92,9 +94,9 @@
                                 Объект
                             </label>
                             <div class="col-md-6">
-                                <textarea id="object" name="object" type="text" rows="2"
+                                <textarea id="object" name="object" type="text" rows="5"
                                           class="form-control @error('object') is-invalid @enderror"
-                                          required autofocus>{{ old('object') }}</textarea>
+                                          required>{{ old('object') }}</textarea>
                                 @error('object')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -108,9 +110,9 @@
                                 Номенклатура
                             </label>
                             <div class="col-md-6">
-                                <textarea id="equipment" name="equipment" type="text" rows="3"
+                                <textarea id="equipment" name="equipment" type="text" rows="5"
                                           class="form-control @error('equipment') is-invalid @enderror"
-                                          required autofocus>{{ old('equipment') }}</textarea>
+                                          required>{{ old('equipment') }}</textarea>
                                 @error('equipment')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -126,7 +128,7 @@
                             <div class="col-md-6">
                                 <textarea id="comment" name="comment" type="text" rows="5"
                                           class="form-control @error('comment') is-invalid @enderror"
-                                          autofocus>{{ old('comment') }}</textarea>
+                                >{{ old('comment') }}</textarea>
                                 @error('comment')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -144,6 +146,24 @@
                                        class="form-range @error('prospect') is-invalid @enderror"
                                        min="0" max="5" value="{{ old('prospect') }}">
                                 @error('prospect')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="expectedOrderDatePicker" class="col-md-4 col-form-label text-md-end">
+                                Ожидаемая дата заказа
+                            </label>
+                            <div class="col-md-6">
+                                <input id="expectedOrderDatePicker" name="expected_order_date"  type="text"
+                                       placeholder="Выберите ожидаемую дату заказа"
+                                       class="form-control @error('expected_order_date') is-invalid @enderror"
+                                       autocomplete="off"
+                                       value="{{ old('expected_order_date') }}">
+                                @error('expected_order_date')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>

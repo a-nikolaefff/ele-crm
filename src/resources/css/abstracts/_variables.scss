@@ -1,18 +1,43 @@
-// Sizes
-$header-height: 3rem;
-$sidebar-width: 68px;
-$sidebar-extension-width: 160px;
-$sidebar-page-gap-width: 32px;
-$minWidth: 320px;
-// Colors
-$primary-color: #0066ff;
-$secondary-color: #f7f6fb;
-$disabled-item-color: #e0e0e0;
-$admin-panel-color: #198754;
-$icon-color: gray;
+// FONTS
+$defaultFont: "Nunito", sans-serif;
+$defaultFontSize: 1rem;
+
+// SIZES
+$headerHeight: 3rem;
+$sidebarWidth: 68px;
+$sidebarExtensionWidth: 160px;
+$sidebarPageGapWidth: 32px;
+
+// Z-INDEXES
+$zFixed: 100;
+
+// COLORS
+
+// Sidebar
+$sidebarColor: #0066ff;
+$adminSidebarColor: #198754;
+$sidebarActiveColor: #f7f6fb;
+$sidebarDisabledColor: #e0e0e0;
+
+// Header
+$headerColor: #f7f6fb;
+
+// Tables
 $tableHeaderColor: #212529;
-// Fonts
-$default-font: "Nunito", sans-serif;
-$default-font-size: 1rem;
-// Z-indexes
-$z-fixed: 100;
+$fullInfoBlock: #F5F5F5;
+
+// Icons
+$iconColor: gray;
+$iconHoverColor: #0066ff;
+
+// Statuses
+$statusText: #fff;
+$newStatus: #b8c22d;
+$awaitingResponseStatus: #F57C00;
+$inProgressStatus: #BF360C;
+$completedStatus: #1565C0;
+$cancelledStatus: #757575;
+
+
+
+
