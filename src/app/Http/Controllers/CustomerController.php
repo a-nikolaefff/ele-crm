@@ -128,24 +128,14 @@ class CustomerController extends Controller
 
         $isProjectOrganizationRequest = $request->input('is_project_organization');
 
-        $projectOrganizationTypeId = null;
-        if ($isProjectOrganizationRequest) {
-            $projectOrganizationTypeId = CustomerType::getBaseCustomerType(
-                BaseCustomerTypeEnum::ProjectOrganization
-            )->get()->first()->id;
-        }
-
         $customers = Customer::where(function ($query) use ($keyword) {
             $query->where('name', 'like', "%$keyword%")
                 ->orWhere('full_name', 'like', "%$keyword%");
         })
             ->when(
                 $isProjectOrganizationRequest,
-                function ($query) use ($projectOrganizationTypeId) {
-                    return $query->where(
-                        'customer_type_id',
-                        $projectOrganizationTypeId
-                    );
+                function ($query) {
+                    return $query->where('has_project_department', true);
                 }
             )
             ->get();

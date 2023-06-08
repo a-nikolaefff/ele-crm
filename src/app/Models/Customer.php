@@ -35,6 +35,7 @@ class Customer extends Model
             'email',
             'phone',
             'customer_type_id',
+            'has_project_department',
             'created_by_user_id',
             'updated_by_user_id',
         ];

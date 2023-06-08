@@ -64,19 +64,35 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="role" class="col-md-4 col-form-label text-md-end">Тип</label>
+                            <label for="customerType" class="col-md-4 col-form-label text-md-end">Тип</label>
                             <div class="col-md-6">
-                                <select id="role" name="customer_type_id"
+                                <select id="customerType" name="customer_type_id"
                                         class="form-select @error('role_id') is-invalid @enderror">
                                     <option value="">не задан</option>
                                     @foreach($types as $type)
                                         <option
-                                            value="{{ $type->id }}" {{ $customer->customer_type_id == $type->id ? 'selected' : '' }}>
-                                            {{ $type->name }}
-                                        </option>
+                                            value="{{ $type->id }}" {{ $customer->customer_type_id == $type->id ? 'selected' : '' }}
+                                        >{{ $type->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('role_id')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="hasProjectDepartment" class="col-md-4 col-form-label text-md-end">
+                                Есть проектный отдел
+                            </label>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <input id="hasProjectDepartment" name="has_project_department"
+                                       type="checkbox"
+                                       class="form-check-input @error('has_project_department') is-invalid @enderror"
+                                @if($customer->has_project_department) checked @endif>
+                                @error('has_project_department')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -55,9 +55,10 @@ abstract class RequestService
     protected abstract function setSpecificData($inputData): void;
 
     /**
-     * Set the direct data without any processing.
+     * Set the direct data from the input data, excluding specific keys.
      *
-     * @param array $inputData The input data to be set as the processed data.
+     * @param array $inputData     The input data array.
+     * @param array $notDirectData The array of keys to exclude from direct data setting.
      *
      * @return void
      */

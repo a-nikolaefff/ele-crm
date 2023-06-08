@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Customer;
 
+use App\Enums\BaseCustomerTypeEnum;
+use App\Models\CustomerType;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -26,7 +28,13 @@ abstract class CustomerService
      */
     public function processData(array $inputData): array
     {
-        $this->setDirectData($inputData);
+        $notDirectData = array(
+            'has_project_department',
+        );
+        $this->setDirectData($inputData, $notDirectData);
+
+        $this->setHasProjectDepartment($inputData);
+
         $this->setUpdatedByUser();
 
         $this->setSpecificData($inputData);
@@ -41,18 +49,38 @@ abstract class CustomerService
      *
      * @return void
      */
+
     protected abstract function setSpecificData($inputData): void;
 
     /**
-     * Set the direct data without any processing.
+     * Set the direct data from the input data, excluding specific keys.
      *
-     * @param array $inputData The input data to be set as the processed data.
+     * @param array $inputData The input data array.
+     * @param array $notDirectData The array of keys to exclude from direct data setting.
      *
      * @return void
      */
-    private function setDirectData(array $inputData): void
+    private function setDirectData(array $inputData, array $notDirectData): void
     {
-        $this->processedData = $inputData;
+        foreach ($inputData as $key => $value) {
+            if (!in_array($key, $notDirectData)) {
+                $this->processedData[$key] = $value;
+            }
+        }
+    }
+
+    public function setHasProjectDepartment(array $inputData): void
+    {
+        $projectOrganizationTypeId = CustomerType::getBaseCustomerType(
+            BaseCustomerTypeEnum::ProjectOrganization
+        )->get()->first()->id;
+
+        if ((int)$inputData['customer_type_id'] === $projectOrganizationTypeId) {
+            $this->processedData['has_project_department'] = true;
+        } else {
+            $this->processedData['has_project_department']
+                = isset($inputData['has_project_department']);
+        }
     }
 
     /**

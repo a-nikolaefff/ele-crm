@@ -26,6 +26,10 @@ if (document.getElementById('projectOrganizationAutocomplete')) {
     import ('./pages/requests/project-organization-autocomplete');
 }
 
+if (document.getElementById('hasProjectDepartment')) {
+    import ('./pages/requests/has_project_department');
+}
+
 if (document.getElementById('receivedAtDatePicker')) {
     import ('./pages/requests/received-at-date-picker');
 }

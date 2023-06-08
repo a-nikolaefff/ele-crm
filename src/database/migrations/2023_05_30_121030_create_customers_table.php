@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('full_name');
-            $table->string('contact_person')->nullable();;
-            $table->string('email')->nullable();;
-            $table->string('phone')->nullable();;
-            $table->string('website')->nullable();;
+            $table->string('contact_person')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('website')->nullable();
+            $table->boolean('has_project_department');
             $table->unsignedBigInteger('customer_type_id')->nullable();
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();

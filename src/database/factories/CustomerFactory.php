@@ -38,6 +38,7 @@ class CustomerFactory extends Factory
             'name' => $name,
             'full_name' => $name,
             'customer_type_id' => $customerTypeId->random(),
+            'has_project_department' => fake()->boolean,
             'contact_person' => fake()->name,
             'email' => fake()->email,
             'phone' => fake('US')->e164PhoneNumber,

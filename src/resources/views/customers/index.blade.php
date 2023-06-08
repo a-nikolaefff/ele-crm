@@ -129,18 +129,18 @@
 
                                             <div class="row">
                                                 <div class="col-4 entityTable__fieldName">
-                                                    Сайт
+                                                    Есть проектный отдел
                                                 </div>
                                                 <div class="col-8">
-                                                    @if($customer->website)
-                                                        <a href="{{ $customer->website }}" target="_blank">
-                                                            {{ $customer->website }}
-                                                        </a>
+                                                    @if($customer->has_project_department)
+                                                        да
                                                     @else
-                                                        не указан
+                                                        нет
                                                     @endif
                                                 </div>
                                             </div>
+
+
 
                                         </div>
                                         <div class="col-6">
@@ -181,6 +181,21 @@
                                                     @if($customer->email)
                                                         <a href="mailto:{{$customer->email}}">
                                                             {{ $customer->email }}
+                                                        </a>
+                                                    @else
+                                                        не указан
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Сайт
+                                                </div>
+                                                <div class="col-8">
+                                                    @if($customer->website)
+                                                        <a href="{{ $customer->website }}" target="_blank">
+                                                            {{ $customer->website }}
                                                         </a>
                                                     @else
                                                         не указан

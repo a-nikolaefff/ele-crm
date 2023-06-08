@@ -28,6 +28,7 @@ class StoreCustomerRequest extends FormRequest
                 'nullable',
                 'integer',
             ],
+            'has_project_department' => ['nullable'],
             'website' => ['nullable', 'url'],
             'contact_person' => ['nullable', 'string', 'max:70'],
             'email' => ['nullable', 'email'],
