@@ -24,4 +24,8 @@
     &_cancelled {
         background-color: $cancelledStatus;
     }
+
+    &_success {
+        background-color: $successStatus;
+    }
 }

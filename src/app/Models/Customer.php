@@ -32,6 +32,7 @@ class Customer extends Model
             'full_name',
             'website',
             'contact_person',
+            'post',
             'email',
             'phone',
             'customer_type_id',

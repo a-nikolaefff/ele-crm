@@ -1,5 +1,13 @@
 import autoComplete from "@tarekraafat/autocomplete.js/dist/autoComplete";
 
+
+const customerIdElement = document.getElementById('customerId');
+const customerResetAutocompleteElement = document.getElementById('customerResetAutocomplete');
+
+if (customerIdElement.value !== "") {
+    customerResetAutocompleteElement.classList.add('resetAutocomplete__displayed')
+}
+
 const customerAutoComplete = new autoComplete({
 
     selector: "#customerAutocomplete",
@@ -71,12 +79,25 @@ const customerAutoComplete = new autoComplete({
             selection: (event) => {
                 const selection = event.detail.selection.value;
                 customerAutoComplete.input.value = selection.name;
-                const selectionId = document.getElementById('customerId');
-                selectionId.value = selection.id;
+
+                customerIdElement.value = selection.id;
+
+                customerResetAutocompleteElement.classList.add('resetAutocomplete__displayed')
             }
         }
     }
 });
+
+customerResetAutocompleteElement.addEventListener('click', () => {
+    const selectionName = document.getElementById('customerAutocomplete');
+    selectionName.value = null;
+    const selectionId = document.getElementById('customerId');
+    selectionId.value = null;
+
+    customerResetAutocompleteElement.classList.remove('resetAutocomplete__displayed')
+});
+
+
 
 
 

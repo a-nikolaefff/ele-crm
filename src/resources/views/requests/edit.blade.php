@@ -49,25 +49,35 @@
                                 Заказчик
                             </label>
                             <div class="col-md-6 mb-2 mb-md-0">
+                                <div class="d-flex">
+                                    <input id="customerAutocomplete" autocomplete="off"
+                                           class="form-control @error('customer_id') is-invalid @enderror"
+                                           value="{{ $request->customer->name }}"
+                                    >
+                                    <input id="customerId" name="customer_id" hidden="hidden"
+                                           value="{{ $request->customer->id }}">
 
-                                <input id="customerAutocomplete" autocomplete="off"
-                                       class="form-control @error('customer_id') is-invalid @enderror"
-                                       value="{{ $request->customer->name }}"
-                                >
-                                <input name="customer_id" id="customerId" hidden="hidden"
-                                       value="{{ $request->customer->id }}">
-                                @error('customer_id')
-                                <span class="invalid-feedback d-block" role="alert">
+                                    <div id="customerResetAutocomplete" class="resetAutocomplete">
+                                        <button class="btn btn-outline-danger autocompleteButton" type="button">
+                                            <i class='bx bx-x-circle'></i>
+                                        </button>
+                                    </div>
+
+                                    <a href="{{ route('customers.create') }}" target="_blank"
+                                    >
+                                        <button class="btn btn-outline-success autocompleteButton" type="button">
+                                            <i class='bx bx-message-square-add'></i>
+                                        </button>
+                                    </a>
+
+                                    @error('customer_id')
+                                    <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
-                                @enderror
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="col-md-2">
-                                <a href="{{ route('customers.create') }}" target="_blank"
-                                >
-                                    <button type="button" class="btn btn-success">Создать</button>
-                                </a>
-                            </div>
+
                         </div>
 
                         <div class="row mb-3">
@@ -75,30 +85,42 @@
                                 Проектная организация
                             </label>
                             <div class="col-md-6 mb-2 mb-md-0">
-                                <input id="projectOrganizationAutocomplete" autocomplete="off"
-                                       class="form-control @error('project_organization_id') is-invalid @enderror"
-                                       @if(isset($request->projectOrganization))
-                                           value="{{ $request->projectOrganization->name }}"
-                                    @endif
-                                >
-                                <input name="project_organization_id" id="projectOrganizationId" hidden="hidden"
-                                       @if(isset($request->projectOrganization))
-                                           value="{{ $request->projectOrganization->id }}"
-                                    @endif
-                                >
-                                @error('project_organization_id')
-                                <span class="invalid-feedback d-block" role="alert">
+
+                                <div class="d-flex">
+                                    <input id="projectOrganizationAutocomplete" autocomplete="off"
+                                           class="form-control @error('project_organization_id') is-invalid @enderror"
+                                           @if(isset($request->projectOrganization))
+                                               value="{{ $request->projectOrganization->name }}"
+                                        @endif
+                                    >
+                                    <input name="project_organization_id" id="projectOrganizationId" hidden="hidden"
+                                           @if(isset($request->projectOrganization))
+                                               value="{{ $request->projectOrganization->id }}"
+                                        @endif
+                                    >
+                                    @error('project_organization_id')
+                                    <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
-                                @enderror
+                                    @enderror
+
+                                    <div id="projectOrganizationResetAutocomplete" class="resetAutocomplete">
+                                        <button class="btn btn-outline-danger autocompleteButton" type="button">
+                                            <i class='bx bx-x-circle'></i>
+                                        </button>
+                                    </div>
+
+                                    <a href="{{ route('customers.create') }}" target="_blank"
+                                    >
+                                        <button class="btn btn-outline-success autocompleteButton" type="button">
+                                            <i class='bx bx-message-square-add'></i>
+                                        </button>
+                                    </a>
+
+                                </div>
+
                             </div>
 
-                            <div class="col-md-2">
-                                <a href="{{ route('customers.create') }}" target="_blank"
-                                >
-                                    <button type="button" class="btn btn-success">Создать</button>
-                                </a>
-                            </div>
                         </div>
 
                         <div class="row mb-3">

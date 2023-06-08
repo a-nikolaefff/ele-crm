@@ -127,7 +127,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row mb-2">
                                                 <div class="col-4 entityTable__fieldName">
                                                     Есть проектный отдел
                                                 </div>
@@ -140,7 +140,20 @@
                                                 </div>
                                             </div>
 
-
+                                            <div class="row">
+                                                <div class="col-4 entityTable__fieldName">
+                                                    Сайт
+                                                </div>
+                                                <div class="col-8">
+                                                    @if($customer->website)
+                                                        <a href="{{ $customer->website }}" target="_blank">
+                                                            {{ $customer->website }}
+                                                        </a>
+                                                    @else
+                                                        не указан
+                                                    @endif
+                                                </div>
+                                            </div>
 
                                         </div>
                                         <div class="col-6">
@@ -158,17 +171,16 @@
                                                 </div>
                                             </div>
 
+
                                             <div class="row mb-2">
                                                 <div class="col-4 entityTable__fieldName">
-                                                    Телефон
+                                                    Должность
                                                 </div>
                                                 <div class="col-8">
-                                                    @if($customer->phone)
-                                                        <a href="tel:{{$customer->phone}}">
-                                                            {{ $customer->phone->formatInternational() }}
-                                                        </a>
+                                                    @if($customer->post)
+                                                        {{ $customer->post }}
                                                     @else
-                                                        не указан
+                                                        не указана
                                                     @endif
                                                 </div>
                                             </div>
@@ -188,14 +200,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row mb-2">
                                                 <div class="col-4 entityTable__fieldName">
-                                                    Сайт
+                                                    Телефон
                                                 </div>
                                                 <div class="col-8">
-                                                    @if($customer->website)
-                                                        <a href="{{ $customer->website }}" target="_blank">
-                                                            {{ $customer->website }}
+                                                    @if($customer->phone)
+                                                        <a href="tel:{{$customer->phone}}">
+                                                            {{ $customer->phone->formatInternational() }}
                                                         </a>
                                                     @else
                                                         не указан

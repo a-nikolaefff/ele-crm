@@ -31,6 +31,7 @@ class UpdateCustomerRequest extends FormRequest
             'has_project_department' => ['nullable'],
             'website' => ['nullable', 'url'],
             'contact_person' => ['nullable', 'string', 'max:70'],
+            'post' => ['nullable', 'string', 'max:70'],
             'email' => ['nullable', 'email'],
             'phone' => ['nullable', 'phone'],
         ];

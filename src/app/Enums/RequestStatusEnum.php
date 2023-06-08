@@ -14,4 +14,6 @@ enum RequestStatusEnum: string
     case InProgress = 'в работе';
     case Completed = 'ответ отправлен';
     case Cancelled = 'отменена';
+
+    case Success = 'заказ получен';
 }

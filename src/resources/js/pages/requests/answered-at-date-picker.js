@@ -20,7 +20,7 @@ const answeredAtFormBlockElement = document.getElementById('answeredAtFormBlock'
 const selectedOption = selectRequestStatusElement.options[selectRequestStatusElement.selectedIndex];
 const selectedText = selectedOption.textContent;
 
-if (selectedText === 'ответ отправлен') {
+if (selectedText === 'ответ отправлен' || selectedText === 'заказ получен') {
     answeredAtFormBlockElement.style.display = 'flex';
     answeredAtDatePickerElement.required = true;
 } else {
@@ -31,10 +31,11 @@ selectRequestStatusElement.addEventListener('change', () => {
     const selectedOption = selectRequestStatusElement.options[selectRequestStatusElement.selectedIndex];
     const selectedText = selectedOption.textContent;
 
-    if (selectedText === 'ответ отправлен') {
+    if (selectedText === 'ответ отправлен' || selectedText === 'заказ получен') {
         answeredAtFormBlockElement.style.display = 'flex';
         answeredAtDatePickerElement.required = true;
     } else {
         answeredAtFormBlockElement.style.display = 'none';
+        answeredAtDatePickerElement.required = false;
     }
 });

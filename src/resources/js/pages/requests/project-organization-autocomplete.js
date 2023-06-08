@@ -1,5 +1,13 @@
 import autoComplete from "@tarekraafat/autocomplete.js/dist/autoComplete";
 
+
+const projectOrganizationIdElement = document.getElementById('projectOrganizationId');
+const projectOrganizationResetAutocompleteElement = document.getElementById('projectOrganizationResetAutocomplete');
+
+if (projectOrganizationIdElement.value !== "") {
+    projectOrganizationResetAutocompleteElement.classList.add('resetAutocomplete__displayed')
+}
+
 const projectOrganizationAutocomplete = new autoComplete({
 
     selector: "#projectOrganizationAutocomplete",
@@ -72,9 +80,20 @@ const projectOrganizationAutocomplete = new autoComplete({
             selection: (event) => {
                 const selection = event.detail.selection.value;
                 projectOrganizationAutocomplete.input.value = selection.name;
-                const selectionId = document.getElementById('projectOrganizationId');
-                selectionId.value = selection.id;
+
+                projectOrganizationIdElement.value = selection.id;
+
+                projectOrganizationResetAutocompleteElement.classList.add('resetAutocomplete__displayed')
             }
         }
     }
+});
+
+projectOrganizationResetAutocompleteElement.addEventListener('click', () => {
+    const selectionName = document.getElementById('projectOrganizationAutocomplete');
+    selectionName.value = null;
+    const selectionId = document.getElementById('projectOrganizationId');
+    selectionId.value = null;
+
+    projectOrganizationResetAutocompleteElement.classList.remove('resetAutocomplete__displayed')
 });

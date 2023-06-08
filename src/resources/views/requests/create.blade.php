@@ -45,23 +45,34 @@
                                 Заказчик
                             </label>
                             <div class="col-md-6 mb-2 mb-md-0">
-                                <input id="customerAutocomplete" name="customer" autocomplete="off"
-                                       class="form-control @error('customer_id') is-invalid @enderror"
-                                       value="{{ old('customer') }}"
-                                >
-                                <input name="customer_id" id="customerId" hidden="hidden"
-                                       value="{{ old('customer_id') }}">
+                                <div class="d-flex">
+                                    <input id="customerAutocomplete" name="customer" autocomplete="off"
+                                           class="form-control @error('customer_id') is-invalid @enderror"
+                                           value="{{ old('customer') }}">
+
+                                    <input name="customer_id" id="customerId" hidden="hidden"
+                                           value="{{ old('customer_id') }}">
+
+                                    <div id="customerResetAutocomplete" class="resetAutocomplete">
+                                        <button class="btn btn-outline-danger autocompleteButton" type="button">
+                                            <i class='bx bx-x-circle'></i>
+                                        </button>
+                                    </div>
+
+                                    <a href="{{ route('customers.create') }}" target="_blank"
+                                    >
+                                        <button class="btn btn-outline-success autocompleteButton" type="button">
+                                            <i class='bx bx-message-square-add'></i>
+                                        </button>
+                                    </a>
+
+                                </div>
+
                                 @error('customer_id')
                                 <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
-                            </div>
-                            <div class="col-md-2">
-                                <a href="{{ route('customers.create') }}" target="_blank"
-                                >
-                                    <button type="button" class="btn btn-success">Создать</button>
-                                </a>
                             </div>
                         </div>
 
@@ -70,23 +81,36 @@
                                 Проектная организация
                             </label>
                             <div class="col-md-6 mb-2 mb-md-0">
-                                <input id="projectOrganizationAutocomplete" autocomplete="off" name="project_organization"
-                                       class="form-control @error('project_organization_id') is-invalid @enderror"
-                                       value="{{ old('project_organization') }}">
-                                <input name="project_organization_id" id="projectOrganizationId" hidden="hidden"
-                                       value="{{ old('project_organization_id') }}">
+                                <div class="d-flex">
+                                    <input id="projectOrganizationAutocomplete" autocomplete="off"
+                                           name="project_organization"
+                                           class="form-control @error('project_organization_id') is-invalid @enderror"
+                                           value="{{ old('project_organization') }}">
+                                    <input id="projectOrganizationId" name="project_organization_id" hidden="hidden"
+                                           value="{{ old('project_organization_id') }}">
+
+                                    <div id="projectOrganizationResetAutocomplete" class="resetAutocomplete">
+                                        <button class="btn btn-outline-danger autocompleteButton" type="button">
+                                            <i class='bx bx-x-circle'></i>
+                                        </button>
+                                    </div>
+
+                                    <a href="{{ route('customers.create') }}" target="_blank"
+                                    >
+                                        <button class="btn btn-outline-success autocompleteButton" type="button">
+                                            <i class='bx bx-message-square-add'></i>
+                                        </button>
+                                    </a>
+
+                                </div>
+
                                 @error('project_organization_id')
                                 <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
-                            <div class="col-md-2">
-                                <a href="{{ route('customers.create') }}" target="_blank"
-                                >
-                                    <button type="button" class="btn btn-success">Создать</button>
-                                </a>
-                            </div>
+
                         </div>
 
                         <div class="row mb-3">
@@ -158,7 +182,7 @@
                                 Ожидаемая дата заказа
                             </label>
                             <div class="col-md-6">
-                                <input id="expectedOrderDatePicker" name="expected_order_date"  type="text"
+                                <input id="expectedOrderDatePicker" name="expected_order_date" type="text"
                                        placeholder="Выберите ожидаемую дату заказа"
                                        class="form-control @error('expected_order_date') is-invalid @enderror"
                                        autocomplete="off"

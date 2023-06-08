@@ -20,13 +20,24 @@ class UpdateRequestService extends RequestService
     {
         $status = RequestStatus::find((int)$inputData['status_id']);
 
-        if ($status->name === RequestStatusEnum::Completed->value) {
-            $this->setAnsweredAtDate($inputData['answered_at']);
-        } else {
-            $this->setAnsweredAtDate(null);
-            if ($status->name === RequestStatusEnum::Cancelled->value) {
+        switch ($status->name) {
+
+            case(RequestStatusEnum::Completed->value):
+                $this->setAnsweredAtDate($inputData['answered_at']);
+                break;
+
+            case(RequestStatusEnum::Success->value):
+                $this->setAnsweredAtDate($inputData['answered_at']);
                 $this->setProspectToZero();
-            }
+                break;
+
+            case(RequestStatusEnum::Cancelled->value):
+                $this->setAnsweredAtDate(null);
+                $this->setProspectToZero();
+                break;
+
+            default:
+                $this->setAnsweredAtDate(null);
         }
     }
 

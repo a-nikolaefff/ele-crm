@@ -126,6 +126,8 @@
                             @break
                             @case('отменена') statusBadge_cancelled
                             @break
+                            @case('заказ получен') statusBadge_success
+                            @break
                         @endswitch
                         ">
                                 {{ $request->status->name }}
