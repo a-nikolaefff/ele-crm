@@ -16,7 +16,7 @@
                         </div>
                         <div>
                             @can('delete', $user)
-                                <x-delete-modal-button question="Вы уверены, что хотите удалить эту группу пользователей?"
+                                <x-delete-modal-button question="Вы уверены, что хотите удалить этого пользователя?"
                                                        :route="route('users.destroy', $user->id)"/>
                             @endcan
                         </div>
@@ -45,7 +45,7 @@
                         <div class="row mb-3">
                             <label for="role" class="col-md-4 col-form-label text-md-end">Роль</label>
                             <div class="col-md-6">
-                                <select id="role "name="role_id"
+                                <select id="role" name="role_id"
                                         class="form-select @error('role_id') is-invalid @enderror">
                                     @foreach($roles as $role)
                                         <option

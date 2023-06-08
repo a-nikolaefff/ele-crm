@@ -1,4 +1,6 @@
- @extends('layouts.app')
+@extends('layouts.app')
+
+@section('title', 'Подтверждение email')
 
 @section('content')
     <div class="container">

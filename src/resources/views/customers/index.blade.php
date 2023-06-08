@@ -5,7 +5,7 @@
 @section('content')
     <x-page-title title="Заказчики"></x-page-title>
 
-   <x-error-messages></x-error-messages>
+    <x-error-messages></x-error-messages>
 
     <div class="mb-3">
         <a href="{{ route('customers.create') }}"
@@ -140,20 +140,18 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col-4 entityTable__fieldName">
-                                                    Сайт
-                                                </div>
-                                                <div class="col-8">
-                                                    @if($customer->website)
+                                            @if($customer->website)
+                                                <div class="row">
+                                                    <div class="col-4 entityTable__fieldName">
+                                                        Сайт
+                                                    </div>
+                                                    <div class="col-8">
                                                         <a href="{{ $customer->website }}" target="_blank">
                                                             {{ $customer->website }}
                                                         </a>
-                                                    @else
-                                                        не указан
-                                                    @endif
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
 
                                         </div>
                                         <div class="col-6">

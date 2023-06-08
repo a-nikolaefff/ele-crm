@@ -181,18 +181,16 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row mb-2">
-                                                <div class="col-4 entityTable__fieldName">
-                                                    Дата ответа
-                                                </div>
-                                                <div class="col-8">
-                                                    @if($request->answered_at)
+                                            @if($request->answered_at)
+                                                <div class="row mb-2">
+                                                    <div class="col-4 entityTable__fieldName">
+                                                        Дата ответа
+                                                    </div>
+                                                    <div class="col-8">
                                                         {{ $request->answered_at->format('d.m.Y') }}
-                                                    @else
-                                                        ответ не дан
-                                                    @endif
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
 
                                             <div class="row mb-2">
                                                 <div class="col-4 entityTable__fieldName">
@@ -203,16 +201,16 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row mb-2">
-                                                <div class="col-4 entityTable__fieldName">
-                                                    Проектная организация
-                                                </div>
-                                                <div class="col-8">
-                                                    @if($request->projectOrganization)
+                                            @if($request->projectOrganization)
+                                                <div class="row mb-2">
+                                                    <div class="col-4 entityTable__fieldName">
+                                                        Проектная организация
+                                                    </div>
+                                                    <div class="col-8">
                                                         {{ $request->projectOrganization->name }}
-                                                    @endif
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
 
                                             <div class="row mb-2">
                                                 <div class="col-4 entityTable__fieldName">
@@ -259,27 +257,27 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row mb-2">
-                                                <div class="col-4 entityTable__fieldName">
-                                                    Ожидаемая дата заказа
-                                                </div>
-                                                <div class="col-8">
-                                                    @if($request->expected_order_date)
+                                            @if($request->expected_order_date)
+                                                <div class="row mb-2">
+                                                    <div class="col-4 entityTable__fieldName">
+                                                        Ожидаемая дата заказа
+                                                    </div>
+                                                    <div class="col-8">
                                                         {{ $request->expected_order_date->format('d.m.Y') }}
-                                                    @else
-                                                        не задана
-                                                    @endif
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
 
-                                            <div class="row mb-2">
-                                                <div class="col-4 entityTable__fieldName">
-                                                    Комментарий
+                                            @if($request->comment)
+                                                <div class="row">
+                                                    <div class="col-4 entityTable__fieldName">
+                                                        Комментарий
+                                                    </div>
+                                                    <div class="col-8">
+                                                        {{ $request->comment }}
+                                                    </div>
                                                 </div>
-                                                <div class="col-8">
-                                                    {{ $request->comment }}
-                                                </div>
-                                            </div>
+                                            @endif
 
                                         </div>
                                     </div>
