@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Request;
 
 use App\Enums\RequestStatusEnum;
+use App\Helpers\DateHelper;
 use App\Models\RequestStatus;
 use Carbon\Carbon;
 
@@ -21,7 +22,6 @@ class UpdateRequestService extends RequestService
         $status = RequestStatus::find((int)$inputData['status_id']);
 
         switch ($status->name) {
-
             case(RequestStatusEnum::Completed->value):
                 $this->setAnsweredAtDate($inputData['answered_at']);
                 break;
@@ -54,8 +54,7 @@ class UpdateRequestService extends RequestService
     private function setAnsweredAtDate(?string $answeredAt): void
     {
         if (isset($answeredAt)) {
-            $this->processedData['answered_at'] = Carbon::createFromFormat(
-                'd.m.Y',
+            $this->processedData['answered_at'] = DateHelper::createFromString(
                 $answeredAt
             );
         } else {

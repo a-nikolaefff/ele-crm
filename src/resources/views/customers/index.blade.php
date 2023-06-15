@@ -33,7 +33,7 @@
         not-specified-option-selector="не задан"
     ></x-option-selector>
 
-    <div class="table-responsive">
+    <div class="table-responsive-xl">
         <table class="table text-center table-fixed align-middle entityTable" id="sortableTable">
 
             <thead>
@@ -100,7 +100,7 @@
                                                 <div class="col-4 entityTable__fieldName">
                                                     Имя
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-8 max-w-415 break-long-words">
                                                     {{ $customer->name }}
                                                 </div>
                                             </div>
@@ -109,7 +109,7 @@
                                                 <div class="col-4 entityTable__fieldName">
                                                     Полное имя
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-8 max-w-415 break-long-words">
                                                     {{ $customer->full_name }}
                                                 </div>
                                             </div>
@@ -145,7 +145,7 @@
                                                     <div class="col-4 entityTable__fieldName">
                                                         Сайт
                                                     </div>
-                                                    <div class="col-8">
+                                                    <div class="col-8 max-w-415 break-long-words">
                                                         <a href="{{ $customer->website }}" target="_blank">
                                                             {{ $customer->website }}
                                                         </a>
@@ -160,7 +160,7 @@
                                                 <div class="col-4 entityTable__fieldName">
                                                     Контактное лицо
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-8 max-w-415 break-long-words">
                                                     @if($customer->contact_person)
                                                         {{ $customer->contact_person }}
                                                     @else
@@ -174,7 +174,7 @@
                                                 <div class="col-4 entityTable__fieldName">
                                                     Должность
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-8 max-w-415 break-long-words">
                                                     @if($customer->post)
                                                         {{ $customer->post }}
                                                     @else
@@ -187,7 +187,7 @@
                                                 <div class="col-4 entityTable__fieldName">
                                                     Email
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-8 max-w-415 break-long-words">
                                                     @if($customer->email)
                                                         <a href="mailto:{{$customer->email}}">
                                                             {{ $customer->email }}
@@ -202,7 +202,7 @@
                                                 <div class="col-4 entityTable__fieldName">
                                                     Телефон
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-8 max-w-415 break-long-words">
                                                     @if($customer->phone)
                                                         <a href="tel:{{$customer->phone}}">
                                                             {{ $customer->phone->formatInternational() }}

@@ -33,9 +33,9 @@
                                 Наименование
                             </label>
                             <div class="col-md-6">
-                                <input id="name" name="name" type="text"
+                                <input id="name" name="name" type="text" maxlength="50"
                                        class="form-control @error('name') is-invalid @enderror"
-                                       value="{{ $customerType->name }}" required
+                                       value="{{ old('name', $customerType->name) }}" required
                                        aria-labelledby="nameHelpBlock"
                                        autofocus>
                                 @error('name')

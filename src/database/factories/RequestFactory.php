@@ -7,7 +7,6 @@ use App\Models\Customer;
 use App\Models\CustomerType;
 use App\Models\RequestStatus;
 use App\Models\User;
-use App\Services\Request\CreateRequestService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -36,7 +36,8 @@
                                        class="form-control @error('received_at') is-invalid @enderror"
                                        autocomplete="off" required
                                        aria-labelledby="receivedAtDateHelpBlock"
-                                       value="{{ $request->received_at->format('d.m.Y') }}">
+                                       value="{{ old('received_at', $request->received_at->format('d.m.Y')) }}">
+
                                 @error('received_at')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -56,10 +57,10 @@
                             </label>
                             <div class="col-md-6 mb-2 mb-md-0">
                                 <div class="d-flex">
-                                    <input id="customerAutocomplete" autocomplete="off"
+                                    <input id="customerAutocomplete" name="customer" autocomplete="off"
                                            class="form-control @error('customer_id') is-invalid @enderror"
-                                           value="{{ $request->customer->name }}" aria-labelledby="customerHelpBlock"
-
+                                           value="{{ $request->customer->name }}"
+                                           aria-labelledby="customerHelpBlock"
                                     >
                                     <input id="customerId" name="customer_id" hidden="hidden"
                                            value="{{ $request->customer->id }}">
@@ -142,7 +143,8 @@
                             <div class="col-md-6">
                                 <textarea id="object" name="object" type="text" rows="5"
                                           class="form-control @error('object') is-invalid d-block @enderror"
-                                          required aria-labelledby="objectHelpBlock">{{ $request->object }}</textarea>
+                                          required aria-labelledby="objectHelpBlock"
+                                >{{ old('object',$request->object) }}</textarea>
                                 @error('object')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -163,7 +165,9 @@
                             <div class="col-md-6">
                                 <textarea id="equipment" name="equipment" type="text" rows="5"
                                           class="form-control @error('equipment') is-invalid @enderror"
-                                          required aria-labelledby="equipmentHelpBlock">{{ $request->equipment }}</textarea>
+                                          required
+                                          aria-labelledby="equipmentHelpBlock"
+                                >{{ old('equipment', $request->equipment) }}</textarea>
 
                                 @error('equipment')
                                 <span class="invalid-feedback" role="alert">
@@ -185,7 +189,7 @@
                                 <textarea id="comment" name="comment" type="text" rows="5"
                                           class="form-control @error('comment') is-invalid @enderror"
                                           aria-labelledby="commentHelpBlock"
-                                >{{ $request->comment }}</textarea>
+                                >{{ old('comment', $request->comment) }}</textarea>
                                 @error('comment')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -205,7 +209,7 @@
                             <div class="col-md-6">
                                 <input id="prospect" name="prospect" type="range"
                                        class="form-range @error('prospect') is-invalid @enderror"
-                                       min="0" max="5" value="{{ $request->prospect }}">
+                                       min="0" max="5" value="{{ old('prospect', $request->prospect) }}">
                                 @error('prospect')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -223,7 +227,7 @@
                                         name="status_id">
                                     @foreach($statuses as $status)
                                         <option
-                                            value="{{ $status->id }}" {{ $request->status->id == $status->id ? 'selected' : '' }}
+                                            value="{{ $status->id }}" {{ old('status_id', $request->status->id) == $status->id ? 'selected' : '' }}
                                         >{{ $status->name }}</option>
                                     @endforeach
                                 </select>
@@ -246,7 +250,7 @@
                                        class="form-control @error('answered_at') is-invalid @enderror"
                                        autocomplete="off"
                                        @if($request->answered_at)
-                                           value="{{ $request->answered_at->format('d.m.Y') }}"
+                                           value="{{ old('answered_at', $request->answered_at->format('d.m.Y')) }}"
                                     @endif
                                 >
                                 @error('answered_at')
@@ -267,7 +271,7 @@
                                        class="form-control @error('expected_order_date') is-invalid @enderror"
                                        autocomplete="off"
                                        @if($request->expected_order_date)
-                                           value="{{ $request->expected_order_date->format('d.m.Y') }}"
+                                           value="{{ old('expected_order_date', $request->expected_order_date->format('d.m.Y')) }}"
                                     @endif>
                                 @error('expected_order_date')
                                 <span class="invalid-feedback" role="alert">

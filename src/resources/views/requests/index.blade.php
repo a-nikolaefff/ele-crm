@@ -32,7 +32,7 @@
         all-options-selector='любой статус'
     ></x-option-selector>
 
-    <div class="table-responsive">
+    <div class="table-responsive-xl">
         <table class="table text-center table-fixed align-middle entityTable" id="sortableTable">
 
             <thead>
@@ -216,7 +216,7 @@
                                                 <div class="col-4 entityTable__fieldName">
                                                     Объект
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-8 max-w-415 break-long-words">
                                                     {{ $request->object }}
                                                 </div>
                                             </div>
@@ -225,7 +225,7 @@
                                                 <div class="col-4 entityTable__fieldName">
                                                     Номенклатура
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-8 max-w-415 break-long-words">
                                                     {{ $request->equipment }}
                                                 </div>
                                             </div>
@@ -273,7 +273,7 @@
                                                     <div class="col-4 entityTable__fieldName">
                                                         Комментарий
                                                     </div>
-                                                    <div class="col-8">
+                                                    <div class="col-8 max-w-415 break-long-words">
                                                         {{ $request->comment }}
                                                     </div>
                                                 </div>

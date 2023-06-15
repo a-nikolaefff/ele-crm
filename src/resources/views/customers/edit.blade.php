@@ -36,9 +36,9 @@
                                 Имя
                             </label>
                             <div class="col-md-6">
-                                <input id="name" name="name" type="text"
+                                <input id="name" name="name" type="text" maxlength="30"
                                        class="form-control @error('name') is-invalid @enderror" autocomplete="off"
-                                       value="{{ $customer->name }}" required autofocus
+                                       value="{{ old('name', $customer->name) }}" required autofocus
                                        aria-labelledby="nameHelpBlock">
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -57,9 +57,9 @@
                                 Полное имя
                             </label>
                             <div class="col-md-6">
-                                <input id="fullName" name="full_name" type="text"
+                                <input id="fullName" name="full_name" type="text" maxlength="70"
                                        class="form-control @error('full_name') is-invalid @enderror" autocomplete="off"
-                                       required value="{{ $customer->full_name }}"
+                                       required value="{{ old('full_name', $customer->full_name) }}"
                                        aria-labelledby="fullNameHelpBlock">
                                 @error('full_name')
                                 <span class="invalid-feedback" role="alert">
@@ -81,7 +81,7 @@
                                     <option value="">не задан</option>
                                     @foreach($types as $type)
                                         <option
-                                            value="{{ $type->id }}" {{ $customer->customer_type_id == $type->id ? 'selected' : '' }}
+                                            value="{{ $type->id }}" {{ old('role_id', $customer->customer_type_id) == $type->id ? 'selected' : '' }}
                                         >{{ $type->name }}</option>
                                     @endforeach
                                 </select>
@@ -117,7 +117,7 @@
                             <div class="col-md-6">
                                 <input id="website" name="website" type="url"
                                        class="form-control @error('website') is-invalid @enderror" autocomplete="off"
-                                       value="{{ $customer->website }}"
+                                       value="{{ old('website', $customer->website) }}"
                                        placeholder="включая часть http:// или https://">
                                 @error('website')
                                 <span class="invalid-feedback" role="alert">
@@ -133,8 +133,9 @@
                             </label>
                             <div class="col-md-6">
                                 <input id="contact_person" name="contact_person" type="text" autocomplete="off"
+                                       maxlength="70"
                                        class="form-control @error('contact_person') is-invalid @enderror"
-                                       value="{{ $customer->contact_person }}"
+                                       value="{{ old('contact_person', $customer->contact_person) }}"
                                        aria-labelledby="contactPersonHelpBlock">
                                 @error('contact_person')
                                 <span class="invalid-feedback" role="alert">
@@ -153,9 +154,9 @@
                                 Должность
                             </label>
                             <div class="col-md-6">
-                                <input id="post" name="post" type="text" autocomplete="off"
+                                <input id="post" name="post" type="text" autocomplete="off" maxlength="70"
                                        class="form-control @error('post') is-invalid @enderror"
-                                       value="{{ $customer->post }}">
+                                       value="{{ old('post', $customer->post) }}">
                                 @error('post')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -175,7 +176,7 @@
                             <div class="col-md-6">
                                 <input id="email" name="email" type="email" autocomplete="off"
                                        class="form-control @error('email') is-invalid @enderror"
-                                       value="{{ $customer->email }}">
+                                       value="{{ old('email', $customer->email) }}">
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -192,7 +193,7 @@
                                 <input id="phone" name="phone" type="tel"
                                        class="form-control @error('phone') is-invalid @enderror"
                                        autocomplete="off" placeholder="включая код страны (+7 или иной код)"
-                                       value="{{ $customer->phone }}">
+                                       value="{{ old('phone', $customer->phone) }}">
                                 @error('phone')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

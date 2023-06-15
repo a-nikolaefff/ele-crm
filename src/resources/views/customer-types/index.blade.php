@@ -13,7 +13,7 @@
             <button type="button" class="btn btn-success">Создать тип</button>
         </a>
     @endcan
-    <div class="table-responsive">
+    <div class="table-responsive-xl">
         <table class="table text-center table-fixed align-middle entityTable" id="sortableTable">
 
             <thead>
@@ -80,7 +80,7 @@
                                                 <div class="col-4 entityTable__fieldName">
                                                     Наименование
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-8 max-w-415 break-long-words">
                                                     {{ $type->name }}
                                                 </div>
                                             </div>

@@ -26,7 +26,7 @@
                                 Имя
                             </label>
                             <div class="col-md-6">
-                                <input id="name" name="name" type="text"
+                                <input id="name" name="name" type="text" maxlength="30"
                                        class="form-control @error('name') is-invalid @enderror" autocomplete="off"
                                        required autofocus value="{{ old('name') }}"
                                        aria-labelledby="nameHelpBlock">
@@ -47,7 +47,7 @@
                                 Полное имя
                             </label>
                             <div class="col-md-6">
-                                <input id="full-name" name="full_name" type="text"
+                                <input id="full-name" name="full_name" type="text" maxlength="70"
                                        class="form-control @error('full_name') is-invalid @enderror" autocomplete="off"
                                        required value="{{ old('full_name') }}"
                                        aria-labelledby="fullNameHelpBlock">
@@ -121,6 +121,7 @@
                             </label>
                             <div class="col-md-6">
                                 <input id="contactPerson" name="contact_person" type="text" autocomplete="off"
+                                       maxlength="70"
                                        class="form-control @error('contact_person') is-invalid @enderror"
                                        value="{{ old('contact_person') }}"
                                        aria-labelledby="contactPersonHelpBlock">

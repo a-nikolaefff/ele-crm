@@ -31,9 +31,9 @@
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">Имя</label>
                             <div class="col-md-6">
-                                <input id="name" name="name" type="text"
+                                <input id="name" name="name" type="text" maxlength="50"
                                        class="form-control @error('name') is-invalid @enderror"
-                                       value="{{ $user->name }}" required autocomplete="name"
+                                       value="{{ old('name', $user->name) }}" required autocomplete="name"
                                        aria-labelledby="nameHelpBlock"
                                        autofocus>
                                 @error('name')
@@ -43,7 +43,7 @@
                                 @enderror
 
                                 <div id="nameHelpBlock" class="form-text">
-                                    Обязательное поле. Не более 70 символов.
+                                    Обязательное поле. Не более 50 символов.
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                         class="form-select @error('role_id') is-invalid @enderror">
                                     @foreach($roles as $role)
                                         <option
-                                            value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                                            value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
                                             {{ $role->name }}
                                         </option>
                                     @endforeach

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Request;
 
+use App\Rules\NotBeforeReceivedDate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequestRequest extends FormRequest
@@ -33,7 +34,7 @@ class StoreRequestRequest extends FormRequest
                 'nullable'
             ],
             'prospect' => 'required|integer|between:0,5',
-            'expected_order_date' => ['date', 'nullable'],
+            'expected_order_date' => ['date', 'nullable', new NotBeforeReceivedDate],
         ];
     }
 }

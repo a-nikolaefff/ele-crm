@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Request;
 
-use Carbon\Carbon;
+use App\Helpers\DateHelper;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -83,8 +83,7 @@ abstract class RequestService
      */
     private function setReceivedAtDate(string $receivedAt): void
     {
-        $this->processedData['received_at'] = Carbon::createFromFormat(
-            'd.m.Y',
+        $this->processedData['received_at'] = DateHelper::createFromString(
             $receivedAt
         );
     }
@@ -103,10 +102,7 @@ abstract class RequestService
     {
         if (isset($expectedOrderDate)) {
             $this->processedData['expected_order_date']
-                = Carbon::createFromFormat(
-                'd.m.Y',
-                $expectedOrderDate
-            );
+                = DateHelper::createFromString($expectedOrderDate);
         }
     }
 

@@ -16,15 +16,20 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-end">Имя</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text"
+                                    <input id="name" type="text" maxlength="50"
                                            class="form-control @error('name') is-invalid @enderror" name="name"
-                                           value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                           value="{{ old('name') }}" required autocomplete="name" autofocus
+                                           aria-labelledby="nameHelpBlock">
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+
+                                    <div id="nameHelpBlock" class="form-text">
+                                       Не более 50 символов.
+                                    </div>
                                 </div>
                             </div>
 
@@ -35,13 +40,16 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                            class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value="{{ old('email') }}" required autocomplete="email">
+                                           value="{{ old('email') }}" required autocomplete="email"
+                                    >
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+
+
                                 </div>
                             </div>
 
@@ -50,15 +58,19 @@
                                        class="col-md-4 col-form-label text-md-end">Пароль</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password"
+                                    <input id="password" type="password" minlength="8"
                                            class="form-control @error('password') is-invalid @enderror" name="password"
-                                           required autocomplete="new-password">
+                                           required autocomplete="new-password" aria-labelledby="passwordHelpBlock">
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+
+                                    <div id="passwordHelpBlock" class="form-text">
+                                        Не менее 8 символов
+                                    </div>
                                 </div>
                             </div>
 

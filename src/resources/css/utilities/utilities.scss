@@ -20,8 +20,18 @@
     max-width: 250px;
 }
 
+.max-w-415 {
+    max-width: 415px;
+}
+
 // Special classes
 .icon-button {
     background: none;
     border: none;
 }
+
+.break-long-words {
+    overflow-wrap: break-word;
+}
+
+
