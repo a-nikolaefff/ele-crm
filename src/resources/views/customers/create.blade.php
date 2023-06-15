@@ -28,12 +28,17 @@
                             <div class="col-md-6">
                                 <input id="name" name="name" type="text"
                                        class="form-control @error('name') is-invalid @enderror" autocomplete="off"
-                                       required autofocus value="{{ old('name') }}">
+                                       required autofocus value="{{ old('name') }}"
+                                       aria-labelledby="nameHelpBlock">
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+
+                                <div id="nameHelpBlock" class="form-text">
+                                    Обязательное поле. Не более 30 символов.
+                                </div>
                             </div>
                         </div>
 
@@ -44,12 +49,17 @@
                             <div class="col-md-6">
                                 <input id="full-name" name="full_name" type="text"
                                        class="form-control @error('full_name') is-invalid @enderror" autocomplete="off"
-                                       required value="{{ old('full_name') }}">
+                                       required value="{{ old('full_name') }}"
+                                       aria-labelledby="fullNameHelpBlock">
                                 @error('full_name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+
+                                <div id="fullNameHelpBlock" class="form-text">
+                                    Обязательное поле. Не более 70 символов.
+                                </div>
                             </div>
                         </div>
 
@@ -95,7 +105,8 @@
                             <div class="col-md-6">
                                 <input id="website" name="website" type="url"
                                        class="form-control @error('website') is-invalid @enderror" autocomplete="off"
-                                       value="{{ old('website') }}">
+                                       value="{{ old('website') }}"
+                                       placeholder="включая часть http:// или https://">
                                 @error('website')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -105,18 +116,24 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="contact_person" class="col-md-4 col-form-label text-md-end">
+                            <label for="contactPerson" class="col-md-4 col-form-label text-md-end">
                                 Контактное лицо
                             </label>
                             <div class="col-md-6">
-                                <input id="contact_person" name="contact_person" type="text" autocomplete="off"
+                                <input id="contactPerson" name="contact_person" type="text" autocomplete="off"
                                        class="form-control @error('contact_person') is-invalid @enderror"
-                                       value="{{ old('contact_person') }}">
+                                       value="{{ old('contact_person') }}"
+                                       aria-labelledby="contactPersonHelpBlock">
+
                                 @error('contact_person')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+
+                                <div id="contactPersonHelpBlock" class="form-text">
+                                    Не более 70 символов
+                                </div>
                             </div>
                         </div>
 
@@ -127,12 +144,17 @@
                             <div class="col-md-6">
                                 <input id="post" name="post" type="text" autocomplete="off"
                                        class="form-control @error('post') is-invalid @enderror"
-                                       value="{{ old('post') }}">
+                                       value="{{ old('post') }}"
+                                       aria-labelledby="postHelpBlock">
                                 @error('post')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+
+                                <div id="postHelpBlock" class="form-text">
+                                    Не более 70 символов
+                                </div>
                             </div>
                         </div>
 

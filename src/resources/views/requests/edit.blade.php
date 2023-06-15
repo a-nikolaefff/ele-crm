@@ -35,12 +35,18 @@
                                        placeholder="Выберите дату поступления заявки"
                                        class="form-control @error('received_at') is-invalid @enderror"
                                        autocomplete="off" required
+                                       aria-labelledby="receivedAtDateHelpBlock"
                                        value="{{ $request->received_at->format('d.m.Y') }}">
                                 @error('received_at')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+
+                                <div id="receivedAtDateHelpBlock" class="form-text">
+                                    Обязательное поле
+                                </div>
+
                             </div>
                         </div>
 
@@ -52,7 +58,8 @@
                                 <div class="d-flex">
                                     <input id="customerAutocomplete" autocomplete="off"
                                            class="form-control @error('customer_id') is-invalid @enderror"
-                                           value="{{ $request->customer->name }}"
+                                           value="{{ $request->customer->name }}" aria-labelledby="customerHelpBlock"
+
                                     >
                                     <input id="customerId" name="customer_id" hidden="hidden"
                                            value="{{ $request->customer->id }}">
@@ -69,13 +76,18 @@
                                             <i class='bx bx-message-square-add'></i>
                                         </button>
                                     </a>
-
-                                    @error('customer_id')
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                </span>
-                                    @enderror
                                 </div>
+
+                                @error('customer_id')
+                                <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
+                                <div id="customerHelpBlock" class="form-text">
+                                    Обязательное поле
+                                </div>
+
                             </div>
 
                         </div>
@@ -130,12 +142,17 @@
                             <div class="col-md-6">
                                 <textarea id="object" name="object" type="text" rows="5"
                                           class="form-control @error('object') is-invalid d-block @enderror"
-                                          required>{{ $request->object }}</textarea>
+                                          required aria-labelledby="objectHelpBlock">{{ $request->object }}</textarea>
                                 @error('object')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+
+                                <div id="objectHelpBlock" class="form-text">
+                                    Обязательное поле. Не более 200 символов.
+                                </div>
+
                             </div>
                         </div>
 
@@ -146,12 +163,17 @@
                             <div class="col-md-6">
                                 <textarea id="equipment" name="equipment" type="text" rows="5"
                                           class="form-control @error('equipment') is-invalid @enderror"
-                                          required>{{ $request->equipment }}</textarea>
+                                          required aria-labelledby="equipmentHelpBlock">{{ $request->equipment }}</textarea>
+
                                 @error('equipment')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+
+                                <div id="equipmentHelpBlock" class="form-text">
+                                    Обязательное поле. Не более 200 символов.
+                                </div>
                             </div>
                         </div>
 
@@ -162,12 +184,17 @@
                             <div class="col-md-6">
                                 <textarea id="comment" name="comment" type="text" rows="5"
                                           class="form-control @error('comment') is-invalid @enderror"
+                                          aria-labelledby="commentHelpBlock"
                                 >{{ $request->comment }}</textarea>
                                 @error('comment')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+
+                                <div id="commentHelpBlock" class="form-text">
+                                    Не более 200 символов
+                                </div>
                             </div>
                         </div>
 

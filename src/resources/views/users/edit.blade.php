@@ -33,12 +33,18 @@
                             <div class="col-md-6">
                                 <input id="name" name="name" type="text"
                                        class="form-control @error('name') is-invalid @enderror"
-                                       value="{{ $user->name }}" required autocomplete="name" autofocus>
+                                       value="{{ $user->name }}" required autocomplete="name"
+                                       aria-labelledby="nameHelpBlock"
+                                       autofocus>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+
+                                <div id="nameHelpBlock" class="form-text">
+                                    Обязательное поле. Не более 70 символов.
+                                </div>
                             </div>
                         </div>
 
