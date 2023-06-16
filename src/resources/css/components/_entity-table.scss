@@ -14,15 +14,25 @@
         padding: 0 !important;
     }
 
-    &__fullInfoBlock {
+    &__fullInfo {
         /*
         The 99.5% width is needed to avoid the horizontal scroll that appears when using the bootstrap
         table-responsive class
         */
         width: 99.5%;
         padding: 10px 10px;
-        background-color: $fullInfoBlock;
+        background-color: $fullInfoBackgroundColor;
         text-align: start;
+    }
+
+    &__infoBlock {
+        background-color: $infoBlockBackgroundColor;
+        padding: 10px 0;
+        border-radius: 10px;
+        box-shadow: 2px 2px 7px 0 rgba(0, 0, 0, 0.3);
+        &_userInfo {
+            font-size: 0.85rem;
+        }
     }
 
     &__fieldName {
@@ -30,7 +40,10 @@
         font-weight: 600;
     }
 
-    &__userInfoBlock {
-        font-size: 0.85rem;
+    &__fieldValue {
+        max-width: 415px;
+        overflow-wrap: break-word;
     }
 }
+
+

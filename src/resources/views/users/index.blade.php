@@ -25,6 +25,12 @@
         all-options-selector='Любая роль'
     ></x-option-selector>
 
+    @if($users->count() === 0)
+        <p class="h5 mt-2">
+            Результаты не найдены
+        </p>
+    @else
+
     <div class="table-responsive-xl">
         <table class="table text-center table-fixed align-middle entityTable" id="sortableTable">
 
@@ -109,101 +115,96 @@
                     <td colspan="12">
                         <div class="collapse" id="user_{{$user->id}}">
                             <div class="d-flex justify-content-center">
-                                <div class="entityTable__fullInfoBlock">
-                                    <div class="row gx-0">
+                                <div class="entityTable__fullInfo">
+                                    <div class="row gx-3">
                                         <div class="col-6">
-
-                                            <div class="row mb-2">
-                                                <div class="col-4 entityTable__fieldName">
-                                                    Имя
+                                            <div class="entityTable__infoBlock">
+                                                <div class="row mb-2">
+                                                    <div class="col-4 entityTable__fieldName">
+                                                        Имя:
+                                                    </div>
+                                                    <div class="col-8 entityTable__fieldValue">
+                                                        {{ $user->name }}
+                                                    </div>
                                                 </div>
-                                                <div class="col-8 max-w-415 break-long-words">
-                                                    {{ $user->name }}
+                                                <div class="row">
+                                                    <div class="col-4 entityTable__fieldName">
+                                                        Роль:
+                                                    </div>
+                                                    <div class="col-8">
+                                                        {{ $user->role->name }}
+                                                    </div>
                                                 </div>
                                             </div>
-
-                                            <div class="row">
-                                                <div class="col-4 entityTable__fieldName">
-                                                    Роль
-                                                </div>
-                                                <div class="col-8">
-                                                    {{ $user->role->name }}
-                                                </div>
-                                            </div>
-
 
                                         </div>
                                         <div class="col-6">
-
-                                            <div class="row mb-2">
-                                                <div class="col-4 entityTable__fieldName">
-                                                    Email
+                                            <div class="entityTable__infoBlock">
+                                                <div class="row mb-2">
+                                                    <div class="col-4 entityTable__fieldName">
+                                                        Email:
+                                                    </div>
+                                                    <div class="col-8 entityTable__fieldValue">
+                                                        {{ $user->email }}
+                                                    </div>
                                                 </div>
-                                                <div class="col-8 max-w-415 break-long-words">
-                                                    {{ $user->email }}
+
+                                                <div class="row">
+                                                    <div class="col-4 entityTable__fieldName">
+                                                        Подтверждение email:
+                                                    </div>
+                                                    <div class="col-8">
+                                                        @if($user->email_verified_at)
+                                                            Да
+                                                        @else
+                                                            Нет
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-
-                                            <div class="row">
-                                                <div class="col-4 entityTable__fieldName">
-                                                    Подтверждение email
-                                                </div>
-                                                <div class="col-8">
-                                                    @if($user->email_verified_at)
-                                                        Да
-                                                    @else
-                                                        Нет
-                                                    @endif
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
 
                                     <hr>
 
-                                    <div class="entityTable__userInfoBlock">
-                                        <div class="row gx-0">
+                                        <div class="row gx-3">
                                             <div class="col-6">
-
-                                                <div class="row">
-                                                    <div class="col-6 col-lg-4 entityTable__fieldName">
-                                                        Зарегистрирован
-                                                    </div>
-                                                    <div class="col-6 col-lg-8">
-                                                        {{ $user->created_at }}
+                                                <div class="entityTable__infoBlock entityTable__infoBlock_userInfo">
+                                                    <div class="row">
+                                                        <div class="col-6 col-lg-4 entityTable__fieldName">
+                                                            Зарегистрирован:
+                                                        </div>
+                                                        <div class="col-6 col-lg-8">
+                                                            {{ $user->created_at }}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             @if($user->updatedByUser)
                                                 <div class="col-6">
-                                                    <div class="row mb-1">
-                                                        <div class="col-6 col-lg-4 entityTable__fieldName">
-                                                            Обновлен
+                                                    <div class="entityTable__infoBlock entityTable__infoBlock_userInfo">
+                                                        <div class="row mb-1">
+                                                            <div class="col-6 col-lg-4 entityTable__fieldName">
+                                                                Обновлен:
+                                                            </div>
+                                                            <div class="col-6 col-lg-8">
+                                                                {{ $user->updated_at }}
+                                                            </div>
                                                         </div>
-                                                        <div class="col-6 col-lg-8">
-                                                            {{ $user->updated_at }}
+
+                                                        <div class="row">
+                                                            <div class="col-6 col-lg-4 entityTable__fieldName">
+                                                                Администратором:
+                                                            </div>
+                                                            <div class="col-6 col-lg-8">
+                                                                {{ $user->updatedByUser->name }}
+                                                            </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="row">
-                                                        <div class="col-6 col-lg-4 entityTable__fieldName">
-                                                            Администратором
-                                                        </div>
-                                                        <div class="col-6 col-lg-8">
-                                                            {{ $user->updatedByUser->name }}
-                                                        </div>
-                                                    </div>
-
                                                 </div>
                                             @endif
-
-
                                         </div>
-                                    </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -218,7 +219,7 @@
             {{ $users->links() }}
         </div>
     </div>
-
+    @endif
 @endsection
 
 
