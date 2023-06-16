@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Request;
 
 use App\Rules\NotBeforeReceivedDate;
+use App\Rules\SameCustomer;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequestRequest extends FormRequest
@@ -33,6 +34,8 @@ class StoreRequestRequest extends FormRequest
                 'exists:customers,id',
                 'nullable'
             ],
+            'customer_employee_id' => ['nullable', new SameCustomer('customer_id')],
+            'project_organization_employee_id' => ['nullable', new SameCustomer('project_organization_id')],
             'prospect' => 'required|integer|between:0,5',
             'expected_order_date' => ['date', 'nullable', new NotBeforeReceivedDate],
         ];

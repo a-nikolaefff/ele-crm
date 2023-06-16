@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\BaseCustomerTypeEnum;
 use App\Filters\CustomerFilter;
+use App\Filters\RequestFilter;
 use App\Http\Requests\Customer\IndexCustomerRequest;
 use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
+use App\Http\Requests\Request\IndexRequestRequest;
 use App\Models\Customer;
 use App\Models\CustomerType;
+use App\Models\Request;
+use Illuminate\Http\Request as HttpRequest;
 use App\Services\Customer\CreateCustomerService;
 use App\Services\Customer\UpdateCustomerService;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CustomerController extends Controller
@@ -43,6 +45,41 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers', 'types'));
     }
 
+
+    /**
+     * Display the customer.
+     *
+     * @param Customer $customer
+     *
+     * @return View
+     */
+    public function show(
+        Customer $customer,
+        IndexRequestRequest $httpRequest
+    ): View {
+        $queryParams = $httpRequest->validated();
+        $queryParams['customer_id'] = $customer->id;
+
+        $filter = app()->make(
+            RequestFilter::class,
+            ['queryParams' => $queryParams]
+        );
+
+        $customer->load([
+            'type',
+            'employees',
+        ]);
+
+        $requests = Request::with('projectOrganization', 'status')
+            ->filter($filter)
+            ->sort($queryParams, 'number', 'desc')
+            ->paginate(6)
+            ->withQueryString();
+
+        return view('customers.show', compact('customer', 'requests'));
+    }
+
+
     /**
      * Show the form for creating a new customer.
      *
@@ -57,7 +94,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created customer in storage.
      *
-     * @param StoreCustomerRequest $request  The request object.
+     * @param StoreCustomerRequest  $request The request object.
      * @param CreateCustomerService $service The service for creating a customer.
      *
      * @return RedirectResponse The redirect response.
@@ -88,9 +125,10 @@ class CustomerController extends Controller
     /**
      * Update the specified customer in storage.
      *
-     * @param UpdateCustomerRequest $request The request object.
-     * @param Customer $customer The customer model instance.
-     * @param UpdateCustomerService $service The service for updating a customer.
+     * @param UpdateCustomerRequest $request  The request object.
+     * @param Customer              $customer The customer model instance.
+     * @param UpdateCustomerService $service  The service for updating a customer.
+     *
      * @return RedirectResponse The redirect response.
      */
     public function update(
@@ -108,6 +146,7 @@ class CustomerController extends Controller
      * Remove the specified customer from storage.
      *
      * @param Customer $customer The customer model instance.
+     *
      * @return RedirectResponse The redirect response.
      */
     public function destroy(Customer $customer): RedirectResponse
@@ -119,19 +158,23 @@ class CustomerController extends Controller
     /**
      * Returns the result of a search for customers in JSON format.
      *
-     * @param Request $request The request object.
+     * @param HttpRequest $request The request object.
+     *
      * @return JsonResponse The JSON response with customer data.
      */
-    public function autocomplete(Request $request): JsonResponse
+    public function autocomplete(HttpRequest $request): JsonResponse
     {
         $keyword = $request->input('search');
 
-        $isProjectOrganizationRequest = $request->input('is_project_organization');
+        $isProjectOrganizationRequest = $request->input(
+            'is_project_organization'
+        );
 
-        $customers = Customer::where(function ($query) use ($keyword) {
-            $query->where('name', 'like', "%$keyword%")
-                ->orWhere('full_name', 'like', "%$keyword%");
-        })
+        $customers = Customer::with('employees')
+            ->where(function ($query) use ($keyword) {
+                $query->where('name', 'like', "%$keyword%")
+                    ->orWhere('full_name', 'like', "%$keyword%");
+            })
             ->when(
                 $isProjectOrganizationRequest,
                 function ($query) {

@@ -13,12 +13,14 @@ class RequestFilter extends AbstractFilter
 {
     public const STATUS_ID = 'status_id';
     public const SEARCH = 'search';
+    public const CUSTOMER_ID = 'customer_id';
 
     protected function getCallbacks(): array
     {
         return [
             self::STATUS_ID => [$this, 'statusId'],
             self::SEARCH => [$this, 'search'],
+            self::CUSTOMER_ID => [$this, 'customerId'],
         ];
     }
 
@@ -29,9 +31,21 @@ class RequestFilter extends AbstractFilter
      * @param mixed $statusId The status ID.
      * @return void
      */
-    public function statusId(Builder $builder, $statusId)
+    public function statusId(Builder $builder, $statusId): void
     {
         $builder->where('status_id', $statusId);
+    }
+
+    /**
+     * Apply the filter based on customer ID.
+     *
+     * @param Builder $builder The Builder instance.
+     * @param mixed $statusId The status ID.
+     * @return void
+     */
+    public function customerId(Builder $builder, $customerId): void
+    {
+        $builder->where('customer_id', $customerId);
     }
 
     /**
@@ -41,7 +55,7 @@ class RequestFilter extends AbstractFilter
      * @param string $keyword The search keyword.
      * @return void
      */
-    public function search(Builder $builder, $keyword)
+    public function search(Builder $builder, $keyword): void
     {
         $builder->where(function ($query) use ($keyword) {
             $query->where('object', 'like', "%$keyword%")

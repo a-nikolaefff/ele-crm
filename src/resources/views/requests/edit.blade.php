@@ -88,9 +88,30 @@
                                 <div id="customerHelpBlock" class="form-text">
                                     Обязательное поле
                                 </div>
-
                             </div>
+                        </div>
 
+                        <div class="row mb-3">
+                            <label for="customerEmployeeSelect" class="col-md-4 col-form-label text-md-end">
+                                Контактное лицо заказчика
+                            </label>
+                            <div class="col-md-6">
+                                <select id="customerEmployeeSelect"
+                                        class="form-select @error('customer_employee_id') is-invalid @enderror"
+                                        name="customer_employee_id">
+                                    <option value="">не задан</option>
+                                    @foreach($request->customer->employees as $employee)
+                                        <option
+                                            value="{{ $employee->id }}" {{ old('customer_employee_id', $request->customer_employee_id) == $employee->id ? 'selected' : '' }}
+                                        >{{ $employee->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('customer_employee_id')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="row mb-3">
@@ -116,13 +137,11 @@
                                         <strong>{{ $message }}</strong>
                                 </span>
                                     @enderror
-
                                     <div id="projectOrganizationResetAutocomplete" class="resetAutocomplete">
                                         <button class="btn btn-outline-danger autocompleteButton" type="button">
                                             <i class='bx bx-x-circle'></i>
                                         </button>
                                     </div>
-
                                     <a href="{{ route('customers.create') }}" target="_blank"
                                     >
                                         <button class="btn btn-outline-success autocompleteButton" type="button">
@@ -131,9 +150,32 @@
                                     </a>
 
                                 </div>
-
                             </div>
+                        </div>
 
+                        <div class="row mb-3">
+                            <label for="projectOrganizationSelect" class="col-md-4 col-form-label text-md-end">
+                                Контактное лицо проектной орг.
+                            </label>
+                            <div class="col-md-6">
+                                <select id="projectOrganizationSelect"
+                                        class="form-select @error('project_organization_employee_id') is-invalid @enderror"
+                                        name="project_organization_employee_id">
+                                    <option value="">не задан</option>
+                                    @if($request->projectOrganization && $request->projectOrganization->employees)
+                                        @foreach($request->projectOrganization->employees as $employee)
+                                            <option
+                                                value="{{ $employee->id }}" {{ old('project_organization_employee_id', $request->project_organization_employee_id) == $employee->id ? 'selected' : '' }}
+                                            >{{ $employee->name }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                @error('project_organization_employee_id')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="row mb-3">
@@ -227,7 +269,7 @@
                                         name="status_id">
                                     @foreach($statuses as $status)
                                         <option
-                                            value="{{ $status->id }}" {{ old('status_id', $request->status->id) == $status->id ? 'selected' : '' }}
+                                            value="{{ $status->id }}" {{ old('status_id', $request->status_id) == $status->id ? 'selected' : '' }}
                                         >{{ $status->name }}</option>
                                     @endforeach
                                 </select>

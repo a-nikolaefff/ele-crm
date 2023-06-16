@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerEmployeeController;
 use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\HomeController;
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'verified', 'authorized'])->group(function () {
     Route::resource('customer-types', CustomerTypeController::class);
     Route::get('customers/autocomplete', [CustomerController::class, 'autocomplete']);
     Route::resource('customers', CustomerController::class);
+    Route::resource('customer-employees', CustomerEmployeeController::class);
     Route::resource('requests', RequestController::class);
 
 });

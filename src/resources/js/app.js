@@ -14,10 +14,6 @@ if (document.getElementById('searchForm')) {
     import ('./ui/search-form');
 }
 
-if (document.querySelectorAll('.accordion-arrow')) {
-    import ('./ui/accordion-arrow');
-}
-
 if (document.getElementById('customerAutocomplete')) {
     import ('./pages/requests/customer-autocomplete');
 }

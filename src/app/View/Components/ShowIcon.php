@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class AccordionArrow extends Component
+class ShowIcon extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class AccordionArrow extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.accordion-arrow');
+        return view('components.show-icon');
     }
 }

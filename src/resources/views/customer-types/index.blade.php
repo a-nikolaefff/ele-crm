@@ -14,11 +14,11 @@
         </a>
     @endcan
     <div class="table-responsive-xl">
-        <table class="table text-center table-fixed align-middle entityTable" id="sortableTable">
+        <table class="table text-center table-fixed table-hover align-middle entityTable" id="sortableTable">
 
             <thead>
             <tr class="align-middle">
-                <th class="col-2" scope="col">
+                <th class="col-6" scope="col">
                     <a class="d-block"
                        href="{{ route('customer-types.index', ['sort' => 'name', 'direction' => 'asc']) }}"
                     >
@@ -26,7 +26,7 @@
                     </a>
                 </th>
 
-                <th class="col-2" scope="col">
+                <th class="col-5" scope="col">
                     <a class="d-block"
                        href="{{ route('customer-types.index', ['sort' => 'is_base_type', 'direction' => 'asc']) }}"
                     >
@@ -41,10 +41,10 @@
             <tbody>
             @foreach($customerTypes as $type)
                 <tr>
-                    <td>
+                    <td class="clickable" data-bs-toggle="collapse" data-bs-target="#customerType_{{$type->id}}">
                         {{ $type->name }}
                     </td>
-                    <td>
+                    <td class="clickable" data-bs-toggle="collapse" data-bs-target="#customerType_{{$type->id}}">
                         @if($type->is_base_type)
                             Базовый тип CRM
                         @else
@@ -52,13 +52,7 @@
                         @endif
                     </td>
 
-                    <td class="min-w-130 text-start">
-                        <button data-bs-toggle="collapse" data-bs-target="#customerType_{{$type->id}}"
-                                class="icon-button" type="button"
-                        >
-                            <x-accordion-arrow></x-accordion-arrow>
-                        </button>
-
+                    <td class="min-w-130 text-center">
                         @can('update', $type)
                             <a href="{{ route('customer-types.edit', $type->id) }}">
                                 <x-edit-icon></x-edit-icon>
@@ -74,9 +68,8 @@
                             <div class="d-flex justify-content-center">
                                 <div class="entityTable__fullInfo">
                                     <div class="row gx-3">
-
                                         <div class="col-6">
-                                            <div class="entityTable__infoBlock">
+                                            <div class="entityTable__infoBlock mb-3">
                                                 <div class="row">
                                                     <div class="col-4 entityTable__fieldName">
                                                         Наименование
@@ -86,9 +79,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="col-6">
                                             <div class="entityTable__infoBlock">
                                                 <div class="row">
                                                     <div class="col-4 entityTable__fieldName">
@@ -103,45 +93,30 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
-                                    </div>
-
-                                    <hr>
-
-                                    <div class="entityTable__userInfoBlock">
-                                        <div class="row gx-3">
-                                            <div class="col-6">
-                                                <div class="entityTable__infoBlock entityTable__infoBlock_userInfo">
-                                                    <div class="row">
-                                                        <div class="col-6 col-lg-4 entityTable__fieldName">
-                                                            Создан
-                                                        </div>
-                                                        <div class="col-6 col-lg-8">
-                                                            {{ $type->created_at }}
-                                                        </div>
+                                        <div class="col-6">
+                                            <div class="entityTable__infoBlock mb-3">
+                                                <div class="row">
+                                                    <div class="col-6 col-lg-4 entityTable__fieldName">
+                                                        Создан
                                                     </div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-6">
-                                                <div class="entityTable__infoBlock entityTable__infoBlock_userInfo">
-                                                    <div class="row">
-                                                        <div class="col-6 col-lg-4 entityTable__fieldName">
-                                                            Обновлен
-                                                        </div>
-                                                        <div class="col-6 col-lg-8">
-                                                            {{ $type->updated_at }}
-                                                        </div>
+                                                    <div class="col-6 col-lg-8">
+                                                        {{ $type->created_at }}
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <div class="entityTable__infoBlock">
+                                                <div class="row">
+                                                    <div class="col-6 col-lg-4 entityTable__fieldName">
+                                                        Обновлен
+                                                    </div>
+                                                    <div class="col-6 col-lg-8">
+                                                        {{ $type->updated_at }}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

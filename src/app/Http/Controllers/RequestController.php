@@ -36,7 +36,13 @@ class RequestController extends Controller
                 '=',
                 'customers.id'
             )
-            ->with('customer', 'projectOrganization', 'status')
+            ->with(
+                'customer',
+                'projectOrganization',
+                'customerEmployee',
+                'projectOrganizationEmployee',
+                'status'
+            )
             ->filter($filter)
             ->sort($queryParams, 'number', 'desc')
             ->paginate(6)
@@ -83,7 +89,7 @@ class RequestController extends Controller
      */
     public function edit(Request $request): View
     {
-        $request->load(['customer', 'projectOrganization']);
+        $request->load(['customer.employees', 'projectOrganization.employees']);
         $statuses = RequestStatus::all();
         return view('requests.edit', compact('request', 'statuses'));
     }

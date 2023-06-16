@@ -22,14 +22,28 @@ class RequestFactory extends Factory
      */
     public function definition(): array
     {
-        $customerId = Customer::pluck('id');
+        $customers = Customer::with('employees')->get();
+        $customer = $customers->random();
+        $customerEmployeeId = null;
+        if ($customer->employees->count() > 0) {
+            $customerEmployeeId = $customer->employees->random()->id;
+        }
 
         $projectOrganizationTypeId = CustomerType::getBaseCustomerType(
             BaseCustomerTypeEnum::ProjectOrganization
         )->get()->first()->id;
+        $projectOrganizations = Customer::with('employees')
+            ->where(
+                'customer_type_id',
+                $projectOrganizationTypeId
+            )->get();
+        $projectOrganization = $projectOrganizations->random();
+        $projectOrganizationEmployeeId = null;
+        if ($projectOrganization->employees->count() > 0) {
+            $projectOrganizationEmployeeId
+                = $projectOrganization->employees->random()->id;
+        }
 
-        $projectOrganizationId = Customer::where('customer_type_id',
-            $projectOrganizationTypeId)->pluck('id');
 
         $statusId = RequestStatus::pluck('id');
 
@@ -39,18 +53,20 @@ class RequestFactory extends Factory
 
         $collection = collect($numbers);
 
-        $prospect = collect([0,1,2,3,4,5]);
+        $prospect = collect([0, 1, 2, 3, 4, 5]);
 
         return [
             'number' => $collection->random(),
             'received_at' => Carbon::now(),
-            'answered_at'=> Carbon::now(),
+            'answered_at' => Carbon::now(),
             'expected_order_date' => Carbon::now(),
             'object' => fake()->word,
             'equipment' => fake()->word,
             'comment' => fake()->word,
-            'customer_id' => $customerId->random(),
-            'project_organization_id' => $projectOrganizationId->random(),
+            'customer_id' => $customer->id,
+            'customer_employee_id' => $customerEmployeeId,
+            'project_organization_id' => $projectOrganization->id,
+            'project_organization_employee_id' => $projectOrganizationEmployeeId,
             'prospect' => $prospect->random(),
             'status_id' => $statusId->random(),
             'created_by_user_id' => $usersId->random(),

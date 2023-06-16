@@ -73,9 +73,7 @@
                                             <i class='bx bx-message-square-add'></i>
                                         </button>
                                     </a>
-
                                 </div>
-
                                 @error('customer_id')
                                 <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -85,7 +83,24 @@
                                 <div id="customerHelpBlock" class="form-text">
                                     Обязательное поле
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="row mb-3">
+                            <label for="customerEmployeeSelect" class="col-md-4 col-form-label text-md-end">
+                                Контактное лицо заказчика
+                            </label>
+                            <div class="col-md-6">
+                                <select id="customerEmployeeSelect"
+                                        class="form-select @error('customer_employee_id') is-invalid @enderror"
+                                        name="customer_employee_id">
+                                    <option value="">не задан</option>
+                                </select>
+                                @error('customer_employee_id')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 
@@ -116,14 +131,30 @@
                                     </a>
 
                                 </div>
-
                                 @error('project_organization_id')
                                 <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
+                        </div>
 
+                        <div class="row mb-3">
+                            <label for="projectOrganizationSelect" class="col-md-4 col-form-label text-md-end">
+                                Контактное лицо проектной орг.
+                            </label>
+                            <div class="col-md-6">
+                                <select id="projectOrganizationSelect"
+                                        class="form-select @error('project_organization_employee_id') is-invalid @enderror"
+                                        name="project_organization_employee_id">
+                                    <option value="">не задан</option>
+                                </select>
+                                @error('project_organization_employee_id')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="row mb-3">
@@ -154,7 +185,8 @@
                             <div class="col-md-6">
                                 <textarea id="equipment" name="equipment" type="text" rows="5" maxlength="200"
                                           class="form-control @error('equipment') is-invalid @enderror"
-                                          required aria-labelledby="equipmentHelpBlock">{{ old('equipment') }}</textarea>
+                                          required
+                                          aria-labelledby="equipmentHelpBlock">{{ old('equipment') }}</textarea>
                                 @error('equipment')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

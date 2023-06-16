@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             $seeders[] = UserSeeder::class;
             $seeders[] = CustomerTypeSeeder::class;
             $seeders[] = CustomerSeeder::class;
+            $seeders[] = CustomerEmployeeSeeder::class;
             $seeders[] = RequestSeeder::class;
         }
         $this->call($seeders);

@@ -9,12 +9,6 @@
     }
 }
 
-.accordion-arrow {
-    transition: transform 0.3s ease-in-out;
-    &_active {
-        transform: rotate(180deg);
-    }
-}
 
 
 

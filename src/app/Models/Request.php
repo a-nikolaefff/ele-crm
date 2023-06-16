@@ -36,7 +36,9 @@ class Request extends Model
             'answered_at',
             'expected_order_date',
             'customer_id',
+            'customer_employee_id',
             'project_organization_id',
+            'project_organization_employee_id',
             'status_id',
             'created_by_user_id',
             'updated_by_user_id',
@@ -73,6 +75,18 @@ class Request extends Model
     {
         return $this->belongsTo(Customer::class, 'project_organization_id');
     }
+
+    public function customerEmployee(): BelongsTo
+    {
+        return $this->belongsTo(CustomerEmployee::class, 'customer_employee_id');
+    }
+
+    public function projectOrganizationEmployee(): BelongsTo
+    {
+        return $this->belongsTo(CustomerEmployee::class, 'project_organization_employee_id');
+    }
+
+
 
     /**
      * Get current status of the request.

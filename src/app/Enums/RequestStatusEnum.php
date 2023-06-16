@@ -11,9 +11,8 @@ enum RequestStatusEnum: string
 {
     case New = 'новая';
     case AwaitingResponse = 'уточнение';
-    case InProgress = 'в работе';
-    case Completed = 'ответ отправлен';
     case Cancelled = 'отменена';
-
+    case InProgress = 'в обработке';
+    case Completed = 'ответ отправлен';
     case Success = 'заказ получен';
 }

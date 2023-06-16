@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div>
-                            <x-delete-modal-button question="Вы уверены, что хотите данного заказчика?
+                            <x-delete-modal-button question="Вы уверены, что хотите удалить данного заказчика?
                             Это действие также удалит все заявки данного заказчика"
                                                    :route="route('customers.destroy', $customer->id)"/>
                         </div>
@@ -120,81 +120,6 @@
                                        value="{{ old('website', $customer->website) }}"
                                        placeholder="включая часть http:// или https://">
                                 @error('website')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="contact_person" class="col-md-4 col-form-label text-md-end">
-                                Контактное лицо
-                            </label>
-                            <div class="col-md-6">
-                                <input id="contact_person" name="contact_person" type="text" autocomplete="off"
-                                       maxlength="70"
-                                       class="form-control @error('contact_person') is-invalid @enderror"
-                                       value="{{ old('contact_person', $customer->contact_person) }}"
-                                       aria-labelledby="contactPersonHelpBlock">
-                                @error('contact_person')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-
-                                <div id="contactPersonHelpBlock" class="form-text">
-                                    Не более 70 символов
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="post" class="col-md-4 col-form-label text-md-end">
-                                Должность
-                            </label>
-                            <div class="col-md-6">
-                                <input id="post" name="post" type="text" autocomplete="off" maxlength="70"
-                                       class="form-control @error('post') is-invalid @enderror"
-                                       value="{{ old('post', $customer->post) }}">
-                                @error('post')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-
-                                <div id="postHelpBlock" class="form-text">
-                                    Не более 70 символов
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">
-                                Email
-                            </label>
-                            <div class="col-md-6">
-                                <input id="email" name="email" type="email" autocomplete="off"
-                                       class="form-control @error('email') is-invalid @enderror"
-                                       value="{{ old('email', $customer->email) }}">
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="phone" class="col-md-4 col-form-label text-md-end">
-                                Телефон
-                            </label>
-                            <div class="col-md-6">
-                                <input id="phone" name="phone" type="tel"
-                                       class="form-control @error('phone') is-invalid @enderror"
-                                       autocomplete="off" placeholder="включая код страны (+7 или иной код)"
-                                       value="{{ old('phone', $customer->phone) }}">
-                                @error('phone')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                 </span>

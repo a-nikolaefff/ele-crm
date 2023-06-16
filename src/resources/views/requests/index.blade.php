@@ -38,7 +38,7 @@
         </p>
     @else
         <div class="table-responsive-xl">
-            <table class="table text-center table-fixed align-middle entityTable" id="sortableTable">
+            <table class="table text-center table-fixed table-hover align-middle entityTable" id="sortableTable">
 
                 <thead>
                 <tr class="align-middle">
@@ -101,35 +101,39 @@
                 <tbody>
                 @foreach($requests as $request)
                     <tr>
-                        <td class="text-truncate max-w-100">
+                        <td class="text-truncate max-w-100 clickable"
+                            data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}">
                             {{ $request->received_at->format('Y') . '-' . $request->number }}
                         </td>
-                        <td class="text-truncate max-w-125">
+                        <td class="text-truncate max-w-125 clickable"
+                            data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}">
                             {{ $request->received_at->format('d.m.Y') }}
                         </td>
-                        <td class="text-truncate max-w-200">
+                        <td class="text-truncate max-w-200 clickable"
+                            data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}">
                             {{ $request->customer->name }}
                         </td>
-                        <td class="text-truncate max-w-200">
+                        <td class="text-truncate max-w-200 clickable"
+                            data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}">
                             {{ $request->object }}
                         </td>
-                        <td class="text-truncate max-w-200">
+                        <td class="text-truncate max-w-200 clickable"
+                            data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}">
                             {{ $request->equipment }}
                         </td>
-                        <td>
+                        <td class="clickable"
+                            data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}">
                         <span class="badge statusBadge
                         @switch($request->status->name)
                             @case('новая') statusBadge_new
                             @break
                             @case('уточнение') statusBadge_awaiting-response
                             @break
-                            @case('в работе') statusBadge_in-progress
+                            @case('отменена') statusBadge_cancelled
                             @break
-                            @case('в работе') statusBadge_completed
+                            @case('в обработке') statusBadge_in-progress
                             @break
                             @case('ответ отправлен') statusBadge_completed
-                            @break
-                            @case('отменена') statusBadge_cancelled
                             @break
                             @case('заказ получен') statusBadge_success
                             @break
@@ -138,7 +142,8 @@
                                 {{ $request->status->name }}
                             </span>
                         </td>
-                        <td>
+                        <td class="clickable"
+                            data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}">
                             @if($request->prospect !== 0)
                                 @for($i = 0; $i < $request->prospect; $i++)
                                     <i class='bx bxs-star'></i>
@@ -148,13 +153,7 @@
                             @endif
                         </td>
 
-                        <td class="min-w-130 text-start">
-                            <button data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}"
-                                    class="icon-button" type="button"
-                            >
-                                <x-accordion-arrow></x-accordion-arrow>
-                            </button>
-
+                        <td class="min-w-130 text-center">
                             <a href="{{ route('requests.edit', $request->id) }}">
                                 <x-edit-icon></x-edit-icon>
                             </a>
@@ -199,31 +198,6 @@
                                                     @endif
                                                 </div>
 
-                                                <div class="entityTable__infoBlock">
-
-                                                    <div class="row">
-                                                        <div class="col-4 entityTable__fieldName">
-                                                            Заказчик:
-                                                        </div>
-                                                        <div class="col-8">
-                                                            {{ $request->customer->name }}
-                                                        </div>
-                                                    </div>
-
-                                                    @if($request->projectOrganization)
-                                                        <div class="row mt-2">
-                                                            <div class="col-4 entityTable__fieldName">
-                                                                Проектная организация:
-                                                            </div>
-                                                            <div class="col-8">
-                                                                {{ $request->projectOrganization->name }}
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-
                                                 <div class="entityTable__infoBlock mb-3">
                                                     <div class="row mb-2">
                                                         <div class="col-4 entityTable__fieldName">
@@ -245,6 +219,141 @@
                                                 </div>
 
                                                 <div class="entityTable__infoBlock">
+
+                                                    <div class="row">
+                                                        <div class="col-4 entityTable__fieldName">
+                                                            Заказчик:
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <a href="{{ route('customers.show', $request->customer->id) }}">
+                                                                {{ $request->customer->name }}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    @if($request->customerEmployee)
+
+                                                        @if($request->customerEmployee->name)
+                                                            <div class="row mt-2">
+                                                                <div class="col-4 entityTable__fieldName">
+                                                                    Контактное лицо:
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    {{ $request->customerEmployee->name }}
+                                                                </div>
+                                                            </div>
+                                                        @endif
+
+                                                        @if($request->customerEmployee->post)
+                                                            <div class="row mt-2">
+                                                                <div class="col-4 entityTable__fieldName">
+                                                                    Должность:
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    {{ $request->customerEmployee->post }}
+                                                                </div>
+                                                            </div>
+                                                        @endif
+
+                                                        @if($request->customerEmployee->email)
+                                                            <div class="row mt-2">
+                                                                <div class="col-4 entityTable__fieldName">
+                                                                    Email:
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <a href="mailto:{{$request->customerEmployee->email}}">
+                                                                        {{ $request->customerEmployee->email }}
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+
+                                                        @if($request->customerEmployee->phone)
+                                                            <div class="row mt-2">
+                                                                <div class="col-4 entityTable__fieldName">
+                                                                    Телефон:
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <a href="tel:{{$request->customerEmployee->phone}}">
+                                                                        {{ $request->customerEmployee->phone->formatInternational() }}
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+
+                                                    @endif
+                                                </div>
+
+                                                @if($request->projectOrganization)
+                                                    <div class="entityTable__infoBlock mt-3">
+                                                        <div class="row">
+                                                            <div class="col-4 entityTable__fieldName">
+                                                                Проектная организация:
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <a href="{{ route('customers.show', $request->projectOrganization->id) }}">
+                                                                    {{ $request->projectOrganization->name }}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+
+                                                        @if($request->projectOrganizationEmployee)
+
+                                                            @if($request->projectOrganizationEmployee->name)
+                                                                <div class="row mt-2">
+                                                                    <div class="col-4 entityTable__fieldName">
+                                                                        Контактное лицо:
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        {{ $request->projectOrganizationEmployee->name }}
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+
+                                                            @if($request->projectOrganizationEmployee->post)
+                                                                <div class="row mt-2">
+                                                                    <div class="col-4 entityTable__fieldName">
+                                                                        Должность:
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        {{ $request->projectOrganizationEmployee->post }}
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+
+                                                            @if($request->projectOrganizationEmployee->email)
+                                                                <div class="row mt-2">
+                                                                    <div class="col-4 entityTable__fieldName">
+                                                                        Email:
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <a href="mailto:{{$request->projectOrganizationEmployee->email}}">
+                                                                            {{ $request->projectOrganizationEmployee->email }}
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+
+                                                            @if($request->projectOrganizationEmployee->phone)
+                                                                <div class="row mt-2">
+                                                                    <div class="col-4 entityTable__fieldName">
+                                                                        Телефон:
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <a href="tel:{{$request->projectOrganizationEmployee->phone}}">
+                                                                            {{ $request->projectOrganizationEmployee->phone->formatInternational() }}
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="col-6">
+
+                                                <div class="entityTable__infoBlock mb-3">
                                                     <div class="row mb-2">
                                                         <div class="col-4 entityTable__fieldName">
                                                             Статус:
@@ -292,15 +401,7 @@
                                                     @endif
                                                 </div>
 
-                                            </div>
-                                        </div>
-
-                                        <hr>
-
-                                        <div class="row gx-3">
-                                            <div class="col-6">
-
-                                                <div class="entityTable__infoBlock entityTable__infoBlock_userInfo">
+                                                <div class="entityTable__infoBlock mb-3">
                                                     <div class="row mb-1">
                                                         <div class="col-6 col-lg-4 entityTable__fieldName">
                                                             Создана:
@@ -320,9 +421,7 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="entityTable__infoBlock entityTable__infoBlock_userInfo">
+                                                <div class="entityTable__infoBlock">
                                                     <div class="row mb-1">
                                                         <div class="col-6 col-lg-4 entityTable__fieldName">
                                                             Обновлена:
@@ -343,7 +442,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

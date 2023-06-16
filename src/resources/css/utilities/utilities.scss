@@ -23,9 +23,13 @@
 
 // Special classes
 
-.icon-button {
+.hidden-button {
     background: none;
     border: none;
+}
+
+.clickable {
+    cursor: pointer;
 }
 
 

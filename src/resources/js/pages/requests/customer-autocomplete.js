@@ -1,8 +1,8 @@
 import autoComplete from "@tarekraafat/autocomplete.js/dist/autoComplete";
 
-
 const customerIdElement = document.getElementById('customerId');
 const customerResetAutocompleteElement = document.getElementById('customerResetAutocomplete');
+const customerEmployeeSelectElement = document.getElementById('customerEmployeeSelect');
 
 if (customerIdElement.value !== "") {
     customerResetAutocompleteElement.classList.add('resetAutocomplete__displayed')
@@ -79,8 +79,26 @@ const customerAutoComplete = new autoComplete({
             selection: (event) => {
                 const selection = event.detail.selection.value;
                 customerAutoComplete.input.value = selection.name;
-
                 customerIdElement.value = selection.id;
+
+                let emptyOption = customerEmployeeSelectElement.querySelector('option[value=""]');
+                while (customerEmployeeSelectElement.firstChild) {
+                    customerEmployeeSelectElement.removeChild(customerEmployeeSelectElement.firstChild);
+                }
+                customerEmployeeSelectElement.appendChild(emptyOption);
+
+                const employees = selection.employees;
+                employees.forEach((employee, index) => {
+                    let optionElement = document.createElement('option');
+                    optionElement.text = employee.name;
+                    optionElement.value = employee.id;
+
+                    if (index === 0) {
+                        optionElement.selected = true;
+                    }
+
+                    customerEmployeeSelectElement.appendChild(optionElement);
+                });
 
                 customerResetAutocompleteElement.classList.add('resetAutocomplete__displayed')
             }
@@ -95,6 +113,12 @@ customerResetAutocompleteElement.addEventListener('click', () => {
     selectionId.value = null;
 
     customerResetAutocompleteElement.classList.remove('resetAutocomplete__displayed')
+
+    let emptyOption = customerEmployeeSelectElement.querySelector('option[value=""]');
+    while (customerEmployeeSelectElement.firstChild) {
+        customerEmployeeSelectElement.removeChild(customerEmployeeSelectElement.firstChild);
+    }
+    customerEmployeeSelectElement.appendChild(emptyOption);
 });
 
 

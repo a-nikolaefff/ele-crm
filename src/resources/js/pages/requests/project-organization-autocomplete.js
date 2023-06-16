@@ -1,8 +1,8 @@
 import autoComplete from "@tarekraafat/autocomplete.js/dist/autoComplete";
 
-
 const projectOrganizationIdElement = document.getElementById('projectOrganizationId');
 const projectOrganizationResetAutocompleteElement = document.getElementById('projectOrganizationResetAutocomplete');
+const projectOrganizationSelectElement = document.getElementById('projectOrganizationSelect');
 
 if (projectOrganizationIdElement.value !== "") {
     projectOrganizationResetAutocompleteElement.classList.add('resetAutocomplete__displayed')
@@ -80,8 +80,26 @@ const projectOrganizationAutocomplete = new autoComplete({
             selection: (event) => {
                 const selection = event.detail.selection.value;
                 projectOrganizationAutocomplete.input.value = selection.name;
-
                 projectOrganizationIdElement.value = selection.id;
+
+                let emptyOption = projectOrganizationSelectElement.querySelector('option[value=""]');
+                while (projectOrganizationSelectElement.firstChild) {
+                    projectOrganizationSelectElement.removeChild(projectOrganizationSelectElement.firstChild);
+                }
+                projectOrganizationSelectElement.appendChild(emptyOption);
+
+                const employees = selection.employees;
+                employees.forEach((employee, index) => {
+                    let optionElement = document.createElement('option');
+                    optionElement.text = employee.name;
+                    optionElement.value = employee.id;
+
+                    if (index === 0) {
+                        optionElement.selected = true;
+                    }
+
+                    projectOrganizationSelectElement.appendChild(optionElement);
+                });
 
                 projectOrganizationResetAutocompleteElement.classList.add('resetAutocomplete__displayed')
             }
@@ -95,5 +113,11 @@ projectOrganizationResetAutocompleteElement.addEventListener('click', () => {
     const selectionId = document.getElementById('projectOrganizationId');
     selectionId.value = null;
 
-    projectOrganizationResetAutocompleteElement.classList.remove('resetAutocomplete__displayed')
+    projectOrganizationResetAutocompleteElement.classList.remove('resetAutocomplete__displayed');
+
+    let emptyOption = projectOrganizationSelectElement.querySelector('option[value=""]');
+    while (projectOrganizationSelectElement.firstChild) {
+        projectOrganizationSelectElement.removeChild(projectOrganizationSelectElement.firstChild);
+    }
+    projectOrganizationSelectElement.appendChild(emptyOption);
 });

@@ -31,145 +31,135 @@
         </p>
     @else
 
-    <div class="table-responsive-xl">
-        <table class="table text-center table-fixed align-middle entityTable" id="sortableTable">
+        <div class="table-responsive-xl">
+            <table class="table text-center table-fixed table-hover align-middle entityTable" id="sortableTable">
 
-            <thead>
-            <tr class="align-middle">
-                <th class="col-2" scope="col">
-                    <a class="d-block"
-                       href="{{ route('users.index', ['sort' => 'name', 'direction' => 'asc']) }}"
-                    >
-                        Имя
-                    </a>
-                </th>
-                <th class="col-1" scope="col">
-                    <a class="d-block"
-                       href="{{ route('users.index', ['sort' => 'role_id', 'direction' => 'asc']) }}"
-                    >
-                        Роль
-                    </a>
-                </th>
-                <th class="col-3" scope="col">
-                    <a class="d-block"
-                       href="{{ route('users.index', ['sort' => 'email', 'direction' => 'asc']) }}"
-                    >
-                        Email
-                    </a>
-                </th>
-                <th class="col-1" scope="col">
-                    <a class="d-block"
-                       href="{{ route('users.index', ['sort' => 'email_verified_at', 'direction' => 'asc']) }}"
-                    >
-                        Подтверждение email
-                    </a>
-                </th>
-                <th class="col-2" scope="col">
-                    <a class="d-block"
-                       href="{{ route('users.index', ['sort' => 'created_at', 'direction' => 'asc']) }}"
-                    >
-                        Регистрация
-                    </a>
-                </th>
-                <th class="col-1" scope="col"></th>
-            </tr>
-            </thead>
-
-            <tbody>
-            @foreach($users as $user)
-                <tr>
-                    <td class="text-truncate max-w-250">
-                        {{ $user->name }}
-                    </td>
-                    <td>
-                        {{ $user->role->name }}
-                    </td>
-                    <td class="text-truncate max-w-250">
-                        {{ $user->email }}
-                    </td>
-                    <td>
-                        @if($user->email_verified_at)
-                            Да
-                        @else
-                            Нет
-                        @endif
-                    </td>
-                    <td>{{ $user->created_at->format('d.m.Y') }}</td>
-
-                    <td class="min-w-130 text-start">
-                        <button data-bs-toggle="collapse" data-bs-target="#user_{{$user->id}}"
-                                class="icon-button" type="button"
+                <thead>
+                <tr class="align-middle">
+                    <th class="col-2" scope="col">
+                        <a class="d-block"
+                           href="{{ route('users.index', ['sort' => 'name', 'direction' => 'asc']) }}"
                         >
-                            <x-accordion-arrow></x-accordion-arrow>
-                        </button>
-
-                        @can('update', $user)
-                            <a href="{{ route('users.edit', $user->id) }}">
-                                <x-edit-icon></x-edit-icon>
-                            </a>
-                        @endcan
-                    </td>
+                            Имя
+                        </a>
+                    </th>
+                    <th class="col-1" scope="col">
+                        <a class="d-block"
+                           href="{{ route('users.index', ['sort' => 'role_id', 'direction' => 'asc']) }}"
+                        >
+                            Роль
+                        </a>
+                    </th>
+                    <th class="col-3" scope="col">
+                        <a class="d-block"
+                           href="{{ route('users.index', ['sort' => 'email', 'direction' => 'asc']) }}"
+                        >
+                            Email
+                        </a>
+                    </th>
+                    <th class="col-1" scope="col">
+                        <a class="d-block"
+                           href="{{ route('users.index', ['sort' => 'email_verified_at', 'direction' => 'asc']) }}"
+                        >
+                            Подтверждение email
+                        </a>
+                    </th>
+                    <th class="col-2" scope="col">
+                        <a class="d-block"
+                           href="{{ route('users.index', ['sort' => 'created_at', 'direction' => 'asc']) }}"
+                        >
+                            Регистрация
+                        </a>
+                    </th>
+                    <th class="col-1" scope="col"></th>
                 </tr>
+                </thead>
 
-                <tr class="hiddenRow">
-                    <td colspan="12">
-                        <div class="collapse" id="user_{{$user->id}}">
-                            <div class="d-flex justify-content-center">
-                                <div class="entityTable__fullInfo">
-                                    <div class="row gx-3">
-                                        <div class="col-6">
-                                            <div class="entityTable__infoBlock">
-                                                <div class="row mb-2">
-                                                    <div class="col-4 entityTable__fieldName">
-                                                        Имя:
-                                                    </div>
-                                                    <div class="col-8 entityTable__fieldValue">
-                                                        {{ $user->name }}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-4 entityTable__fieldName">
-                                                        Роль:
-                                                    </div>
-                                                    <div class="col-8">
-                                                        {{ $user->role->name }}
-                                                    </div>
-                                                </div>
-                                            </div>
+                <tbody>
+                @foreach($users as $user)
+                    <tr>
+                        <td class="text-truncate max-w-250 clickable"
+                            data-bs-toggle="collapse" data-bs-target="#user_{{$user->id}}">
+                            {{ $user->name }}
+                        </td>
+                        <td class="clickable" data-bs-toggle="collapse" data-bs-target="#user_{{$user->id}}">
+                            {{ $user->role->name }}
+                        </td>
+                        <td class="text-truncate max-w-250 clickable"
+                            data-bs-toggle="collapse" data-bs-target="#user_{{$user->id}}">
+                            {{ $user->email }}
+                        </td>
+                        <td class="clickable" data-bs-toggle="collapse" data-bs-target="#user_{{$user->id}}">
+                            @if($user->email_verified_at)
+                                Да
+                            @else
+                                Нет
+                            @endif
+                        </td>
+                        <td class="clickable" data-bs-toggle="collapse" data-bs-target="#user_{{$user->id}}">
+                            {{ $user->created_at->format('d.m.Y') }}
+                        </td>
 
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="entityTable__infoBlock">
-                                                <div class="row mb-2">
-                                                    <div class="col-4 entityTable__fieldName">
-                                                        Email:
-                                                    </div>
-                                                    <div class="col-8 entityTable__fieldValue">
-                                                        {{ $user->email }}
-                                                    </div>
-                                                </div>
+                        <td class="min-w-130 text-center">
+                            @can('update', $user)
+                                <a href="{{ route('users.edit', $user->id) }}">
+                                    <x-edit-icon></x-edit-icon>
+                                </a>
+                            @endcan
+                        </td>
+                    </tr>
 
-                                                <div class="row">
-                                                    <div class="col-4 entityTable__fieldName">
-                                                        Подтверждение email:
-                                                    </div>
-                                                    <div class="col-8">
-                                                        @if($user->email_verified_at)
-                                                            Да
-                                                        @else
-                                                            Нет
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
+                    <tr class="hiddenRow">
+                        <td colspan="12">
+                            <div class="collapse" id="user_{{$user->id}}">
+                                <div class="d-flex justify-content-center">
+                                    <div class="entityTable__fullInfo">
                                         <div class="row gx-3">
                                             <div class="col-6">
-                                                <div class="entityTable__infoBlock entityTable__infoBlock_userInfo">
+                                                <div class="entityTable__infoBlock mb-3">
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 entityTable__fieldName">
+                                                            Имя:
+                                                        </div>
+                                                        <div class="col-8 entityTable__fieldValue">
+                                                            {{ $user->name }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-4 entityTable__fieldName">
+                                                            Роль:
+                                                        </div>
+                                                        <div class="col-8">
+                                                            {{ $user->role->name }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="entityTable__infoBlock">
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 entityTable__fieldName">
+                                                            Email:
+                                                        </div>
+                                                        <div class="col-8 entityTable__fieldValue">
+                                                            {{ $user->email }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-4 entityTable__fieldName">
+                                                            Подтверждение email:
+                                                        </div>
+                                                        <div class="col-8">
+                                                            @if($user->email_verified_at)
+                                                                Да
+                                                            @else
+                                                                Нет
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="entityTable__infoBlock">
                                                     <div class="row">
                                                         <div class="col-6 col-lg-4 entityTable__fieldName">
                                                             Зарегистрирован:
@@ -179,11 +169,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            @if($user->updatedByUser)
-                                                <div class="col-6">
-                                                    <div class="entityTable__infoBlock entityTable__infoBlock_userInfo">
+                                                @if($user->updatedByUser)
+                                                    <div class="entityTable__infoBlock mt-3">
                                                         <div class="row mb-1">
                                                             <div class="col-6 col-lg-4 entityTable__fieldName">
                                                                 Обновлен:
@@ -202,23 +189,23 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            @endif
+                                                @endif
+                                            </div>
                                         </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
 
-            @endforeach
-            </tbody>
+                @endforeach
+                </tbody>
 
-        </table>
-        <div>
-            {{ $users->links() }}
+            </table>
+            <div>
+                {{ $users->links() }}
+            </div>
         </div>
-    </div>
     @endif
 @endsection
 

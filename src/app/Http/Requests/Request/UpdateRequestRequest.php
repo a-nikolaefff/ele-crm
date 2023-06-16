@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Request;
 
 use App\Rules\NotBeforeReceivedDate;
+use App\Rules\SameCustomer;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequestRequest extends FormRequest
@@ -31,6 +32,8 @@ class UpdateRequestRequest extends FormRequest
                 'exists:customers,id',
                 'nullable'
             ],
+            'customer_employee_id' => ['nullable', new SameCustomer('customer_id')],
+            'project_organization_employee_id' => ['nullable', new SameCustomer('project_organization_id')],
             'object' => ['required', 'string', 'max:200'],
             'equipment' => ['required', 'string', 'max:200'],
             'comment' => ['nullable', 'string', 'max:200'],
