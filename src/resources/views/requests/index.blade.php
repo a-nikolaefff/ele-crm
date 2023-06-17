@@ -144,12 +144,16 @@
                         </td>
                         <td class="clickable"
                             data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}">
-                            @if($request->prospect !== 0)
-                                @for($i = 0; $i < $request->prospect; $i++)
-                                    <i class='bx bxs-star'></i>
-                                @endfor
+                            @if($request->status->name === 'заказ получен')
+                                <i class='bx bx-check bx-sm'></i>
                             @else
-                                <i class='bx bxs-trash bx-sm'></i>
+                                @if($request->prospect !== 0)
+                                    @for($i = 0; $i < $request->prospect; $i++)
+                                        <i class='bx bxs-star'></i>
+                                    @endfor
+                                @else
+                                    <i class='bx bxs-trash bx-sm'></i>
+                                @endif
                             @endif
                         </td>
 
@@ -368,18 +372,22 @@
                                                             Перспективность:
                                                         </div>
                                                         <div class="col-8">
-                                                            @if($request->prospect !== 0)
-                                                                @for($i = 0; $i < $request->prospect; $i++)
-                                                                    <i class='bx bxs-star'></i>
-                                                                @endfor
+                                                            @if($request->status->name === 'заказ получен')
+                                                                <i class='bx bx-check bx-sm'></i>
                                                             @else
-                                                                <i class='bx bxs-trash bx-sm'></i>
+                                                                @if($request->prospect !== 0)
+                                                                    @for($i = 0; $i < $request->prospect; $i++)
+                                                                        <i class='bx bxs-star'></i>
+                                                                    @endfor
+                                                                @else
+                                                                    <i class='bx bxs-trash bx-sm'></i>
+                                                                @endif
                                                             @endif
                                                         </div>
                                                     </div>
 
                                                     @if($request->expected_order_date)
-                                                        <div class="row mt-2">
+                                                        <div class="row mt-1">
                                                             <div class="col-4 entityTable__fieldName">
                                                                 Ожидаемая дата заказа:
                                                             </div>
