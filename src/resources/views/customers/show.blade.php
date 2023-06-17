@@ -184,16 +184,19 @@
                         </table>
                     @endif
 
-                    <h2 class="h4 mb-3">
+                    <h2 class="h4 mb-1">
                         Заявки:
                     </h2>
+                    @if($customer->has_project_department)
+                        <p>В том числе те заявки, где {{ $customer->name }} в роли проектной организации.</p>
+                    @endif
 
                     @if($requests->count() === 0)
-                        <p class="h5 mt-2">
+                        <p class="h6">
                             Заявки не найдены
                         </p>
                     @else
-                        <div class="table-responsive-xl">
+                        <div class="table-responsive-xl mt-3">
                             <table class="table text-center table-fixed table-hover align-middle entityTable"
                                    id="sortableTable">
 
@@ -264,7 +267,7 @@
                                         </td>
                                         <td class="text-truncate max-w-200 clickable"
                                             data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}">
-                                            {{ $customer->name }}
+                                            {{ $request->customer->name }}
                                         </td>
                                         <td class="text-truncate max-w-200 clickable"
                                             data-bs-toggle="collapse" data-bs-target="#request_{{$request->id}}">
@@ -352,23 +355,207 @@
                                                                 </div>
 
                                                                 <div class="entityTable__infoBlock mb-3">
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-4 entityTable__fieldName">
+                                                                            Объект:
+                                                                        </div>
+                                                                        <div class="col-8 entityTable__fieldValue">
+                                                                            {{ $request->object }}
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-4 entityTable__fieldName">
+                                                                            Номенклатура:
+                                                                        </div>
+                                                                        <div class="col-8 entityTable__fieldValue">
+                                                                            {{ $request->equipment }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="entityTable__infoBlock">
 
                                                                     <div class="row">
                                                                         <div class="col-4 entityTable__fieldName">
                                                                             Заказчик:
                                                                         </div>
                                                                         <div class="col-8">
-                                                                            {{ $customer->name }}
+                                                                            <a href="{{ route('customers.show', $request->customer->id) }}">
+                                                                                {{ $request->customer->name }}
+                                                                            </a>
                                                                         </div>
                                                                     </div>
 
-                                                                    @if($request->projectOrganization)
-                                                                        <div class="row mt-2">
+                                                                    @if($request->customerEmployee)
+
+                                                                        @if($request->customerEmployee->name)
+                                                                            <div class="row mt-2">
+                                                                                <div class="col-4 entityTable__fieldName">
+                                                                                    Контактное лицо:
+                                                                                </div>
+                                                                                <div class="col-8">
+                                                                                    {{ $request->customerEmployee->name }}
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
+
+                                                                        @if($request->customerEmployee->post)
+                                                                            <div class="row mt-2">
+                                                                                <div class="col-4 entityTable__fieldName">
+                                                                                    Должность:
+                                                                                </div>
+                                                                                <div class="col-8">
+                                                                                    {{ $request->customerEmployee->post }}
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
+
+                                                                        @if($request->customerEmployee->email)
+                                                                            <div class="row mt-2">
+                                                                                <div class="col-4 entityTable__fieldName">
+                                                                                    Email:
+                                                                                </div>
+                                                                                <div class="col-8">
+                                                                                    <a href="mailto:{{$request->customerEmployee->email}}">
+                                                                                        {{ $request->customerEmployee->email }}
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
+
+                                                                        @if($request->customerEmployee->phone)
+                                                                            <div class="row mt-2">
+                                                                                <div class="col-4 entityTable__fieldName">
+                                                                                    Телефон:
+                                                                                </div>
+                                                                                <div class="col-8">
+                                                                                    <a href="tel:{{$request->customerEmployee->phone}}">
+                                                                                        {{ $request->customerEmployee->phone->formatInternational() }}
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
+
+                                                                    @endif
+                                                                </div>
+
+                                                                @if($request->projectOrganization)
+                                                                    <div class="entityTable__infoBlock mt-3">
+                                                                        <div class="row">
                                                                             <div class="col-4 entityTable__fieldName">
                                                                                 Проектная организация:
                                                                             </div>
                                                                             <div class="col-8">
-                                                                                {{ $request->projectOrganization->name }}
+                                                                                <a href="{{ route('customers.show', $request->projectOrganization->id) }}">
+                                                                                    {{ $request->projectOrganization->name }}
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        @if($request->projectOrganizationEmployee)
+
+                                                                            @if($request->projectOrganizationEmployee->name)
+                                                                                <div class="row mt-2">
+                                                                                    <div class="col-4 entityTable__fieldName">
+                                                                                        Контактное лицо:
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        {{ $request->projectOrganizationEmployee->name }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endif
+
+                                                                            @if($request->projectOrganizationEmployee->post)
+                                                                                <div class="row mt-2">
+                                                                                    <div class="col-4 entityTable__fieldName">
+                                                                                        Должность:
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        {{ $request->projectOrganizationEmployee->post }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endif
+
+                                                                            @if($request->projectOrganizationEmployee->email)
+                                                                                <div class="row mt-2">
+                                                                                    <div class="col-4 entityTable__fieldName">
+                                                                                        Email:
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        <a href="mailto:{{$request->projectOrganizationEmployee->email}}">
+                                                                                            {{ $request->projectOrganizationEmployee->email }}
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endif
+
+                                                                            @if($request->projectOrganizationEmployee->phone)
+                                                                                <div class="row mt-2">
+                                                                                    <div class="col-4 entityTable__fieldName">
+                                                                                        Телефон:
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        <a href="tel:{{$request->projectOrganizationEmployee->phone}}">
+                                                                                            {{ $request->projectOrganizationEmployee->phone->formatInternational() }}
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endif
+
+                                                                        @endif
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+                                                            <div class="col-6">
+
+                                                                <div class="entityTable__infoBlock mb-3">
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-4 entityTable__fieldName">
+                                                                            Статус:
+                                                                        </div>
+                                                                        <div class="col-8">
+                                                                            {{ $request->status->name }}
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-4 entityTable__fieldName">
+                                                                            Перспективность:
+                                                                        </div>
+                                                                        <div class="col-8">
+                                                                            @if($request->status->name === 'заказ получен')
+                                                                                <i class='bx bx-check bx-sm'></i>
+                                                                            @else
+                                                                                @if($request->prospect !== 0)
+                                                                                    @for($i = 0; $i < $request->prospect; $i++)
+                                                                                        <i class='bx bxs-star'></i>
+                                                                                    @endfor
+                                                                                @else
+                                                                                    <i class='bx bxs-trash bx-sm'></i>
+                                                                                @endif
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+
+                                                                    @if($request->expected_order_date)
+                                                                        <div class="row mt-1">
+                                                                            <div class="col-4 entityTable__fieldName">
+                                                                                Ожидаемая дата заказа:
+                                                                            </div>
+                                                                            <div class="col-8">
+                                                                                {{ $request->expected_order_date->format('d.m.Y') }}
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+
+                                                                    @if($request->comment)
+                                                                        <div class="row mt-2">
+                                                                            <div class="col-4 entityTable__fieldName">
+                                                                                Комментарий:
+                                                                            </div>
+                                                                            <div class="col-8 entityTable__fieldValue">
+                                                                                {{ $request->comment }}
                                                                             </div>
                                                                         </div>
                                                                     @endif
@@ -412,75 +599,6 @@
                                                                             {{ $request->updatedByUser->name }}
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <div class="entityTable__infoBlock mb-3">
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-4 entityTable__fieldName">
-                                                                            Объект:
-                                                                        </div>
-                                                                        <div class="col-8 entityTable__fieldValue">
-                                                                            {{ $request->object }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row">
-                                                                        <div class="col-4 entityTable__fieldName">
-                                                                            Номенклатура:
-                                                                        </div>
-                                                                        <div class="col-8 entityTable__fieldValue">
-                                                                            {{ $request->equipment }}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="entityTable__infoBlock">
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-4 entityTable__fieldName">
-                                                                            Статус:
-                                                                        </div>
-                                                                        <div class="col-8">
-                                                                            {{ $request->status->name }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row">
-                                                                        <div class="col-4 entityTable__fieldName">
-                                                                            Перспективность:
-                                                                        </div>
-                                                                        <div class="col-8">
-                                                                            @if($request->prospect !== 0)
-                                                                                @for($i = 0; $i < $request->prospect; $i++)
-                                                                                    <i class='bx bxs-star'></i>
-                                                                                @endfor
-                                                                            @else
-                                                                                <i class='bx bxs-trash bx-sm'></i>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-
-                                                                    @if($request->expected_order_date)
-                                                                        <div class="row mt-2">
-                                                                            <div class="col-4 entityTable__fieldName">
-                                                                                Ожидаемая дата заказа:
-                                                                            </div>
-                                                                            <div class="col-8">
-                                                                                {{ $request->expected_order_date->format('d.m.Y') }}
-                                                                            </div>
-                                                                        </div>
-                                                                    @endif
-
-                                                                    @if($request->comment)
-                                                                        <div class="row mt-2">
-                                                                            <div class="col-4 entityTable__fieldName">
-                                                                                Комментарий:
-                                                                            </div>
-                                                                            <div class="col-8 entityTable__fieldValue">
-                                                                                {{ $request->comment }}
-                                                                            </div>
-                                                                        </div>
-                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>

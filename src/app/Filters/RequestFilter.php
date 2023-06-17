@@ -45,7 +45,8 @@ class RequestFilter extends AbstractFilter
      */
     public function customerId(Builder $builder, $customerId): void
     {
-        $builder->where('customer_id', $customerId);
+        $builder->where('customer_id', $customerId)
+            ->orWhere('project_organization_id', $customerId);
     }
 
     /**

@@ -70,7 +70,7 @@ class CustomerController extends Controller
             'employees',
         ]);
 
-        $requests = Request::with('projectOrganization', 'status')
+        $requests = Request::with('customer', 'projectOrganization', 'status')
             ->filter($filter)
             ->sort($queryParams, 'number', 'desc')
             ->paginate(6)
