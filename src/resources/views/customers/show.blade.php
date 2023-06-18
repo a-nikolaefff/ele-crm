@@ -26,84 +26,87 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table mb-4">
-                        <tbody>
+                    <div class="table-responsive-xl">
+                        <table class="table mb-4">
+                            <tbody>
 
-                        <tr>
-                            <th scope="row">Имя</th>
-                            <td>
-                                {{ $customer->name }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Полное имя</th>
-                            <td>
-                                {{ $customer->full_name }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Тип</th>
-                            <td>
-                                @if($customer->type)
-                                    {{ $customer->type->name }}
-                                @else
-                                    не задан
-                                @endif
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Наличие проектного отдела</th>
-                            <td>
-                                @if($customer->has_project_department)
-                                    да
-                                @else
-                                    нет
-                                @endif
-                            </td>
-                        </tr>
-
-                        @if($customer->website)
                             <tr>
-                                <th scope="row">Cайт</th>
+                                <th scope="row">Имя</th>
                                 <td>
-                                    <a href="{{ $customer->website }}">
-                                        {{ $customer->website }}
-                                    </a>
+                                    {{ $customer->name }}
                                 </td>
                             </tr>
-                        @endif
 
-                        <tr>
-                            <th scope="row">Создан</th>
-                            <td>
-                                {{ $customer->created_at }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Пользователем</th>
-                            <td>
-                                {{ $customer->createdByUser->name }}
-                            </td>
-                        </tr>
+                            <tr>
+                                <th scope="row">Полное имя</th>
+                                <td>
+                                    {{ $customer->full_name }}
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <th scope="row">Обновлён</th>
-                            <td>
-                                {{ $customer->updated_at }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Пользователем</th>
-                            <td>
-                                {{ $customer->updatedByUser->name }}
-                            </td>
-                        </tr>
+                            <tr>
+                                <th scope="row">Тип</th>
+                                <td>
+                                    @if($customer->type)
+                                        {{ $customer->type->name }}
+                                    @else
+                                        не задан
+                                    @endif
+                                </td>
+                            </tr>
 
-                        </tbody>
-                    </table>
+                            <tr>
+                                <th scope="row">Наличие проектного отдела</th>
+                                <td>
+                                    @if($customer->has_project_department)
+                                        да
+                                    @else
+                                        нет
+                                    @endif
+                                </td>
+                            </tr>
+
+                            @if($customer->website)
+                                <tr>
+                                    <th scope="row">Cайт</th>
+                                    <td>
+                                        <a href="{{ $customer->website }}">
+                                            {{ $customer->website }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endif
+
+                            <tr>
+                                <th scope="row">Создан</th>
+                                <td>
+                                    {{ $customer->created_at }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Пользователем</th>
+                                <td>
+                                    {{ $customer->createdByUser->name }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Обновлён</th>
+                                <td>
+                                    {{ $customer->updated_at }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Пользователем</th>
+                                <td>
+                                    {{ $customer->updatedByUser->name }}
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
 
                     <h2 class="h4 mb-3">
                         Контактные лица:
@@ -121,67 +124,70 @@
                             Контактные лица не найдены
                         </p>
                     @else
-                        <table class="table text-center align-middle mb-4">
-                            <thead>
-                            <tr class="align-middle">
-                                <th class="col-4" scope="col">
-                                    Имя
-                                </th>
-                                <th class="col-3" scope="col">
-                                    Должность
-                                </th>
-                                <th class="col-2" scope="col">
-                                    Email
-                                </th>
-                                <th class="col-2" scope="col">
-                                    Телефон
-                                </th>
-                                <th class="col-1" scope="col">
+                        <div class="table-responsive-xl mb-4">
+                            <table class="table text-center align-middle">
+                                <thead>
+                                <tr class="align-middle">
+                                    <th class="col-4" scope="col">
+                                        Имя
+                                    </th>
+                                    <th class="col-3" scope="col">
+                                        Должность
+                                    </th>
+                                    <th class="col-2" scope="col">
+                                        Email
+                                    </th>
+                                    <th class="col-2" scope="col">
+                                        Телефон
+                                    </th>
+                                    <th class="col-1" scope="col">
 
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($customer->employees as $employee)
-                                <tr>
-                                    <td>
-                                        {{ $employee->name }}
-                                    </td>
-                                    <td>
-                                        @if($employee->post)
-                                            {{ $employee->post }}
-                                        @else
-                                            не задана
-                                        @endif
-
-                                    </td>
-                                    <td>
-                                        @if($employee->email)
-                                            <a href="mailto:{{$employee->email}}">
-                                                {{ $employee->email }}
-                                            </a>
-                                        @else
-                                            не задан
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($employee->phone)
-                                            <a href="tel:{{$employee->phone}}">
-                                                {{ $employee->phone->formatInternational() }}
-                                            </a>
-                                        @else
-                                            не задан
-                                        @endif
-                                    </td>
-                                    <td class="min-w-130 text-center">
-                                        <a href="{{ route('customer-employees.edit', $employee->id) }}">
-                                            <x-edit-icon></x-edit-icon>
-                                        </a>
-                                    </td>
+                                    </th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach($customer->employees as $employee)
+                                    <tr>
+                                        <td>
+                                            {{ $employee->name }}
+                                        </td>
+                                        <td>
+                                            @if($employee->post)
+                                                {{ $employee->post }}
+                                            @else
+                                                не задана
+                                            @endif
+
+                                        </td>
+                                        <td>
+                                            @if($employee->email)
+                                                <a href="mailto:{{$employee->email}}">
+                                                    {{ $employee->email }}
+                                                </a>
+                                            @else
+                                                не задан
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($employee->phone)
+                                                <a href="tel:{{$employee->phone}}">
+                                                    {{ $employee->phone->formatInternational() }}
+                                                </a>
+                                            @else
+                                                не задан
+                                            @endif
+                                        </td>
+                                        <td class="min-w-130 text-center">
+                                            <a href="{{ route('customer-employees.edit', $employee->id) }}">
+                                                <x-edit-icon></x-edit-icon>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
                     @endif
 
                     <h2 class="h4 mb-1">
